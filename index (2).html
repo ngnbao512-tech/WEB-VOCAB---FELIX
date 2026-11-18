@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Từ vựng của tôi</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%232563eb'/%3E%3Crect x='5' y='9' width='22' height='26' rx='5' fill='%23ffffff66' transform='rotate(-12 16 22)'/%3E%3Cg transform='rotate(8 23 20)'%3E%3Crect x='11' y='6' width='24' height='28' rx='5' fill='white'/%3E%3Cpath d='M17 13L23 27L29 13' fill='none' stroke='%232563eb' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box}
+body{font-family:system-ui,sans-serif;margin:0;background:#f5f6fa;color:#222}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+.card{background:#fff;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 1px 4px #0001}
+input,button,select{font:inherit;padding:8px 10px;border:1px solid #ccd;border-radius:6px}
+button{cursor:pointer;background:#4a6cf7;color:#fff;border:0}
+button.sec{background:#e8eaf6;color:#223}
+button.del{background:none;color:#c33;padding:2px 8px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.row input{flex:1;min-width:120px}
+.tabs button{background:#e8eaf6;color:#223}
+.tabs button.on{background:#4a6cf7;color:#fff}
+table{width:100%;border-collapse:collapse}
+th,td{border-bottom:1px solid #eee;padding:8px;text-align:left}
+td[contenteditable]:focus{outline:2px solid #4a6cf7;background:#f0f3ff}
+tr.done td{color:#888}
+.err{color:#c33;min-height:1.2em}
+.scroll{overflow-x:auto}
+[hidden]{display:none!important}
+#auth{position:fixed;inset:0;z-index:10;display:grid;grid-template-columns:6fr minmax(380px,5fr);color:#0f2a5c;overflow:auto;background:radial-gradient(60% 70% at 8% 18%,#bfdbfe 0,transparent 62%),radial-gradient(50% 60% at 42% 100%,#bae6fd 0,transparent 62%),radial-gradient(45% 55% at 96% 8%,#dbeafe 0,transparent 62%),radial-gradient(40% 50% at 88% 96%,#c7d2fe99 0,transparent 62%),#f5f9ff}
+.rp{order:1;position:relative;z-index:1;padding:32px clamp(24px,5vw,72px);display:flex}
+#auth::before,#auth::after{content:"";position:absolute;border-radius:50%;filter:blur(70px);z-index:0;pointer-events:none}
+#auth::before{width:460px;height:460px;background:#93c5fd77;left:28%;top:-140px;animation:drift 16s ease-in-out infinite alternate}
+#auth::after{width:400px;height:400px;background:#a5b4fc55;right:6%;bottom:-120px;animation:drift 19s ease-in-out infinite alternate-reverse}
+@keyframes drift{from{transform:translate(0,0)}to{transform:translate(70px,50px)}}
+.rbody{position:relative;z-index:1;margin:auto 0}
+.big{font-size:clamp(32px,3.6vw,48px);line-height:1.12;font-weight:800;margin:0 0 12px;color:#1e40af}
+.hs{color:#475569;margin:0 0 36px;font-size:16px}
+.fc{display:flex;align-items:center;gap:16px;background:#ffffffe0;backdrop-filter:blur(8px);border:1px solid #fff;color:#0f2a5c;border-radius:24px;padding:14px 22px 14px 14px;margin-bottom:16px;max-width:390px;box-shadow:0 10px 30px #3b82f633;cursor:pointer;animation:fl 5s ease-in-out infinite;transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s}
+.fc:hover{transform:translateY(-8px) scale(1.04) rotate(-1.5deg);box-shadow:0 24px 48px #2563eb40;animation-play-state:paused}
+.fc .tg{flex:none;width:54px;height:54px;border-radius:18px;background:#dbeafe;color:#1e40af;display:grid;place-items:center;font-weight:800;font-size:13px;transition:all .35s cubic-bezier(.34,1.56,.64,1)}
+.fc:hover .tg{background:#2563eb;color:#fff;transform:rotate(-10deg) scale(1.1)}
+.fc .w{font-size:22px;font-weight:800}
+.fc .r{font-size:12px;color:#64748b}
+.fc .m{font-size:13px;color:#2563eb;transition:letter-spacing .3s}
+.fc:hover .m{letter-spacing:.04em}
+.fc .ok{margin-left:auto;width:26px;height:26px;border-radius:50%;background:#dcfce7;color:#16a34a;display:grid;place-items:center;font-weight:800;font-size:14px;transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.fc:hover .ok{transform:scale(1.3) rotate(10deg)}
+@keyframes fl{0%,100%{translate:0 0}50%{translate:0 -7px}}
+.lp{order:2;position:relative;z-index:1;display:flex;flex-direction:column;padding:28px clamp(24px,5vw,72px)}
+.lh{display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;gap:10px;align-items:center;font-weight:800;color:#1e40af;letter-spacing:.06em}
+.logo{width:38px;height:38px;border-radius:14px;background:linear-gradient(135deg,#60a5fa,#2563eb);color:#fff;display:grid;place-items:center;font-weight:800}
+#ui{display:flex;background:#ffffff99;border-radius:99px;padding:3px}
+#ui button{background:none;color:#475569;font-weight:700;font-size:13px;padding:6px 14px;border-radius:99px;transition:all .25s}
+#ui button.on{background:#fff;color:#1d4ed8;box-shadow:0 2px 8px #2563eb26}
+.formwrap{margin:auto 0;max-width:430px;width:100%;padding:38px 34px;background:#ffffff8c;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid #ffffffd9;border-radius:30px;box-shadow:0 24px 60px #3b82f62e}
+.formwrap h1{font-size:34px;margin:0 0 6px;color:#0f2a5c}
+.sub{color:#64748b;margin:0 0 24px}
+.formwrap label{display:block;font-size:13px;font-weight:700;margin:16px 0 6px;color:#334155}
+.formwrap input{width:100%;padding:14px 16px;border:1.5px solid #dbe6f7;border-radius:16px;background:#ffffffb3;transition:all .25s}
+.formwrap input:focus{outline:none;border-color:#60a5fa;background:#fff;box-shadow:0 0 0 4px #dbeafe}
+.pw{position:relative}
+.pw input{padding-right:46px}
+.pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;color:#64748b;font-size:18px;padding:4px 8px}
+#login{width:100%;margin-top:24px;padding:15px;border-radius:99px;background:linear-gradient(135deg,#60a5fa,#2563eb);font-weight:700;box-shadow:0 10px 24px #2563eb40;display:inline-flex;justify-content:center;gap:8px;transition:transform .25s,box-shadow .25s}
+#login:hover{transform:translateY(-2px);box-shadow:0 14px 30px #2563eb59}
+#login span:last-child{transition:transform .25s}
+#login:hover span:last-child{transform:translateX(5px)}
+.err{text-align:center;margin-top:10px}
+.help{color:#64748b;font-size:13px;margin:16px 0 0}
+.lp footer{font-size:12px;color:#94a3b8}
+@media(prefers-reduced-motion:reduce){.fc,#auth::before,#auth::after{animation:none}}
+@media(max-width:860px){#auth{grid-template-columns:1fr}.rp{display:none}}
+
+.big{font-size:clamp(36px,4.4vw,62px)}
+.hs{font-size:18px}
+.stack{position:relative;width:660px;height:570px}
+.stack .fc{position:absolute;width:372px;margin:0;max-width:none;gap:20px;padding:18px 28px 18px 18px;border-radius:30px;transform:rotate(var(--r))}
+.stack .tg{width:72px;height:72px;border-radius:22px;font-size:16px}
+.stack .w{font-size:32px}
+.stack .r{font-size:15px}
+.stack .m{font-size:17px}
+.stack .ok{width:34px;height:34px;font-size:18px}
+.c1{--r:-9deg;left:0;top:20px;z-index:2;animation-delay:-.5s}
+.c2{--r:7deg;right:0;top:195px;z-index:3;animation-delay:-2s}
+.c3{--r:-3deg;left:50px;top:392px;z-index:4;animation-delay:-3.5s}
+.stack .fc:hover{transform:translateY(-12px) scale(1.06) rotate(calc(var(--r)*.3));z-index:8;box-shadow:0 30px 56px #2563eb4d}
+.globe{position:absolute;z-index:1;left:50%;top:50%;width:290px;height:290px;margin:-145px 0 0 -145px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#fff,#bfdbfe 36%,#60a5fa 78%,#2563eb);box-shadow:0 34px 70px #2563eb55,inset -22px -30px 50px #1d4ed855}
+.globe svg{width:100%;height:100%;animation:spin 70s linear infinite}
+.orbit{position:absolute;z-index:0;left:50%;top:50%;width:620px;height:620px;margin:-310px 0 0 -310px;border:2px dashed #60a5fa66;border-radius:50%;animation:spin 45s linear infinite}
+.sat{position:absolute;border-radius:50%}
+.s1{top:-10px;left:50%;margin-left:-10px;width:20px;height:20px;background:#2563eb;box-shadow:0 0 0 7px #2563eb26}
+.s2{bottom:70px;left:46px;width:13px;height:13px;background:#7dd3fc;box-shadow:0 0 0 5px #7dd3fc40}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gh{position:absolute;z-index:0;pointer-events:none;user-select:none;color:#2563eb;opacity:.08;font-weight:800}
+.g1{left:-50px;top:-100px;font-size:210px;letter-spacing:-6px;transform:rotate(-8deg)}
+.g3{right:-30px;bottom:-60px;font-size:120px;transform:rotate(5deg)}
+.fl{position:absolute;z-index:7;animation:fl 6s ease-in-out infinite}
+.tr{right:90px;top:6px;width:66px;height:66px;border-radius:22px;background:linear-gradient(135deg,#60a5fa,#2563eb);color:#fff;font-weight:800;font-size:20px;display:grid;place-items:center;box-shadow:0 14px 30px #2563eb59;transform:rotate(10deg)}
+.bub{background:#fff;color:#1d4ed8;font-weight:800;font-size:18px;padding:12px 22px;box-shadow:0 12px 28px #3b82f64d}
+.b1{right:6px;top:118px;border-radius:22px 22px 22px 5px;transform:rotate(6deg)}
+.b2{left:6px;top:205px;border-radius:22px 22px 5px 22px;transform:rotate(-6deg)}
+.b3{right:30px;top:478px;border-radius:22px 22px 5px 22px;transform:rotate(-4deg)}
+.spk{position:absolute;z-index:7;color:#60a5fa;animation:tw 3s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.3;scale:.7}50%{opacity:1;scale:1.2}}
+@media(max-width:1350px){.stack{zoom:.82}}
+@media(max-width:1150px){.stack{zoom:.66}}
+@media(prefers-reduced-motion:reduce){.fl,.spk,.orbit,.globe svg{animation:none}}
+@media(max-width:860px){#auth{grid-template-columns:1fr}.rp{display:none}}
+
+/* ===== Template mới: header cố định + sidebar + Light/Dark ===== */
+.wrap{max-width:none;padding:0}
+#app{position:fixed;inset:0;z-index:1;display:flex;flex-direction:column;background:var(--bg);color:var(--tx);font-family:Hind,system-ui,sans-serif}
+#app .top{display:flex;align-items:center;gap:12px;background:var(--card);border-bottom:1px solid var(--bd2);padding:10px 18px}
+#app .lg{width:30px;height:30px;border-radius:8px;background:var(--pr);color:#fff;display:grid;place-items:center}
+#app .top #gSearch{flex:1;max-width:420px;border-radius:99px;background:var(--bg);border:2px solid transparent}
+#app .tr{margin-left:auto;display:flex;align-items:center;gap:10px;font-weight:600}
+#app .av{width:32px;height:32px;border-radius:50%;background:#ffcd1f;color:#282e3e;display:grid;place-items:center;font-weight:700}
+#app .bodyw{flex:1;display:flex;min-height:0;position:relative}
+#app .sb{width:250px;flex:none;overflow:auto;background:var(--card);border-right:1px solid var(--bd2);padding:12px;display:flex;flex-direction:column;gap:2px}
+#app .si{background:none;color:var(--tx);text-align:left;font-weight:600;padding:10px 12px;border-radius:10px;box-shadow:none;width:100%}
+#app .si:hover{background:var(--bg)}
+#app .si.on{background:var(--sel);color:var(--pr)}
+#app .sl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);margin:16px 12px 6px}
+#app .pg{flex:1;overflow:auto;padding:28px 24px 60px}
+#app .in{max-width:960px;margin:0 auto}
+#app h1{font-size:30px;font-weight:700;margin:0 0 18px}
+#app h2{font-size:20px;font-weight:700;margin:0}
+#app .sh{margin:28px 0 12px}
+#app .mu{color:var(--mu);font-size:14px}
+#app .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:12px}
+#app .stat{background:var(--card);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:4px;color:var(--mu);font-weight:600}
+#app .stat b{font-size:32px;color:var(--tx)}
+#app .sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+#app .sc{background:var(--card);border:2px solid transparent;border-radius:14px;padding:18px;cursor:pointer;transition:.2s}
+#app .sc:hover{border-color:var(--pr);transform:translateY(-3px)}
+#app .sc h3{margin:0 0 6px;font-size:18px}
+#app .sc .bar{margin-top:12px}
+#app .pr{display:flex;align-items:center;gap:12px;margin:8px 0}
+#app .pr span:first-child{width:160px;font-weight:600}
+#app .pr .bar{flex:1;margin:0}
+#app .panel{background:var(--card);border-radius:14px;padding:18px;margin:18px 0}
+#app .lh2{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:26px 0 10px}
+#app input,#app select{border:2px solid var(--bd2);border-radius:10px;padding:10px 14px;background:var(--card);color:var(--tx)}
+#app input:focus,#app select:focus{outline:none;border-color:var(--pr)}
+#app input[type=checkbox]{width:20px;height:20px;padding:0;accent-color:#23b26d}
+#app button{background:var(--pr);color:#fff;border-radius:10px;padding:10px 18px;font-weight:700;transition:filter .2s}
+#app button:hover{filter:brightness(.92)}
+#app button.sec{background:var(--bd2);color:var(--tx)}
+#app button.del{background:none;color:#e5484d;padding:4px 10px}
+#app .fcv{perspective:1200px}
+#app .fcard{position:relative;height:380px;cursor:pointer;transform-style:preserve-3d;transition:transform .5s}
+#app .fcard.flip{transform:rotateX(180deg)}
+#app .face{position:absolute;inset:0;background:var(--card);border-radius:16px;box-shadow:0 2px 10px #0002;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+#app .face.bk{transform:rotateX(180deg)}
+#app .face .ft{font-size:42px;font-weight:600}
+#app .face .fr{font-size:20px;color:var(--pr)}
+#app .face .fm{font-size:34px;font-weight:500}
+#app .hint{position:absolute;top:16px;left:20px;color:var(--mu);font-size:14px;font-weight:600}
+#app .fctl{display:flex;justify-content:center;align-items:center;gap:14px;margin:18px 0 10px;font-weight:700;flex-wrap:wrap}
+#app .modes{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+#app .modes button,#app .qo button,#app .mg button{background:var(--card);color:var(--tx);border:2px solid var(--bd)}
+#app .modes button.on{background:var(--pr);color:#fff;border-color:var(--pr)}
+#app .qh{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-bottom:14px;gap:10px}
+#app .qq{font-size:28px;font-weight:600;text-align:center;margin:24px 0}
+#app .qo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#app .qo button{text-align:left;padding:16px}
+#app .qo button.ok{background:var(--okbg);border-color:#23b26d}
+#app .qo button.no{background:var(--nobg);border-color:#e5484d}
+#app .mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+#app .mg button{min-height:80px}
+#app .mg button.sel{border-color:var(--pr);background:var(--sel)}
+#app .mg button.gone{visibility:hidden}
+#app table{border-collapse:separate;border-spacing:0 8px}
+#app th{border:0;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);padding:4px 12px}
+#app tbody td{background:var(--card);border:0;padding:16px 12px;color:var(--tx)}
+#app td:first-child{border-radius:10px 0 0 10px;width:52px;text-align:center}
+#app td:last-child{border-radius:0 10px 10px 0;width:50px}
+#app td:nth-child(2){font-weight:600;font-size:17px}
+#app td:nth-child(3){color:var(--pr)}
+#app tr.done td{background:var(--done)}
+#app td[contenteditable]:focus{outline:2px solid var(--pr);background:var(--sel)}
+#app #stat{color:var(--mu)!important;font-weight:600}
+.bar{height:6px;background:var(--bd);border-radius:99px;overflow:hidden;margin:10px 0}
+.bar i{display:block;height:100%;width:0;background:#23b26d;border-radius:99px;transition:width .5s}
+#modal{position:fixed;inset:0;z-index:50;background:#0008;display:grid;place-items:center}
+#modal .mbox{background:var(--card);border-radius:16px;padding:24px;width:min(440px,92vw);display:flex;flex-direction:column;gap:12px}
+#modal .mact{display:flex;justify-content:flex-end;gap:10px}
+#menu{display:none}
+@media(max-width:860px){#menu{display:block}#app .sb{position:absolute;z-index:5;top:0;bottom:0;left:-270px;transition:left .25s}#app .sb.open{left:0;box-shadow:4px 0 20px #0004}#app .brand{display:none}#app .qo{grid-template-columns:1fr}#app .pr span:first-child{width:90px}}
+/* ===== Template kiểu "không gian học tập": đỏ rượu + kem ===== */
+html{--bg:#fdf8f6;--card:#fff;--tx:#2a1f22;--mu:#7b6b6f;--bd:#ecd9dc;--bd2:#f3e6e8;--pr:#7f1d2d;--sel:#fbeef0;--done:#f3faf5;--okbg:#d9f5e6;--nobg:#fdecef;--side:#fffaf8}
+html[data-theme=dark]{--bg:#1c1114;--card:#2a1a1e;--tx:#f8eef0;--mu:#c9a9ae;--bd:#4a2d33;--bd2:#3a2227;--pr:#e0566b;--sel:#3d2229;--done:#10302a;--okbg:#10382a;--nobg:#3f1d25;--side:#231619}
+#app{flex-direction:row}
+#app .sb{width:270px;background:var(--side);padding:22px 18px 16px;gap:4px}
+#app .brand2{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+#app .lg2{width:44px;height:44px;border-radius:12px;background:var(--pr);color:#fff;display:grid;place-items:center;font-weight:800}
+#app .brand2 b{display:block;font-size:20px;letter-spacing:.02em;color:var(--pr)}
+#app .brand2 span{font-size:12px;letter-spacing:.2em;color:var(--mu);font-weight:600}
+#app .si{border-left:3px solid transparent;border-radius:12px;padding:12px 14px}
+#app .si.on{background:var(--sel);border-left-color:var(--pr)}
+#app .sfoot{margin-top:auto;padding-top:14px;display:flex;flex-direction:column;gap:12px}
+#app .curc{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;cursor:pointer}
+#app .curc b{display:block;color:var(--pr);margin:4px 0 2px}
+#app .prof{display:flex;align-items:center;gap:12px;border-top:1px solid var(--bd2);padding-top:12px}
+#app .prof b{display:block}
+#app .prof span.mu,#app .prof div span{color:var(--mu);font-size:13px}
+#app .av{background:var(--sel);color:var(--pr);width:40px;height:40px}
+#app .in{max-width:1280px}
+#app .topr{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-bottom:8px}
+#app .eb{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pr)}
+#app a{color:var(--pr);font-weight:700;cursor:pointer}
+#app .hero{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+#app .hero h1{margin:4px 0 6px;font-size:36px}
+#app button.big{padding:14px 22px;box-shadow:0 8px 18px #7f1d2d40}
+#app .panel{border:1px solid var(--bd2)}
+#app .dg{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(280px,1fr);gap:24px;align-items:start}
+#app .rcol{display:flex;flex-direction:column;gap:6px}
+#app .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+#app .mini div{background:var(--card);border:1px solid var(--bd2);border-radius:14px;padding:14px;font-size:13px;color:var(--mu);display:flex;flex-direction:column;gap:2px}
+#app .mini b{font-size:28px;color:var(--tx)}
+#app .ph{display:flex;justify-content:space-between;align-items:center}
+#app .warn{background:var(--nobg);color:var(--pr);font-weight:700;font-size:13px;border-radius:10px;padding:8px 12px;margin:12px 0}
+#app .tg{display:grid;grid-template-columns:44px 1fr minmax(120px,240px) 60px;gap:10px;align-items:center;padding:12px 14px}
+#app .tgh{background:var(--bg);border-radius:10px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--mu);text-transform:uppercase}
+#app .tgr{border-left:3px solid #23b26d;border-bottom:1px solid var(--bd2);cursor:pointer;margin-top:4px}
+#app .tgr:hover{background:var(--sel)}
+#app .tgr.low{border-left-color:var(--pr);background:var(--nobg)}
+#app .ini{width:34px;height:34px;border-radius:50%;background:var(--sel);color:var(--pr);display:inline-grid;place-items:center;font-weight:800;font-size:12px;margin-right:10px}
+#app .pg2 .bar{margin:0 0 4px}
+#app .pc{color:var(--pr);text-align:right}
+#app .todo{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border-radius:12px;background:var(--bg);margin-top:10px;cursor:pointer}
+#app .chip{background:#fff3cd;color:#8a6d00;font-size:12px;font-weight:700;border-radius:99px;padding:3px 10px;white-space:nowrap}
+#app .lastc{background:linear-gradient(135deg,var(--card),var(--sel))}
+#app .lastc h3{margin:6px 0 4px;font-size:20px}
+@media(max-width:1100px){#app .dg{grid-template-columns:1fr}}
+@media(max-width:600px){#app .tg{grid-template-columns:28px 1fr 50px}#app .pg2{display:none}#app .mini{grid-template-columns:1fr}}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="wrap">
+
+<section id="auth">
+  <div class="lp">
+    <div class="lh">
+      <div class="brand"><div class="logo"><svg viewBox="0 0 40 40" width="30" height="30" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="22" height="26" rx="5" fill="#ffffff66" transform="rotate(-12 16 22)"/><g transform="rotate(8 23 20)"><rect x="11" y="6" width="24" height="28" rx="5" fill="#fff"/><path d="M17 13L23 27L29 13" stroke="#2563eb" stroke-width="4"/></g></svg></div>VOCAB SPACE</div>
+      <div id="ui"><button data-u="vi" class="on">VI</button><button data-u="en">EN</button></div>
+    </div>
+    <div class="formwrap">
+      <h1 data-i="wel"></h1>
+      <p class="sub" data-i="sub"></p>
+      <label for="email" data-i="lu"></label>
+      <input id="email" type="text" autocomplete="username" autocapitalize="none">
+      <label for="pass" data-i="lp"></label>
+      <div class="pw"><input id="pass" type="password" autocomplete="current-password"><button type="button" id="eye" aria-label="show/hide">&#128065;</button></div>
+      <button id="login"><span data-i="btn"></span> <span>&rarr;</span></button>
+      <div class="err" id="authErr"></div>
+      <p class="help" data-i="help"></p>
+    </div>
+    <footer data-i="foot"></footer>
+  </div>
+  <div class="rp">
+    <div class="rbody">
+      <h2 class="big"><span data-i="h1"></span><br><span data-i="h2"></span></h2>
+      <p class="hs" data-i="hs"></p>
+      <div class="stack">
+        <div class="gh g1">文A</div>
+        <div class="gh g3">àèù</div>
+        <div class="orbit"><i class="sat s1"></i><i class="sat s2"></i></div>
+        <div class="globe"><svg viewBox="0 0 40 40" fill="none" stroke="#fff" stroke-width=".6"><circle cx="20" cy="20" r="19.5"/><ellipse cx="20" cy="20" rx="7" ry="19.5"/><ellipse cx="20" cy="20" rx="14" ry="19.5"/><path d="M.5 20h39M3 10h34M3 30h34"/></svg></div>
+        <div class="fc c1"><div class="tg">中文</div><div><div class="w">你好</div><div class="r">nǐ hǎo</div><div class="m" data-i="m1"></div></div><span class="ok">&#10003;</span></div>
+        <div class="fc c2"><div class="tg">EN</div><div><div class="w">serendipity</div><div class="r">/ˌserənˈdɪpəti/</div><div class="m" data-i="m2"></div></div></div>
+        <div class="fc c3"><div class="tg">IT</div><div><div class="w">grazie</div><div class="r">/ˈɡrattsje/</div><div class="m" data-i="m3"></div></div><span class="ok">&#10003;</span></div>
+        <div class="fl tr" style="animation-delay:-1s">文A</div>
+        <div class="fl bub b1" style="animation-delay:-2s">Ciao!</div>
+        <div class="fl bub b2" style="animation-delay:-4s">谢谢</div>
+        <div class="fl bub b3" style="animation-delay:-3s">Hello!</div>
+        <span class="spk" style="top:4px;left:300px;font-size:26px">&#10022;</span>
+        <span class="spk" style="top:330px;right:-8px;font-size:20px;animation-delay:-1s">&#10022;</span>
+        <span class="spk" style="top:300px;left:-6px;font-size:18px;animation-delay:-2s">&#10022;</span>
+        <span class="spk" style="top:540px;left:420px;font-size:22px;animation-delay:-1.5s">&#10022;</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="app" hidden>
+<aside class="sb" id="side">
+  <div class="brand2"><span class="lg2">VS</span><div><b>VOCAB SPACE</b><span>LEARNING JOURNEY</span></div></div>
+  <button class="si" data-p="dash">⌂ Tổng quan</button><button class="si" data-p="lib">▤ Thư viện</button><button class="si" data-p="cfg">⚙ Cài đặt</button>
+  <div class="sl">Bộ thẻ của bạn</div><div id="sideSets"></div><button class="si" id="sNew">＋ Bộ thẻ mới</button>
+  <div class="sfoot"><div class="curc" id="curCard"></div><div class="prof"><span class="av" id="av"></span><div><b id="who"></b><span>Học viên</span></div></div></div>
+</aside>
+<div class="pg">
+<div class="topr"><button id="menu" class="sec">☰</button><span style="flex:1"></span><button id="newBtn">＋ Tạo bộ thẻ</button><button id="theme" class="sec">🌙</button><button id="logout" class="sec">Đăng xuất</button></div>
+<div class="in">
+<section id="pDash">
+  <div class="hero"><div><div class="eb">Không gian học tập của bạn</div><h1>Xin chào, <span id="dHi"></span>!</h1><div class="mu">Hôm nay, bạn muốn học bộ thẻ nào?</div></div><button id="goStudy" class="big">→ Vào học</button></div>
+  <div class="dg">
+    <div class="panel"><div class="eb">Tiến độ theo bộ thẻ</div><h3 id="dSub" style="margin:6px 0 0"></h3><div class="warn" id="dWarn"></div><div id="dTab"></div></div>
+    <div class="rcol"><div class="mini" id="dStats"></div>
+      <div class="panel"><div class="ph"><h2>Từ cần ôn</h2><a id="seeAll">Xem tất cả →</a></div><div class="mu">Những từ chưa thuộc gần đây.</div><div id="dTodo"></div></div>
+      <h2 class="sh">Bộ thẻ gần đây</h2><div class="panel lastc" id="dLast"></div></div>
+  </div>
+</section>
+<section id="pLib" hidden><div class="lh2" style="margin-top:0"><h1 style="margin:0">Thư viện</h1><input id="gSearch" placeholder="Tìm bộ thẻ" style="margin-left:auto"><select id="sort"><option value="new">Mới nhất</option><option value="name">Tên A–Z</option><option value="prog">Mức độ học</option></select></div><div class="sg" id="lGrid"></div></section>
+<section id="pCfg" hidden><h1>Cài đặt</h1>
+  <div class="panel"><h2>Giao diện</h2><p><select id="themeSel"><option value="light">Sáng</option><option value="dark">Tối</option></select></p></div>
+  <div class="panel"><h2>Tài khoản</h2><p>Tên đăng nhập: <b id="cfgWho"></b></p><button id="logout2" class="sec">Đăng xuất</button></div></section>
+<section id="pSet" hidden>
+  <div class="lh2" style="margin-top:0"><div><h1 id="setName" style="margin:0"></h1><div class="mu" id="setDesc"></div></div><div id="setAct" style="margin-left:auto;display:flex;gap:8px"><button id="sRename" class="sec">Đổi tên</button><button id="sDel" class="del">Xóa bộ</button></div></div>
+
+  <div class="modes" id="modes"><button data-m="fc" class="on">Thẻ ghi nhớ</button><button data-m="learn">Học</button><button data-m="test">Kiểm tra</button><button data-m="match">Ghép thẻ</button></div>
+  <div class="fcv" id="mFc">
+    <div class="fcard" id="fcard">
+      <div class="face"><span class="hint">Bấm để lật</span><div class="ft" id="fT"></div><div class="fr" id="fR"></div></div>
+      <div class="face bk"><div class="fm" id="fM"></div></div>
+    </div>
+    <div class="fctl"><button id="fprev" class="sec">←</button><span id="fcnt"></span><button id="fnext" class="sec">→</button><button id="fshuf" class="sec">🔀 Trộn</button><button id="fknow"></button></div>
+    <div class="bar"><i id="barfill"></i></div>
+  </div>
+  <div id="mQuiz" hidden class="panel"><div class="qh" id="qHead"></div><div id="qBody"></div></div>
+  <div id="mMatch" hidden class="panel"><div class="qh"><span id="mTime">Chọn Bắt đầu</span><button id="mStart">Bắt đầu</button></div><div class="mg" id="mGrid"></div></div>
+  <div class="lh2" id="listTop"><h2>Thuật ngữ</h2><span id="stat"></span><input id="search" placeholder="Tìm trong bộ này">
+    <select id="filter" style="margin-left:auto"><option value="all">Tất cả</option><option value="no">Đang học</option><option value="yes">Đã thuộc</option></select>
+    <button id="imp" class="sec">Import Excel/CSV</button>
+    <input id="file" type="file" accept=".xlsx,.xls,.csv,.txt" hidden>
+    <button id="expCsv" class="sec">Xuất CSV</button>
+    <button id="expKnowt" class="sec">Sao chép cho Knowt</button>
+  </div>
+  <div class="panel">
+    <div class="row" style="margin:0">
+      <input id="nTerm" placeholder="Thuật ngữ">
+      <input id="nRead" placeholder="Pinyin / phiên âm (tự tạo cho tiếng Trung)">
+      <input id="nMean" placeholder="Định nghĩa">
+      <button id="add">Thêm</button>
+    </div>
+    <div class="err" id="msg"></div>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Thuộc</th><th>Thuật ngữ</th><th>Phiên âm</th><th>Định nghĩa</th><th></th></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+  <p style="color:#586380;font-size:13px">Bấm vào ô để sửa trực tiếp; tự lưu khi bạn bấm ra ngoài. Import: cột 1 = từ, cột 2 = phiên âm, cột 3 = nghĩa. Phím ← → để chuyển thẻ, phím cách để lật.</p>
+
+</section>
+</div></div>
+<div id="modal" hidden><div class="mbox"><h2>Tạo bộ thẻ mới</h2><input id="sName" placeholder="Tên bộ thẻ"><input id="sDesc" placeholder="Mô tả (tuỳ chọn)"><div class="mact"><button id="sCancel" class="sec">Hủy</button><button id="sOk">Tạo</button></div></div></div>
+</main>
+</div>
+
+<script>
+const T={
+vi:{h1:"Học từ mới,",h2:"nhớ thật lâu.",hs:"Mỗi ngày một từ, một bước xa hơn.",m1:"xin chào",m2:"tình cờ gặp điều may",m3:"cảm ơn",sub:"QUẢN LÝ TỪ VỰNG",kick:"VOCAB SPACE · KHÔNG GIAN TỪ VỰNG CỦA BẠN",jt:"MY VOCAB JOURNEY",q1:"One new word.",q2:"A wider world.",qs:"Mỗi ngày một từ, một bước xa hơn.",f1:"◇ Ba ngôn ngữ",f2:"▣ Theo dõi từ đã thuộc",f3:"⇪ Import Excel / CSV",wel:"CHÀO MỪNG TRỞ LẠI",lu:"Tên đăng nhập",lp:"Mật khẩu",btn:"Đăng nhập",help:"Chưa có tài khoản hoặc quên mật khẩu? Liên hệ quản trị viên.",ct:"VOCAB SPACE",cs:"Học một chút mỗi ngày, nhớ thật lâu.",foot:"Vocab Space · Learn a little, remember a lot.",pu:"Tên đăng nhập",pp:"Nhập mật khẩu",wel:"Chào mừng trở lại",sub:"Đăng nhập để quản lý từ vựng của bạn."},
+en:{h1:"Learn new words,",h2:"remember them longer.",hs:"One word a day, one step further.",m1:"hello",m2:"a happy accident",m3:"thank you",sub:"VOCABULARY MANAGER",kick:"VOCAB SPACE · YOUR WORD SPACE",jt:"MY VOCAB JOURNEY",q1:"One new word.",q2:"A wider world.",qs:"One word a day, one step further.",f1:"◇ Three languages",f2:"▣ Track learned words",f3:"⇪ Excel / CSV import",wel:"WELCOME BACK",lu:"Username",lp:"Password",btn:"Sign in",help:"No account or forgot your password? Contact your administrator.",ct:"VOCAB SPACE",cs:"A little each day, remembered for a long time.",foot:"Vocab Space · Learn a little, remember a lot.",pu:"Username",pp:"Enter password",wel:"Welcome back",sub:"Sign in to manage your vocabulary."}};
+window.curLang=localStorage.getItem("ui")||"vi";
+function setUi(l){
+  window.curLang=l;try{localStorage.setItem("ui",l)}catch(e){}
+  document.documentElement.lang=l;
+  document.querySelectorAll("#auth [data-i]").forEach(e=>e.textContent=T[l][e.dataset.i]);
+  document.getElementById("email").placeholder=T[l].pu;
+  document.getElementById("pass").placeholder=T[l].pp;
+  document.querySelectorAll("#ui button").forEach(b=>b.classList.toggle("on",b.dataset.u===l));
+}
+document.querySelectorAll("#ui button").forEach(b=>b.onclick=()=>setUi(b.dataset.u));
+document.getElementById("eye").onclick=()=>{const i=document.getElementById("pass");i.type=i.type==="password"?"text":"password"};
+setUi(window.curLang);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.19.6/dist/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,collection,addDoc,doc,updateDoc,deleteDoc,onSnapshot,query,orderBy,writeBatch} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ====== DÁN CẤU HÌNH FIREBASE CỦA BẠN VÀO ĐÂY ======
+const firebaseConfig = {
+  apiKey: "AIzaSyAzpF7oxcCE11zauUIRc4EMLQloyoDIQOI",
+  authDomain: "web-vocab---felix.firebaseapp.com",
+  projectId: "web-vocab---felix",
+  storageBucket: "web-vocab---felix.firebasestorage.app",
+  messagingSenderId: "557802654072",
+  appId: "1:557802654072:web:01ef69e47bbd75096ca08d"
+};
+// ==================================================
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const $ = id => document.getElementById(id);
+
+let uid = null, lang = "zh", words = [], unsub = null, fi = 0, rk = null, cur = "", sets = [], page = "dash", unsub2 = null;
+const col = () => collection(db, "users", uid, "words");
+const isZh = t => /[\u4e00-\u9fff]/.test(t);
+const autoPinyin = t => (isZh(t) && window.pinyinPro) ? pinyinPro.pinyin(t) : "";
+const say = (t, el = "msg") => { $(el).textContent = t; };
+
+// ---------- Đăng nhập ----------
+const toEmail = u => u.trim().toLowerCase() + "@myvocab.com";
+async function doAuth(fn) {
+  try { say("", "authErr"); await fn(auth, toEmail($("email").value), $("pass").value); }
+  catch (e) {
+    const bad = /invalid-credential|user-not-found|wrong-password|invalid-email/.test(e.code || "");
+    say(bad ? (window.curLang === "en" ? "Wrong username or password." : "Sai tên đăng nhập hoặc mật khẩu.") : (e.code || e.message), "authErr");
+  }
+}
+$("login").onclick = () => doAuth(signInWithEmailAndPassword);
+["email", "pass"].forEach(i => { $(i).onkeydown = e => { if (e.key === "Enter") $("login").click(); }; });
+$("logout").onclick = () => signOut(auth);
+
+onAuthStateChanged(auth, user => {
+  if (unsub) { unsub(); unsub = null; } if (unsub2) { unsub2(); unsub2 = null; }
+  uid = user ? user.uid : null;
+  $("auth").hidden = !!user;
+  $("app").hidden = !user;
+  if (!user) { words = []; sets = []; return; }
+  $("who").textContent = (user.email || "").split("@")[0];
+  $("av").textContent = ($("who").textContent || "?")[0].toUpperCase();
+  $("cfgWho").textContent = $("who").textContent; go("dash");
+  unsub = onSnapshot(query(col(), orderBy("createdAt", "desc")), snap => {
+    words = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderAll();
+  }, e => say("Lỗi tải dữ liệu: " + e.code));
+  unsub2 = onSnapshot(collection(db, "users", uid, "sets"), snap => { sets = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderAll(); }, e => say("Lỗi tải bộ thẻ: " + e.code));
+});
+
+// ---------- Hiển thị ----------
+function visible() {
+  const q = $("search").value.trim().toLowerCase(), f = $("filter").value;
+  return scope().filter(w => (f === "all" || (f === "yes") === !!w.learned)
+    && (!q || [w.term, w.reading, w.meaning].join(" ").toLowerCase().includes(q)));
+}
+
+function cell(w, field) {
+  const td = document.createElement("td");
+  td.contentEditable = "true";
+  td.textContent = w[field] || "";
+  td.onblur = async () => {
+    const v = td.textContent.trim();
+    if (v === (w[field] || "")) return;
+    const data = { [field]: v };
+    if (field === "term" && !w.reading) { const p = autoPinyin(v); if (p) data.reading = p; }
+    try { await updateDoc(doc(db, "users", uid, "words", w.id), data); }
+    catch (e) { say("Lưu thất bại: " + e.code); }
+  };
+  td.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); td.blur(); } };
+  return td;
+}
+
+function render() {
+  const list = visible(), body = $("body");
+  body.innerHTML = "";
+  for (const w of list) {
+    const tr = document.createElement("tr");
+    if (w.learned) tr.className = "done";
+    const c = document.createElement("td");
+    const cb = document.createElement("input");
+    cb.type = "checkbox"; cb.checked = !!w.learned;
+    cb.onchange = () => updateDoc(doc(db, "users", uid, "words", w.id), { learned: cb.checked });
+    c.appendChild(cb);
+    const d = document.createElement("td");
+    const b = document.createElement("button");
+    b.className = "del"; b.textContent = "✕";
+    b.onclick = () => confirm("Xóa từ này?") && deleteDoc(doc(db, "users", uid, "words", w.id));
+    d.appendChild(b);
+    tr.append(c, cell(w, "term"), cell(w, "reading"), cell(w, "meaning"), d);
+    body.appendChild(tr);
+  }
+  const all = scope();
+  $("barfill").style.width = (all.length ? 100 * all.filter(w => w.learned).length / all.length : 0) + "%";
+  fcRender();
+  $("stat").textContent = `Đã thuộc ${all.filter(w => w.learned).length}/${all.length} từ · đang hiển thị ${list.length}`;
+}
+
+document.querySelectorAll("#langs button").forEach(b => b.onclick = () => {
+  lang = b.dataset.l;
+  document.querySelectorAll("#langs button").forEach(x => x.classList.toggle("on", x === b));
+  render();
+});
+$("search").oninput = render;
+$("filter").onchange = render;
+
+// ---------- Thêm từ ----------
+$("nTerm").oninput = () => { if (!$("nRead").dataset.manual) $("nRead").value = autoPinyin($("nTerm").value); };
+$("nRead").oninput = () => { $("nRead").dataset.manual = $("nRead").value ? "1" : ""; };
+$("add").onclick = async () => {
+  const term = $("nTerm").value.trim();
+  if (!term) return;
+  try {
+    await addDoc(col(), {
+      setId: cur, lang: isZh(term) ? "zh" : "en", term, reading: $("nRead").value.trim() || autoPinyin(term),
+      meaning: $("nMean").value.trim(), learned: false, createdAt: Date.now()
+    });
+    ["nTerm", "nRead", "nMean"].forEach(i => { $(i).value = ""; });
+    $("nRead").dataset.manual = ""; $("nTerm").focus(); say("");
+  } catch (e) { say("Thêm thất bại: " + e.code); }
+};
+$("nMean").onkeydown = e => { if (e.key === "Enter") $("add").click(); };
+
+// ---------- Import ----------
+$("imp").onclick = () => $("file").click();
+$("file").onchange = async e => {
+  const f = e.target.files[0]; e.target.value = "";
+  if (!f) return;
+  try {
+    const wb = /\.(csv|txt)$/i.test(f.name)
+      ? XLSX.read(await f.text(), { type: "string" })
+      : XLSX.read(await f.arrayBuffer(), { type: "array" });
+    let rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: "" })
+      .map(r => r.map(x => String(x).trim())).filter(r => r[0]);
+    if (rows.length && /^(term|word|từ|từ vựng|hanzi|词)$/i.test(rows[0][0])) rows.shift();
+    if (!rows.length) return say("File không có dữ liệu.");
+    if (!confirm(`Import ${rows.length} từ vào danh sách?`)) return;
+    let t = Date.now();
+    for (let i = 0; i < rows.length; i += 400) {
+      const batch = writeBatch(db);
+      rows.slice(i, i + 400).forEach(r => batch.set(doc(col()), {
+        setId: cur, lang: isZh(r[0]) ? "zh" : "en", term: r[0], reading: r[1] || autoPinyin(r[0]), meaning: r[2] || "",
+        learned: false, createdAt: t--
+      }));
+      await batch.commit();
+    }
+    say(`Đã import ${rows.length} từ.`);
+  } catch (e) { say("Import thất bại: " + (e.code || e.message)); }
+};
+
+// ---------- Xuất ----------
+$("expCsv").onclick = () => {
+  const q = s => '"' + String(s || "").replace(/"/g, '""') + '"';
+  const csv = "\uFEFF" + visible().map(w => [w.term, w.reading, w.meaning, w.learned ? 1 : 0].map(q).join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = "tuvung.csv"; a.click();
+};
+$("expKnowt").onclick = async () => {
+  const txt = visible().map(w => `${w.term}\t${w.meaning}`).join("\n");
+  try { await navigator.clipboard.writeText(txt); say("Đã sao chép. Dán vào phần Import của Knowt (phân cách Tab, dòng mới giữa các thẻ)."); }
+  catch { say("Trình duyệt chặn clipboard."); }
+};
+
+// ---------- Thẻ ghi nhớ ----------
+const deck = () => { const d = visible(); if (rk) d.sort((a, b) => (rk[a.id] ?? 0) - (rk[b.id] ?? 0)); return d; };
+function fcRender() {
+  const d = deck(); if (fi >= d.length) fi = Math.max(0, d.length - 1);
+  const w = d[fi];
+  $("fcard").classList.remove("flip");
+  $("fT").textContent = w ? w.term : "Chưa có từ nào";
+  $("fR").textContent = w ? (w.reading || "") : "";
+  $("fM").textContent = w ? (w.meaning || "—") : "";
+  $("fcnt").textContent = d.length ? `${fi + 1} / ${d.length}` : "0 / 0";
+  $("fknow").textContent = w && w.learned ? "✓ Đã thuộc" : "Đánh dấu đã thuộc";
+}
+$("fcard").onclick = () => $("fcard").classList.toggle("flip");
+$("fprev").onclick = () => { const n = deck().length; if (n) { fi = (fi - 1 + n) % n; fcRender(); } };
+$("fnext").onclick = () => { const n = deck().length; if (n) { fi = (fi + 1) % n; fcRender(); } };
+$("fshuf").onclick = () => { rk = {}; scope().forEach(w => { rk[w.id] = Math.random(); }); fi = 0; fcRender(); };
+$("fknow").onclick = () => { const w = deck()[fi]; if (w) updateDoc(doc(db, "users", uid, "words", w.id), { learned: !w.learned }); };
+document.addEventListener("keydown", e => {
+  if ($("app").hidden || /INPUT|SELECT|TD/.test(document.activeElement.tagName)) return;
+  if (e.key === "ArrowRight") $("fnext").click();
+  else if (e.key === "ArrowLeft") $("fprev").click();
+  else if (e.key === " ") { e.preventDefault(); $("fcard").click(); }
+});
+
+// ---------- Chế độ học: Học / Kiểm tra / Ghép thẻ ----------
+const shuf = a => a.map(x => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map(p => p[1]);
+const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+const norm = s => s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+let Q = null, M = null;
+function setMode(m) {
+  document.querySelectorAll("#modes button").forEach(b => b.classList.toggle("on", b.dataset.m === m));
+  $("mFc").hidden = m !== "fc"; $("mQuiz").hidden = !(m === "learn" || m === "test"); $("mMatch").hidden = m !== "match";
+  if (m === "learn" || m === "test") quizStart(m);
+  if (m === "match") { clearInterval(M && M.t); M = null; $("mGrid").innerHTML = ""; $("mTime").textContent = "Chọn Bắt đầu"; $("mStart").textContent = "Bắt đầu"; }
+}
+document.querySelectorAll("#modes button").forEach(b => b.onclick = () => setMode(b.dataset.m));
+function quizStart(m) {
+  const pool = scope().filter(w => w.meaning);
+  if (pool.length < 4) { Q = null; $("qHead").textContent = ""; $("qBody").textContent = "Cần ít nhất 4 từ có nghĩa để bắt đầu."; return; }
+  if (m === "learn") { const todo = shuf(pool.filter(w => !w.learned)); Q = { m, pool, queue: todo.length ? todo : shuf(pool), total: todo.length || pool.length }; }
+  else Q = { m, pool, list: shuf(pool).slice(0, Math.min(10, pool.length)), i: 0, score: 0, log: [] };
+  quizNext();
+}
+function mkQ(w, pool, kinds) {
+  const k = kinds[Math.floor(Math.random() * kinds.length)], others = shuf(pool.filter(x => x.id !== w.id));
+  if (k === "mc") return { w, q: w.term, opts: shuf([w, ...others.slice(0, 3)]).map(x => x.meaning), a: w.meaning };
+  if (k === "tf") { const t = Math.random() < .5; return { w, q: `${w.term} = ${(t ? w : others[0]).meaning}`, opts: ["Đúng", "Sai"], a: t ? "Đúng" : "Sai" }; }
+  return { w, q: w.term, a: w.meaning };
+}
+function quizNext() {
+  const body = $("qBody"), head = $("qHead"); body.innerHTML = "";
+  let w, q;
+  if (Q.m === "learn") {
+    if (!Q.queue.length) { head.textContent = "Hoàn thành!"; body.append(el("div", "qq", `Bạn đã học xong ${Q.total} từ.`), Object.assign(el("button", null, "Học lại"), { onclick: () => quizStart("learn") })); return; }
+    w = Q.queue[0]; q = mkQ(w, Q.pool, ["mc", "mc", "written"]); head.textContent = `Còn ${Q.queue.length} từ`;
+  } else {
+    if (Q.i >= Q.list.length) return quizEnd();
+    w = Q.list[Q.i]; q = mkQ(w, Q.pool, ["mc", "tf", "written"]); head.textContent = `Câu ${Q.i + 1} / ${Q.list.length}`;
+  }
+  body.append(el("div", "qq", q.q));
+  const fin = (ok, c) => {
+    if (Q.m === "learn") { Q.queue.shift(); if (ok) updateDoc(doc(db, "users", uid, "words", w.id), { learned: true }); else Q.queue.push(w); }
+    else { if (ok) Q.score++; Q.log.push({ t: w.term, a: q.a, ok }); Q.i++; }
+    body.append(el("div", "qq", ok ? "✓ Chính xác" : "✗ Đáp án: " + q.a), Object.assign(el("button", null, "Tiếp tục"), { onclick: quizNext }));
+  };
+  if (q.opts) {
+    const box = el("div", "qo");
+    q.opts.forEach(o => { const b = el("button", null, o); b.onclick = () => {
+      box.querySelectorAll("button").forEach(x => { x.disabled = true; if (x.textContent === q.a) x.classList.add("ok"); });
+      if (o !== q.a) b.classList.add("no"); fin(o === q.a); }; box.append(b); });
+    body.append(box);
+  } else {
+    const i = el("input"), b = el("button", null, "Kiểm tra"); i.placeholder = "Nhập định nghĩa"; i.style.width = "100%"; b.style.marginTop = "12px";
+    b.onclick = () => { i.disabled = b.disabled = true; fin(norm(i.value) === norm(q.a)); };
+    i.onkeydown = e => { if (e.key === "Enter") b.click(); };
+    body.append(i, b); i.focus();
+  }
+}
+function quizEnd() {
+  $("qHead").textContent = `Kết quả: ${Q.score} / ${Q.list.length}`;
+  const b = $("qBody"); b.innerHTML = "";
+  Q.log.forEach(r => { const d = el("div", "qq", `${r.ok ? "✓" : "✗"} ${r.t} → ${r.a}`); d.style.cssText = "font-size:18px;margin:8px 0;text-align:left"; b.append(d); });
+  b.append(Object.assign(el("button", null, "Làm lại"), { onclick: () => quizStart("test") }));
+}
+$("mStart").onclick = () => {
+  const pool = shuf(scope().filter(w => w.meaning)).slice(0, 6);
+  if (pool.length < 3) { $("mTime").textContent = "Cần ít nhất 3 từ có nghĩa"; return; }
+  clearInterval(M && M.t);
+  M = { left: pool.length, sel: null, t0: Date.now() };
+  M.t = setInterval(() => { $("mTime").textContent = ((Date.now() - M.t0) / 1000).toFixed(1) + "s"; }, 100);
+  const g = $("mGrid"); g.innerHTML = "";
+  shuf(pool.flatMap(w => [{ id: w.id, x: w.term }, { id: w.id, x: w.meaning }])).forEach(t => {
+    const b = el("button", null, t.x);
+    b.onclick = () => {
+      if (!M.sel) { M.sel = { b, id: t.id }; b.classList.add("sel"); return; }
+      if (M.sel.b === b) { b.classList.remove("sel"); M.sel = null; return; }
+      if (M.sel.id === t.id) {
+        M.sel.b.classList.add("gone"); b.classList.add("gone");
+        if (!--M.left) {
+          clearInterval(M.t); const s = (Date.now() - M.t0) / 1000; let best = s;
+          try { best = Math.min(+localStorage.getItem("matchBest") || 1e9, s); localStorage.setItem("matchBest", best); } catch (e) {}
+          $("mTime").textContent = `Hoàn thành: ${s.toFixed(1)}s · Kỷ lục ${best.toFixed(1)}s`;
+        }
+      } else M.sel.b.classList.remove("sel");
+      M.sel = null;
+    };
+    g.append(b);
+  });
+  $("mStart").textContent = "Chơi lại";
+};
+
+// ---------- Bộ thẻ, điều hướng, giao diện ----------
+const P = { dash: "pDash", lib: "pLib", set: "pSet", cfg: "pCfg" };
+const scope = () => words.filter(w => (w.setId || "") === cur);
+const stOf = id => { const a = words.filter(w => (w.setId || "") === id), l = a.filter(w => w.learned).length; return { n: a.length, l, p: a.length ? Math.round(100 * l / a.length) : 0 }; };
+const allSets = () => (words.some(w => !w.setId) ? [{ id: "", name: "Chưa phân loại", desc: "Các từ chưa thuộc bộ nào", createdAt: 0 }] : []).concat(sets);
+function go(p, id) {
+  if (id !== undefined) { cur = id; fi = 0; rk = null; setMode("fc"); }
+  page = p; $("side").classList.remove("open"); renderAll();
+}
+function fillSets(box, list) {
+  box.innerHTML = "";
+  if (!list.length) { box.textContent = "Chưa có bộ thẻ nào. Bấm ＋ Tạo để bắt đầu."; return; }
+  list.forEach(x => {
+    const s = stOf(x.id), c = el("div", "sc"), bar = el("div", "bar"), i = el("i"); i.style.width = s.p + "%"; bar.append(i);
+    c.append(el("h3", null, x.name), el("div", "mu", `${s.n} thuật ngữ · ${s.p}% đã thuộc`), el("div", "mu", x.desc || ""), bar);
+    c.onclick = () => go("set", x.id); box.append(c);
+  });
+}
+function renderAll() {
+  Object.entries(P).forEach(([k, v]) => { $(v).hidden = k !== page; });
+  const sl = allSets(), cs = sl.find(x => x.id === cur) || { name: "Bộ thẻ", desc: "" };
+  $("setName").textContent = cs.name; $("setDesc").textContent = cs.desc || ""; $("setAct").hidden = !cur;
+  document.querySelectorAll("#side [data-p]").forEach(b => b.classList.toggle("on", b.dataset.p === page));
+  const box = $("sideSets"); box.innerHTML = "";
+  sl.forEach(x => { const b = el("button", "si" + (page === "set" && x.id === cur ? " on" : ""), "📘 " + x.name); b.onclick = () => go("set", x.id); box.append(b); });
+  const t = words.length, l = words.filter(w => w.learned).length;
+  $("dHi").textContent = $("who").textContent;
+  $("dStats").replaceChildren(...[["Bộ thẻ", sets.length, "đang có"], ["Chưa thuộc", t - l, "từ cần học"], ["Đã thuộc", l, (t ? Math.round(100 * l / t) : 0) + "% tiến độ"]].map(([k, v, n]) => { const d = el("div", null, k); d.append(el("b", null, v), el("span", null, n)); return d; }));
+  const low = sl.filter(x => { const s = stOf(x.id); return s.n && s.p < 50; }).length;
+  $("dSub").textContent = `${sl.length} bộ thẻ · ${t} từ`;
+  $("dWarn").hidden = !low; $("dWarn").textContent = `⚠ ${low} bộ thẻ dưới 50% đã thuộc`;
+  const tb = $("dTab"); tb.innerHTML = "";
+  if (!sl.length) tb.textContent = "Chưa có bộ thẻ nào. Bấm ＋ Tạo bộ thẻ để bắt đầu.";
+  else { const h = el("div", "tg tgh"); h.append(el("span", null, "STT"), el("span", null, "Tên bộ thẻ"), el("span", "pg2", "Tiến độ"), el("span")); tb.append(h); }
+  sl.forEach((x, i) => {
+    const s = stOf(x.id), r = el("div", "tg tgr" + (s.n && s.p < 50 ? " low" : "")), nm = el("span"), pg = el("div", "pg2"), bar = el("div", "bar"), f = el("i");
+    f.style.width = s.p + "%"; bar.append(f); pg.append(bar, el("span", "mu", `${s.l}/${s.n} từ`));
+    nm.append(el("span", "ini", (x.name || "?").slice(0, 2).toUpperCase()), el("b", null, x.name));
+    r.append(el("span", null, i + 1), nm, pg, el("b", "pc", s.p + "%")); r.onclick = () => go("set", x.id); tb.append(r);
+  });
+  const td = $("dTodo"); td.innerHTML = "";
+  const todo = words.filter(w => !w.learned).slice(0, 3);
+  if (!todo.length) td.textContent = t ? "Bạn đã thuộc hết! 🎉" : "Chưa có từ nào.";
+  todo.forEach(w => { const r = el("div", "todo"), c = el("div"); c.append(el("b", null, w.term), el("div", "mu", w.meaning || "")); r.append(c, el("span", "chip", "Chờ học")); r.onclick = () => go("set", w.setId || ""); td.append(r); });
+  const lc = sl.slice().sort((a, b) => b.createdAt - a.createdAt)[0], dl = $("dLast"); dl.innerHTML = "";
+  if (lc) { const s = stOf(lc.id), a = el("a", null, "Mở bộ thẻ ↗"); a.onclick = () => go("set", lc.id); dl.append(el("div", "eb", "Bộ thẻ mới nhất"), el("h3", null, lc.name), el("div", "mu", `${s.n} thuật ngữ · ${s.p}% đã thuộc`), a); } else dl.textContent = "Chưa có bộ thẻ.";
+  const cc = sl.find(x => x.id === cur) || lc, cd = $("curCard"); cd.hidden = !cc; cd.innerHTML = "";
+  if (cc) { cd.append(el("div", "eb", "Bộ thẻ hiện tại"), el("b", null, cc.name), el("div", "mu", stOf(cc.id).n + " từ")); cd.onclick = () => go("set", cc.id); }
+  const q = norm($("gSearch").value), so = $("sort").value;
+  const lst = sl.filter(x => !q || norm(x.name + " " + (x.desc || "")).includes(q));
+  lst.sort(so === "name" ? (a, b) => a.name.localeCompare(b.name) : so === "prog" ? (a, b) => stOf(b.id).p - stOf(a.id).p : (a, b) => b.createdAt - a.createdAt);
+  fillSets($("lGrid"), lst);
+  render();
+}
+document.querySelectorAll("#side [data-p]").forEach(b => b.onclick = () => go(b.dataset.p));
+$("menu").onclick = () => $("side").classList.toggle("open");
+$("gSearch").oninput = () => page === "lib" ? renderAll() : go("lib");
+$("sort").onchange = renderAll;
+$("logout2").onclick = () => signOut(auth);
+const openM = () => { $("modal").hidden = false; $("sName").value = ""; $("sDesc").value = ""; $("sName").focus(); };
+$("newBtn").onclick = openM; $("sNew").onclick = openM;
+$("sCancel").onclick = () => { $("modal").hidden = true; };
+$("sName").onkeydown = e => { if (e.key === "Enter") $("sOk").click(); };
+$("sOk").onclick = async () => {
+  const n = $("sName").value.trim(); if (!n) return $("sName").focus();
+  $("modal").hidden = true;
+  try { const r = await addDoc(collection(db, "users", uid, "sets"), { name: n, desc: $("sDesc").value.trim(), createdAt: Date.now() }); go("set", r.id); }
+  catch (e) { say("Tạo bộ thất bại: " + e.code); }
+};
+$("sRename").onclick = async () => {
+  const x = sets.find(v => v.id === cur), n = x && prompt("Tên mới:", x.name);
+  if (n && n.trim()) try { await updateDoc(doc(db, "users", uid, "sets", cur), { name: n.trim() }); } catch (e) { say("Lưu thất bại: " + e.code); }
+};
+$("sDel").onclick = async () => {
+  const x = sets.find(v => v.id === cur); if (!x || !confirm(`Xóa bộ "${x.name}" và toàn bộ từ trong đó?`)) return;
+  try { const b = writeBatch(db); words.filter(w => w.setId === cur).forEach(w => b.delete(doc(db, "users", uid, "words", w.id))); b.delete(doc(db, "users", uid, "sets", cur)); await b.commit(); go("lib", ""); }
+  catch (e) { say("Xóa thất bại: " + e.code); }
+};
+$("goStudy").onclick = () => { const x = allSets().slice().sort((a, b) => b.createdAt - a.createdAt)[0]; if (x) go("set", x.id); else openM(); };
+$("seeAll").onclick = () => go("lib");
+function setTheme(t) { document.documentElement.dataset.theme = t; try { localStorage.setItem("theme", t); } catch (e) {} $("theme").textContent = t === "dark" ? "☀️" : "🌙"; $("themeSel").value = t; }
+$("theme").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+$("themeSel").onchange = () => setTheme($("themeSel").value);
+let th = "light"; try { th = localStorage.getItem("theme") || (matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light"); } catch (e) {}
+setTheme(th);
+</script>
+</body>
+</html>

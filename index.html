@@ -31,7 +31,7 @@ tr.done td{color:#888}
 
 <section id="auth" class="card" style="max-width:380px;margin:60px auto">
   <h2>Từ vựng của tôi</h2>
-  <div class="row"><input id="email" type="email" placeholder="Email"></div>
+  <div class="row"><input id="email" type="text" placeholder="Tên đăng nhập" autocomplete="username" autocapitalize="none"></div>
   <div class="row"><input id="pass" type="password" placeholder="Mật khẩu (≥ 6 ký tự)"></div>
   <div class="row"><button id="login">Đăng nhập</button></div>
   <p style="color:#889;font-size:13px">Chưa có tài khoản? Hãy liên hệ quản trị viên để được cấp.</p>
@@ -94,6 +94,8 @@ const firebaseConfig = {
   apiKey: "AIzaSyAzpF7oxcCE11zauUIRc4EMLQloyoDIQOI",
   authDomain: "web-vocab---felix.firebaseapp.com",
   projectId: "web-vocab---felix",
+  storageBucket: "web-vocab---felix.firebasestorage.app",
+  messagingSenderId: "557802654072",
   appId: "1:557802654072:web:01ef69e47bbd75096ca08d"
 };
 // ==================================================
@@ -109,8 +111,9 @@ const autoPinyin = t => (lang === "zh" && window.pinyinPro) ? pinyinPro.pinyin(t
 const say = (t, el = "msg") => { $(el).textContent = t; };
 
 // ---------- Đăng nhập ----------
+const toEmail = u => u.trim().toLowerCase() + "@tuvung.com";
 async function doAuth(fn) {
-  try { say("", "authErr"); await fn(auth, $("email").value.trim(), $("pass").value); }
+  try { say("", "authErr"); await fn(auth, toEmail($("email").value), $("pass").value); }
   catch (e) { say(e.code || e.message, "authErr"); }
 }
 $("login").onclick = () => doAuth(signInWithEmailAndPassword);
@@ -122,7 +125,7 @@ onAuthStateChanged(auth, user => {
   $("auth").hidden = !!user;
   $("app").hidden = !user;
   if (!user) { words = []; return; }
-  $("who").textContent = user.email;
+  $("who").textContent = (user.email || "").split("@")[0];
   unsub = onSnapshot(query(col(), orderBy("createdAt", "desc")), snap => {
     words = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     render();

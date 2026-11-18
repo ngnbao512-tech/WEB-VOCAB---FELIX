@@ -158,7 +158,18 @@ tr.done td{color:#888}
 <main id="app" hidden>
   <div class="row" style="justify-content:space-between">
     <h2 style="margin:0">Từ vựng của tôi</h2>
-    <span><span id="who"></span> <button id="logout" class="sec">Đăng xuất</button></span>
+    <span><span id="who"></span> <button id="adminBtn" class="sec" hidden>Quản lý tài khoản</button> <button id="logout" class="sec">Đăng xuất</button></span>
+  </div>
+
+  <div class="card" id="admin" hidden>
+    <h3 style="margin-top:0">Quản lý tài khoản</h3>
+    <div class="row">
+      <input id="aUser" placeholder="Tên đăng nhập mới" autocapitalize="none">
+      <input id="aPass" type="text" placeholder="Mật khẩu (≥ 6 ký tự)">
+      <button id="mkUser">Tạo tài khoản</button>
+    </div>
+    <div class="err" id="aMsg"></div>
+    <div id="members"></div>
   </div>
 
   <div class="card">
@@ -220,8 +231,8 @@ setUi(window.curLang);
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,collection,addDoc,doc,updateDoc,deleteDoc,onSnapshot,query,orderBy,writeBatch} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,collection,addDoc,setDoc,doc,updateDoc,deleteDoc,onSnapshot,query,orderBy,writeBatch} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ====== DÁN CẤU HÌNH FIREBASE CỦA BẠN VÀO ĐÂY ======
 const firebaseConfig = {
@@ -237,6 +248,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const ADMIN = "admin@tuvung.com";           // tài khoản admin: tên đăng nhập là "admin"
+const auth2 = getAuth(initializeApp(firebaseConfig, "creator")); // dùng riêng để tạo tài khoản, không làm admin bị đăng xuất
+let isAdmin = false, unsubM = null;
 const $ = id => document.getElementById(id);
 
 let uid = null, lang = "zh", words = [], unsub = null;
@@ -250,7 +264,7 @@ async function doAuth(fn) {
   try { say("", "authErr"); await fn(auth, toEmail($("email").value), $("pass").value); }
   catch (e) {
     const bad = /invalid-credential|user-not-found|wrong-password|invalid-email/.test(e.code || "");
-    say(bad ? (window.curLang === "en" ? "Wrong username or password." : "Sai tên đăng nhập hoặc mật khẩu.") : (e.code || e.message), "authErr");
+    say((bad ? (window.curLang === "en" ? "Wrong username or password." : "Sai tên đăng nhập hoặc mật khẩu.") : (e.code || e.message)) + (bad ? " [" + (e.code || "") + "]" : ""), "authErr");
   }
 }
 $("login").onclick = () => doAuth(signInWithEmailAndPassword);
@@ -259,15 +273,22 @@ $("logout").onclick = () => signOut(auth);
 
 onAuthStateChanged(auth, user => {
   if (unsub) { unsub(); unsub = null; }
+  if (unsubM) { unsubM(); unsubM = null; }
   uid = user ? user.uid : null;
   $("auth").hidden = !!user;
   $("app").hidden = !user;
   if (!user) { words = []; return; }
   $("who").textContent = (user.email || "").split("@")[0];
+  isAdmin = user.email === ADMIN;
+  $("adminBtn").hidden = !isAdmin;
+  $("admin").hidden = true;
+  if (isAdmin) unsubM = onSnapshot(collection(db, "members"),
+    snap => renderMembers(snap.docs.map(d => ({ id: d.id, ...d.data() }))),
+    e => say("Lỗi tải danh sách: " + e.code, "aMsg"));
   unsub = onSnapshot(query(col(), orderBy("createdAt", "desc")), snap => {
     words = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     render();
-  }, e => say("Lỗi tải dữ liệu: " + e.code));
+  }, e => say(e.code === "permission-denied" ? "Tài khoản chưa được cấp quyền. Hãy liên hệ quản trị viên." : "Lỗi tải dữ liệu: " + e.code));
 });
 
 // ---------- Hiển thị ----------
@@ -381,6 +402,40 @@ $("expKnowt").onclick = async () => {
   const txt = visible().map(w => `${w.term}\t${w.meaning}`).join("\n");
   try { await navigator.clipboard.writeText(txt); say("Đã sao chép. Dán vào phần Import của Knowt (phân cách Tab, dòng mới giữa các thẻ)."); }
   catch { say("Trình duyệt chặn clipboard."); }
+};
+
+// ---------- Quản lý tài khoản (chỉ admin) ----------
+$("adminBtn").onclick = () => { $("admin").hidden = !$("admin").hidden; };
+function renderMembers(list) {
+  const box = $("members");
+  box.innerHTML = "";
+  list.sort((a, b) => (a.username || "").localeCompare(b.username || ""));
+  for (const m of list) {
+    const row = document.createElement("div");
+    row.className = "row";
+    const name = document.createElement("span");
+    name.style.flex = "1";
+    name.textContent = m.username;
+    const b = document.createElement("button");
+    b.className = "del"; b.textContent = "Thu hồi quyền";
+    b.onclick = () => confirm(`Thu hồi quyền của "${m.username}"?`) && deleteDoc(doc(db, "members", m.id));
+    row.append(name, b);
+    box.appendChild(row);
+  }
+}
+$("mkUser").onclick = async () => {
+  const u = $("aUser").value.trim().toLowerCase(), pw = $("aPass").value;
+  if (!/^[a-z0-9._-]{2,30}$/.test(u)) return say("Tên đăng nhập gồm chữ thường không dấu, số, . _ - (2–30 ký tự).", "aMsg");
+  if (pw.length < 6) return say("Mật khẩu tối thiểu 6 ký tự.", "aMsg");
+  try {
+    const cred = await createUserWithEmailAndPassword(auth2, toEmail(u), pw);
+    await signOut(auth2);
+    await setDoc(doc(db, "members", cred.user.uid), { username: u, createdAt: Date.now() });
+    $("aUser").value = ""; $("aPass").value = "";
+    say(`Đã tạo tài khoản "${u}".`, "aMsg");
+  } catch (e) {
+    say(e.code === "auth/email-already-in-use" ? "Tên đăng nhập này đã tồn tại." : "Tạo thất bại: " + (e.code || e.message), "aMsg");
+  }
 };
 </script>
 </body>

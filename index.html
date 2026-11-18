@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Từ vựng của tôi</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:system-ui,sans-serif;margin:0;background:#f5f6fa;color:#222}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+.card{background:#fff;border-radius:10px;padding:16px;margin-bottom:16px;box-shadow:0 1px 4px #0001}
+input,button,select{font:inherit;padding:8px 10px;border:1px solid #ccd;border-radius:6px}
+button{cursor:pointer;background:#4a6cf7;color:#fff;border:0}
+button.sec{background:#e8eaf6;color:#223}
+button.del{background:none;color:#c33;padding:2px 8px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.row input{flex:1;min-width:120px}
+.tabs button{background:#e8eaf6;color:#223}
+.tabs button.on{background:#4a6cf7;color:#fff}
+table{width:100%;border-collapse:collapse}
+th,td{border-bottom:1px solid #eee;padding:8px;text-align:left}
+td[contenteditable]:focus{outline:2px solid #4a6cf7;background:#f0f3ff}
+tr.done td{color:#888}
+.err{color:#c33;min-height:1.2em}
+.scroll{overflow-x:auto}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<section id="auth" class="card" style="max-width:380px;margin:60px auto">
+  <h2>Từ vựng của tôi</h2>
+  <div class="row"><input id="email" type="email" placeholder="Email"></div>
+  <div class="row"><input id="pass" type="password" placeholder="Mật khẩu (≥ 6 ký tự)"></div>
+  <div class="row"><button id="login">Đăng nhập</button><button id="signup" class="sec">Đăng ký</button></div>
+  <div class="err" id="authErr"></div>
+</section>
+
+<main id="app" hidden>
+  <div class="row" style="justify-content:space-between">
+    <h2 style="margin:0">Từ vựng của tôi</h2>
+    <span><span id="who"></span> <button id="logout" class="sec">Đăng xuất</button></span>
+  </div>
+
+  <div class="card">
+    <div class="row tabs" id="langs">
+      <button data-l="zh" class="on">Tiếng Trung</button>
+      <button data-l="en">Tiếng Anh</button>
+      <button data-l="it">Tiếng Ý</button>
+    </div>
+    <div class="row">
+      <input id="nTerm" placeholder="Từ">
+      <input id="nRead" placeholder="Pinyin / phiên âm (tự tạo cho tiếng Trung)">
+      <input id="nMean" placeholder="Nghĩa">
+      <button id="add">Thêm</button>
+    </div>
+    <div class="row">
+      <input id="search" placeholder="Tìm kiếm...">
+      <select id="filter">
+        <option value="all">Tất cả</option>
+        <option value="no">Chưa thuộc</option>
+        <option value="yes">Đã thuộc</option>
+      </select>
+      <button id="imp" class="sec">Import Excel/CSV</button>
+      <input id="file" type="file" accept=".xlsx,.xls,.csv,.txt" hidden>
+      <button id="expCsv" class="sec">Xuất CSV</button>
+      <button id="expKnowt" class="sec">Sao chép cho Knowt</button>
+    </div>
+    <div id="stat" style="color:#667"></div>
+    <div class="err" id="msg"></div>
+  </div>
+
+  <div class="card scroll">
+    <table>
+      <thead><tr><th>Thuộc</th><th>Từ</th><th>Phiên âm</th><th>Nghĩa</th><th></th></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+  <p style="color:#889;font-size:13px">Bấm vào ô Từ / Phiên âm / Nghĩa để sửa trực tiếp; thay đổi tự lưu khi bạn bấm ra ngoài. Import: cột 1 = từ, cột 2 = phiên âm, cột 3 = nghĩa (dòng tiêu đề không bắt buộc).</p>
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.19.6/dist/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,collection,addDoc,doc,updateDoc,deleteDoc,onSnapshot,query,orderBy,writeBatch} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ====== DÁN CẤU HÌNH FIREBASE CỦA BẠN VÀO ĐÂY ======
+const firebaseConfig = {
+  apiKey: "AIzaSyAzpF7oxcCE11zauUIRc4EMLQloyoDIQOI",
+  authDomain: "web-vocab---felix.firebaseapp.com",
+  projectId: "web-vocab---felix",
+  appId: "1:557802654072:web:01ef69e47bbd75096ca08d"
+};
+// ==================================================
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const $ = id => document.getElementById(id);
+
+let uid = null, lang = "zh", words = [], unsub = null;
+const col = () => collection(db, "users", uid, "words");
+const autoPinyin = t => (lang === "zh" && window.pinyinPro) ? pinyinPro.pinyin(t) : "";
+const say = (t, el = "msg") => { $(el).textContent = t; };
+
+// ---------- Đăng nhập ----------
+async function doAuth(fn) {
+  try { say("", "authErr"); await fn(auth, $("email").value.trim(), $("pass").value); }
+  catch (e) { say(e.code || e.message, "authErr"); }
+}
+$("login").onclick = () => doAuth(signInWithEmailAndPassword);
+$("signup").onclick = () => doAuth(createUserWithEmailAndPassword);
+$("logout").onclick = () => signOut(auth);
+
+onAuthStateChanged(auth, user => {
+  if (unsub) { unsub(); unsub = null; }
+  uid = user ? user.uid : null;
+  $("auth").hidden = !!user;
+  $("app").hidden = !user;
+  if (!user) { words = []; return; }
+  $("who").textContent = user.email;
+  unsub = onSnapshot(query(col(), orderBy("createdAt", "desc")), snap => {
+    words = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    render();
+  }, e => say("Lỗi tải dữ liệu: " + e.code));
+});
+
+// ---------- Hiển thị ----------
+function visible() {
+  const q = $("search").value.trim().toLowerCase(), f = $("filter").value;
+  return words.filter(w => w.lang === lang
+    && (f === "all" || (f === "yes") === !!w.learned)
+    && (!q || [w.term, w.reading, w.meaning].join(" ").toLowerCase().includes(q)));
+}
+
+function cell(w, field) {
+  const td = document.createElement("td");
+  td.contentEditable = "true";
+  td.textContent = w[field] || "";
+  td.onblur = async () => {
+    const v = td.textContent.trim();
+    if (v === (w[field] || "")) return;
+    const data = { [field]: v };
+    if (field === "term" && !w.reading) { const p = autoPinyin(v); if (p) data.reading = p; }
+    try { await updateDoc(doc(db, "users", uid, "words", w.id), data); }
+    catch (e) { say("Lưu thất bại: " + e.code); }
+  };
+  td.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); td.blur(); } };
+  return td;
+}
+
+function render() {
+  const list = visible(), body = $("body");
+  body.innerHTML = "";
+  for (const w of list) {
+    const tr = document.createElement("tr");
+    if (w.learned) tr.className = "done";
+    const c = document.createElement("td");
+    const cb = document.createElement("input");
+    cb.type = "checkbox"; cb.checked = !!w.learned;
+    cb.onchange = () => updateDoc(doc(db, "users", uid, "words", w.id), { learned: cb.checked });
+    c.appendChild(cb);
+    const d = document.createElement("td");
+    const b = document.createElement("button");
+    b.className = "del"; b.textContent = "✕";
+    b.onclick = () => confirm("Xóa từ này?") && deleteDoc(doc(db, "users", uid, "words", w.id));
+    d.appendChild(b);
+    tr.append(c, cell(w, "term"), cell(w, "reading"), cell(w, "meaning"), d);
+    body.appendChild(tr);
+  }
+  const all = words.filter(w => w.lang === lang);
+  $("stat").textContent = `Đã thuộc ${all.filter(w => w.learned).length}/${all.length} từ · đang hiển thị ${list.length}`;
+}
+
+document.querySelectorAll("#langs button").forEach(b => b.onclick = () => {
+  lang = b.dataset.l;
+  document.querySelectorAll("#langs button").forEach(x => x.classList.toggle("on", x === b));
+  render();
+});
+$("search").oninput = render;
+$("filter").onchange = render;
+
+// ---------- Thêm từ ----------
+$("nTerm").oninput = () => { if (lang === "zh" && !$("nRead").dataset.manual) $("nRead").value = autoPinyin($("nTerm").value); };
+$("nRead").oninput = () => { $("nRead").dataset.manual = $("nRead").value ? "1" : ""; };
+$("add").onclick = async () => {
+  const term = $("nTerm").value.trim();
+  if (!term) return;
+  try {
+    await addDoc(col(), {
+      lang, term, reading: $("nRead").value.trim() || autoPinyin(term),
+      meaning: $("nMean").value.trim(), learned: false, createdAt: Date.now()
+    });
+    ["nTerm", "nRead", "nMean"].forEach(i => { $(i).value = ""; });
+    $("nRead").dataset.manual = ""; $("nTerm").focus(); say("");
+  } catch (e) { say("Thêm thất bại: " + e.code); }
+};
+$("nMean").onkeydown = e => { if (e.key === "Enter") $("add").click(); };
+
+// ---------- Import ----------
+$("imp").onclick = () => $("file").click();
+$("file").onchange = async e => {
+  const f = e.target.files[0]; e.target.value = "";
+  if (!f) return;
+  try {
+    const wb = /\.(csv|txt)$/i.test(f.name)
+      ? XLSX.read(await f.text(), { type: "string" })
+      : XLSX.read(await f.arrayBuffer(), { type: "array" });
+    let rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1, defval: "" })
+      .map(r => r.map(x => String(x).trim())).filter(r => r[0]);
+    if (rows.length && /^(term|word|từ|từ vựng|hanzi|词)$/i.test(rows[0][0])) rows.shift();
+    if (!rows.length) return say("File không có dữ liệu.");
+    if (!confirm(`Import ${rows.length} từ vào mục hiện tại?`)) return;
+    let t = Date.now();
+    for (let i = 0; i < rows.length; i += 400) {
+      const batch = writeBatch(db);
+      rows.slice(i, i + 400).forEach(r => batch.set(doc(col()), {
+        lang, term: r[0], reading: r[1] || autoPinyin(r[0]), meaning: r[2] || "",
+        learned: false, createdAt: t--
+      }));
+      await batch.commit();
+    }
+    say(`Đã import ${rows.length} từ.`);
+  } catch (e) { say("Import thất bại: " + (e.code || e.message)); }
+};
+
+// ---------- Xuất ----------
+$("expCsv").onclick = () => {
+  const q = s => '"' + String(s || "").replace(/"/g, '""') + '"';
+  const csv = "\uFEFF" + visible().map(w => [w.term, w.reading, w.meaning, w.learned ? 1 : 0].map(q).join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = `tuvung-${lang}.csv`; a.click();
+};
+$("expKnowt").onclick = async () => {
+  const txt = visible().map(w => `${w.term}\t${w.meaning}`).join("\n");
+  try { await navigator.clipboard.writeText(txt); say("Đã sao chép. Dán vào phần Import của Knowt (phân cách Tab, dòng mới giữa các thẻ)."); }
+  catch { say("Trình duyệt chặn clipboard."); }
+};
+</script>
+</body>
+</html>

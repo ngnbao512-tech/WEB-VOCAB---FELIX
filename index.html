@@ -33,7 +33,8 @@ tr.done td{color:#888}
   <h2>Từ vựng của tôi</h2>
   <div class="row"><input id="email" type="email" placeholder="Email"></div>
   <div class="row"><input id="pass" type="password" placeholder="Mật khẩu (≥ 6 ký tự)"></div>
-  <div class="row"><button id="login">Đăng nhập</button><button id="signup" class="sec">Đăng ký</button></div>
+  <div class="row"><button id="login">Đăng nhập</button></div>
+  <p style="color:#889;font-size:13px">Chưa có tài khoản? Hãy liên hệ quản trị viên để được cấp.</p>
   <div class="err" id="authErr"></div>
 </section>
 
@@ -85,15 +86,15 @@ tr.done td{color:#888}
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {getFirestore,collection,addDoc,doc,updateDoc,deleteDoc,onSnapshot,query,orderBy,writeBatch} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ====== DÁN CẤU HÌNH FIREBASE CỦA BẠN VÀO ĐÂY ======
 const firebaseConfig = {
-  apiKey: "AIzaSyAzpF7oxcCE11zauUIRc4EMLQloyoDIQOI",
-  authDomain: "web-vocab---felix.firebaseapp.com",
-  projectId: "web-vocab---felix",
-  appId: "1:557802654072:web:01ef69e47bbd75096ca08d"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  appId: "YOUR_APP_ID"
 };
 // ==================================================
 
@@ -113,7 +114,6 @@ async function doAuth(fn) {
   catch (e) { say(e.code || e.message, "authErr"); }
 }
 $("login").onclick = () => doAuth(signInWithEmailAndPassword);
-$("signup").onclick = () => doAuth(createUserWithEmailAndPassword);
 $("logout").onclick = () => signOut(auth);
 
 onAuthStateChanged(auth, user => {

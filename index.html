@@ -425,7 +425,8 @@ html[data-theme=dark] #app .security-note{background:#292a2c;border-color:#54483
 /* Vocabulary-first interface */
 .vocabulary-editor{padding:18px}.vocab-add-grid{display:grid;grid-template-columns:1.1fr 1fr 1.2fr 1.2fr auto;gap:8px;margin:12px 0}.vocab-add-grid input{min-width:0}.vocab-help{font-size:12px;margin:12px 0 0}.modal-label{display:block;font-size:12px;font-weight:700;margin:10px 0 4px}#modal .mbox select{width:100%;margin:0 0 8px}.folder-actions{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}#pSet .modes,#pSet .fcv,#pSet #mQuiz,#pSet #mMatch{display:none!important}#pSet .scroll{max-height:unset}#pSet table{min-width:760px}@media(max-width:900px){.vocab-add-grid{grid-template-columns:1fr 1fr}.vocab-add-grid button{grid-column:span 2}}@media(max-width:560px){.vocab-add-grid{grid-template-columns:1fr}.vocab-add-grid button{grid-column:auto}}
 
-/* Vocabulary-first interface */\n.vocabulary-editor{padding:18px}.vocab-add-grid{display:grid;grid-template-columns:1.1fr 1fr 1.2fr 1.2fr auto;gap:8px;margin:12px 0}.vocab-add-grid input{min-width:0}.vocab-help{font-size:12px;margin:12px 0 0}.modal-label{display:block;font-size:12px;font-weight:700;margin:10px 0 4px}#modal .mbox select{width:100%;margin:0 0 8px}.folder-actions{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}#pSet .scroll{max-height:unset}#pSet table{min-width:760px}@media(max-width:900px){.vocab-add-grid{grid-template-columns:1fr 1fr}.vocab-add-grid button{grid-column:span 2}}@media(max-width:560px){.vocab-add-grid{grid-template-columns:1fr}.vocab-add-grid button{grid-column:auto}}
+/* Vocabulary-first interface */
+.vocabulary-editor{padding:18px}.vocab-add-grid{display:grid;grid-template-columns:1.1fr 1fr 1.2fr 1.2fr auto;gap:8px;margin:12px 0}.vocab-add-grid input{min-width:0}.vocab-help{font-size:12px;margin:12px 0 0}.modal-label{display:block;font-size:12px;font-weight:700;margin:10px 0 4px}#modal .mbox select{width:100%;margin:0 0 8px}.folder-actions{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}#pSet .scroll{max-height:unset}#pSet table{min-width:760px}@media(max-width:900px){.vocab-add-grid{grid-template-columns:1fr 1fr}.vocab-add-grid button{grid-column:span 2}}@media(max-width:560px){.vocab-add-grid{grid-template-columns:1fr}.vocab-add-grid button{grid-column:auto}}
 
 /* Study Group workspace */
 .group-page-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:8px 0 22px}.group-page-head h1{margin:5px 0}.group-toolbar{display:flex;gap:10px;margin-bottom:18px}.group-toolbar input{flex:1;min-width:0}.study-group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:15px}.study-group-card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;box-shadow:0 5px 18px #1e40af0a}.study-group-card-head{display:flex;gap:12px;align-items:center}.study-group-card .group-icon{width:48px;height:48px}.study-group-card h3{margin:0 0 4px}.study-group-card p{margin:0;color:var(--mu);font-size:13px}.group-code{font:700 12px monospace;letter-spacing:.1em;color:var(--pr);background:var(--sel);padding:7px 10px;border-radius:8px;display:inline-block;margin:14px 0}.group-card-actions{display:flex;gap:8px;flex-wrap:wrap}.group-detail-head{display:flex;align-items:center;gap:14px;margin:16px 0}.group-detail-tabs{display:flex;gap:7px;flex-wrap:wrap;border-bottom:1px solid var(--bd);padding-bottom:10px;margin:16px 0}.group-detail-tabs button{background:transparent;color:var(--mu);border:0;padding:9px 12px;border-radius:9px}.group-detail-tabs button.active{background:var(--sel);color:var(--pr);font-weight:800}.group-detail-panel{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:14px}.group-item{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--bd2);border-radius:11px;margin:8px 0}.group-item-main{flex:1;min-width:0}.group-item-main b{display:block}.group-item-main small{color:var(--mu)}.group-form{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.group-form input,.group-form select{flex:1;min-width:150px}.group-muted{color:var(--mu);font-size:13px}.group-badge{font-size:11px;font-weight:800;padding:4px 8px;border-radius:99px;background:#fff1c2;color:#946200}.group-member-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd2)}.group-member-avatar{width:34px;height:34px;border-radius:50%;background:var(--sel);color:var(--pr);display:grid;place-items:center;font-weight:800}
@@ -625,6 +626,18 @@ setUi(window.curLang);
 </script>
 <script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3.19.6/dist/index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+window.addEventListener("error", event => {
+  const box = document.getElementById("authErr");
+  if (box && !document.getElementById("app")?.hidden) return;
+  if (box) box.textContent = "Lỗi tải ứng dụng: " + (event.message || "Không thể khởi chạy JavaScript.");
+});
+window.addEventListener("unhandledrejection", event => {
+  const box = document.getElementById("authErr");
+  if (box && !document.getElementById("app")?.hidden) return;
+  if (box) box.textContent = "Lỗi khởi chạy: " + (event.reason?.message || event.reason || "Đã xảy ra lỗi không xác định.");
+});
+</script>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut,EmailAuthProvider,reauthenticateWithCredential,updatePassword,updateProfile} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -647,22 +660,57 @@ const db = getFirestore(app);
 const $ = id => document.getElementById(id);
 
 let uid = null, lang = "zh", words = [], unsub = null, fi = 0, rk = null, cur = "", sets = [], folders = [], page = "dash", unsub2 = null, unsubFolders = null;
-const col = () => collection(db, "users", uid, "words");\nconst foldersCol = () => collection(db, "users", uid, "folders");
+const col = () => collection(db, "users", uid, "words");
+const foldersCol = () => collection(db, "users", uid, "folders");
 const isZh = t => /[\u4e00-\u9fff]/.test(t);
 const autoPinyin = t => (isZh(t) && window.pinyinPro) ? pinyinPro.pinyin(t) : "";
 const say = (t, el = "msg") => { $(el).textContent = t; };
 
 // ---------- Đăng nhập ----------
+// Tài khoản dùng username nội bộ; giữ nguyên quy ước username@myvocab.com.
 const toEmail = u => u.trim().toLowerCase() + "@myvocab.com";
-async function doAuth(fn) {
-  try { say("", "authErr"); await fn(auth, toEmail($("email").value), $("pass").value); }
-  catch (e) {
-    const bad = /invalid-credential|user-not-found|wrong-password|invalid-email/.test(e.code || "");
-    say(bad ? (window.curLang === "en" ? "Wrong username or password." : "Sai tên đăng nhập hoặc mật khẩu.") : (e.code || e.message), "authErr");
+async function doAuth() {
+  const username = $("email").value.trim();
+  const password = $("pass").value;
+  const loginButton = $("login");
+  if (!username || !password) {
+    say(window.curLang === "en" ? "Please enter your username and password." : "Vui lòng nhập tên đăng nhập và mật khẩu.", "authErr");
+    (!username ? $("email") : $("pass")).focus();
+    return;
+  }
+  if (loginButton.disabled) return;
+  loginButton.disabled = true;
+  loginButton.setAttribute("aria-busy", "true");
+  loginButton.dataset.loading = "true";
+  say(window.curLang === "en" ? "Signing in…" : "Đang đăng nhập…", "authErr");
+  try {
+    await signInWithEmailAndPassword(auth, toEmail(username), password);
+    say("", "authErr");
+  } catch (e) {
+    const code = e?.code || "";
+    let message;
+    if (/invalid-credential|user-not-found|wrong-password|invalid-email/.test(code)) {
+      message = window.curLang === "en" ? "Wrong username or password." : "Sai tên đăng nhập hoặc mật khẩu.";
+    } else if (code === "auth/network-request-failed") {
+      message = window.curLang === "en" ? "Network error. Check your connection and try again." : "Không thể kết nối. Hãy kiểm tra mạng rồi thử lại.";
+    } else if (code === "auth/too-many-requests") {
+      message = window.curLang === "en" ? "Too many attempts. Please try again later." : "Bạn đã thử quá nhiều lần. Vui lòng thử lại sau.";
+    } else if (code === "auth/operation-not-allowed") {
+      message = window.curLang === "en" ? "Email/password sign-in is not enabled in Firebase." : "Firebase chưa bật phương thức đăng nhập Email/Mật khẩu.";
+    } else if (code === "auth/unauthorized-domain") {
+      message = window.curLang === "en" ? "This website domain is not authorized in Firebase." : "Tên miền website chưa được cấp quyền trong Firebase Authentication.";
+    } else {
+      message = (code || e?.message || (window.curLang === "en" ? "Sign-in failed." : "Đăng nhập thất bại."));
+    }
+    say(message, "authErr");
+  } finally {
+    loginButton.disabled = false;
+    loginButton.removeAttribute("aria-busy");
+    delete loginButton.dataset.loading;
   }
 }
-$("login").onclick = () => doAuth(signInWithEmailAndPassword);
-["email", "pass"].forEach(i => { $(i).onkeydown = e => { if (e.key === "Enter") $("login").click(); }; });
+$("login").onclick = doAuth;
+["email", "pass"].forEach(i => { $(i).onkeydown = e => { if (e.key === "Enter") doAuth(); }; });
 if ($("logout")) $("logout").onclick = () => signOut(auth);
 $("logout2").onclick = () => signOut(auth);
 const profileMenu = $("profileMenu");
@@ -779,7 +827,8 @@ $("expCsv").onclick = () => {
   a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
   a.download = "tuvung.csv"; a.click();
 };
-\nconst P = { dash:"pDash", noti:"pNoti", lib:"pLib", folders:"pFolders", tests:"pTests", progress:"pProgress", groups:"pGroups", notes:"pNotes", personal:"pPersonal", set:"pSet", cfg:"pCfg" };
+
+const P = { dash:"pDash", noti:"pNoti", lib:"pLib", folders:"pFolders", tests:"pTests", progress:"pProgress", groups:"pGroups", notes:"pNotes", personal:"pPersonal", set:"pSet", cfg:"pCfg" };
 const scope = () => words.filter(w => (w.setId || "") === cur);
 const stOf = id => { const a = words.filter(w => (w.setId || "") === id), l = a.filter(w => w.learned).length; return { n: a.length, l, p: a.length ? Math.round(100 * l / a.length) : 0 }; };
 const allSets = () => (words.some(w => !w.setId) ? [{ id: "", name: "Chưa phân loại", desc: "Các từ chưa thuộc bộ nào", createdAt: 0 }] : []).concat(sets);

@@ -432,6 +432,40 @@ html[data-theme=dark] #app .security-note{background:#292a2c;border-color:#54483
 .group-page-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:8px 0 22px}.group-page-head h1{margin:5px 0}.group-toolbar{display:flex;gap:10px;margin-bottom:18px}.group-toolbar input{flex:1;min-width:0}.study-group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:15px}.study-group-card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;box-shadow:0 5px 18px #1e40af0a}.study-group-card-head{display:flex;gap:12px;align-items:center}.study-group-card .group-icon{width:48px;height:48px}.study-group-card h3{margin:0 0 4px}.study-group-card p{margin:0;color:var(--mu);font-size:13px}.group-code{font:700 12px monospace;letter-spacing:.1em;color:var(--pr);background:var(--sel);padding:7px 10px;border-radius:8px;display:inline-block;margin:14px 0}.group-card-actions{display:flex;gap:8px;flex-wrap:wrap}.group-detail-head{display:flex;align-items:center;gap:14px;margin:16px 0}.group-detail-tabs{display:flex;gap:7px;flex-wrap:wrap;border-bottom:1px solid var(--bd);padding-bottom:10px;margin:16px 0}.group-detail-tabs button{background:transparent;color:var(--mu);border:0;padding:9px 12px;border-radius:9px}.group-detail-tabs button.active{background:var(--sel);color:var(--pr);font-weight:800}.group-detail-panel{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:14px}.group-item{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--bd2);border-radius:11px;margin:8px 0}.group-item-main{flex:1;min-width:0}.group-item-main b{display:block}.group-item-main small{color:var(--mu)}.group-form{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.group-form input,.group-form select{flex:1;min-width:150px}.group-muted{color:var(--mu);font-size:13px}.group-badge{font-size:11px;font-weight:800;padding:4px 8px;border-radius:99px;background:#fff1c2;color:#946200}.group-member-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd2)}.group-member-avatar{width:34px;height:34px;border-radius:50%;background:var(--sel);color:var(--pr);display:grid;place-items:center;font-weight:800}
 @media(max-width:650px){.group-page-head{align-items:flex-start;flex-direction:column}.group-toolbar{flex-direction:column}}
 
+
+/* Functional tabs: tests, progress and notifications */
+#app .test-fields{display:grid;grid-template-columns:repeat(3,minmax(150px,1fr)) auto;gap:14px;align-items:end}
+#app .test-fields label{display:flex;flex-direction:column;gap:7px;color:var(--mu);font-size:13px;font-weight:700}
+#app .test-fields select{width:100%;background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+#app .test-hint{margin:12px 0 0}
+#app .test-quiz{margin-top:18px}
+#app .test-progress-head{display:flex;justify-content:space-between;color:var(--mu);font-weight:700}
+#app .test-prompt{font-size:clamp(24px,3vw,34px);font-weight:800;text-align:center;padding:30px 10px;color:var(--tx);overflow-wrap:anywhere}
+#app .test-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#app .test-choice{background:var(--bg);color:var(--tx);border:1px solid var(--bd);padding:16px;text-align:left;min-height:62px;white-space:normal}
+#app .test-choice.correct{background:var(--okbg);border:1px solid #23b26d;color:var(--tx)}
+#app .test-choice.incorrect{background:var(--nobg);border:1px solid #e5484d;color:var(--tx)}
+#app .test-choice:disabled{opacity:1;cursor:default}
+#app .test-feedback{min-height:24px;font-weight:700;text-align:center}
+#app .test-actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+#app .test-result{text-align:center;margin-top:18px}
+#app .test-result strong{font-size:42px;color:var(--pr);display:block}
+#app .progress-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+#app .progress-summary .panel{margin:0}
+#app .progress-summary b{font-size:28px;display:block}
+#app .progress-set-row{display:grid;grid-template-columns:minmax(150px,1fr) minmax(120px,2fr) 70px auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--bd2)}
+#app .progress-set-row:last-child{border-bottom:0}
+#app .progress-set-row .bar{margin:0}
+#app .progress-set-row button{white-space:nowrap}
+#app .notification-item{display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--card);border:1px solid var(--bd2);border-radius:14px;margin:10px 0}
+#app .notification-item.unread{border-left:4px solid var(--pr);background:var(--sel)}
+#app .notification-item .notification-body{flex:1;min-width:0}
+#app .notification-item small{display:block;color:var(--mu);margin-top:5px}
+#app .notification-item button{padding:6px 10px}
+#app .notification-empty{padding:28px;text-align:center;color:var(--mu);background:var(--card);border:1px dashed var(--bd);border-radius:14px}
+@media(max-width:900px){#app .test-fields{grid-template-columns:1fr 1fr}#app .test-fields button{grid-column:1/-1}#app .progress-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){#app .test-choices{grid-template-columns:1fr}#app .progress-set-row{grid-template-columns:1fr 70px}#app .progress-set-row .bar{grid-column:1/-1;grid-row:2}#app .progress-set-row button{grid-column:2;grid-row:1}#app .progress-summary{grid-template-columns:1fr 1fr}}
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -536,10 +570,23 @@ html[data-theme=dark] #app .security-note{background:#292a2c;border-color:#54483
     <div id="homeNotesList" class="home-notes-list"></div>
   </div>
 </section>
-<section id="pNoti" hidden><h1>Thông báo</h1><div class="panel">Bạn chưa có thông báo mới.</div></section>
+<section id="pNoti" hidden>
+ <div class="lh2"><div><h1 style="margin:0">Thông báo</h1><p class="mu">Hoạt động mới trong không gian học tập của bạn.</p></div><button id="clearNotifications" class="sec">Xóa tất cả</button></div>
+ <div id="notificationList" class="notification-list"></div>
+</section>
 <section id="pFolders" hidden><div class="lh2"><div><h1 style="margin:0">Folders</h1><p class="mu">Sắp xếp các bộ từ vựng theo chủ đề.</p></div><button id="newFolder">＋ Tạo folder</button></div><div class="sg" id="folderGrid"></div></section>
-<section id="pTests" hidden><h1>Tests</h1><div class="panel">Chọn một flashcard để bắt đầu bài kiểm tra.</div></section>
-<section id="pProgress" hidden><h1>Tiến độ học tập</h1><div class="panel">Theo dõi số từ đã học và cần hoàn thành tại trang Home.</div></section>
+<section id="pTests" hidden>
+ <div class="group-page-head"><div><div class="eb">PRACTICE & REVIEW</div><h1>Tests</h1><p class="mu">Luyện nhớ từ vựng bằng câu hỏi trắc nghiệm.</p></div></div>
+ <div class="panel test-setup"><div class="test-fields"><label>Bộ từ vựng<select id="testSetSelect"><option value="all">Tất cả bộ từ vựng</option></select></label><label>Kiểm tra theo<select id="testMode"><option value="meaning">Từ vựng → Nghĩa</option><option value="term">Nghĩa → Từ vựng</option></select></label><label>Số câu<select id="testCount"><option value="5">5 câu</option><option value="10" selected>10 câu</option><option value="20">20 câu</option></select></label><button id="startTest" class="big">Bắt đầu kiểm tra</button></div><p class="mu" id="testHint">Chọn bộ từ vựng có ít nhất 2 từ đầy đủ cả từ và nghĩa.</p></div>
+ <div id="testQuiz" class="panel test-quiz" hidden><div class="test-progress-head"><span id="testCounter">Câu 1</span><span id="testScore">Đúng: 0</span></div><div class="bar"><i id="testProgressBar"></i></div><div id="testPrompt" class="test-prompt"></div><div id="testChoices" class="test-choices"></div><p id="testFeedback" class="test-feedback" aria-live="polite"></p><div class="test-actions"><button id="nextTest" class="big" disabled>Câu tiếp theo →</button><button id="endTest" class="sec">Kết thúc</button></div></div>
+ <div id="testResult" class="panel test-result" hidden></div>
+</section>
+<section id="pProgress" hidden>
+ <div class="group-page-head"><div><div class="eb">YOUR ACHIEVEMENTS</div><h1>Tiến độ học tập</h1><p class="mu">Theo dõi mức độ ghi nhớ từ vựng của bạn.</p></div></div>
+ <div id="progressSummary" class="progress-summary"></div>
+ <div class="panel"><div class="section-head"><div><h2 style="margin:0">Tiến độ theo bộ từ vựng</h2><p class="mu">Bạn có thể cập nhật trạng thái học ngay tại đây.</p></div></div><div id="progressSets" class="progress-set-list"></div></div>
+ <div class="panel"><div class="section-head"><div><h2 style="margin:0">Danh sách từ cần ôn</h2><p class="mu">Các từ chưa được đánh dấu đã học.</p></div></div><div class="scroll"><table><thead><tr><th>Từ vựng</th><th>Phiên âm / Pinyin</th><th>Nghĩa</th><th>Bộ từ</th><th></th></tr></thead><tbody id="progressWords"></tbody></table></div></div>
+</section>
 <section id="pGroups" hidden>
  <div class="group-page-head"><div><div class="eb">LEARN TOGETHER</div><h1>Study group</h1><p class="mu">Kết nối, chia sẻ từ vựng và cùng nhau tiến bộ.</p></div><button id="createStudyGroup" class="big">＋ Tạo nhóm</button></div>
  <div class="group-toolbar"><input id="groupSearch" placeholder="Tìm nhóm bằng tên hoặc mã nhóm..."><button id="joinStudyGroup" class="sec">Tham gia bằng mã</button></div>
@@ -757,6 +804,7 @@ $("passwordForm").addEventListener("submit",async e=>{
 onAuthStateChanged(auth, user => {
   if (unsub) { unsub(); unsub = null; } if (unsub2) { unsub2(); unsub2 = null; } if(unsubFolders){unsubFolders();unsubFolders=null;}
   uid = user ? user.uid : null;
+  loadNotifications();
   $("auth").hidden = !!user;
   $("app").hidden = !user;
   if (!user) { words = []; sets = []; return; }
@@ -790,7 +838,7 @@ $("search").oninput=render;
 $("nTerm").oninput=()=>{if(!$("nRead").dataset.manual&&sets.find(x=>x.id===cur)?.language==="zh")$("nRead").value=autoPinyin($("nTerm").value);};
 $("nRead").oninput=()=>{$("nRead").dataset.manual=$("nRead").value?"1":"";};
 $("add").onclick=async()=>{const term=$("nTerm").value.trim();if(!term)return $("nTerm").focus();const setLang=sets.find(x=>x.id===cur)?.language||"en";
- try{await addDoc(col(),{setId:cur,lang:setLang,term,reading:$("nRead").value.trim()||(setLang==="zh"?autoPinyin(term):""),meaning:$("nMean").value.trim(),example:$("nExample").value.trim(),createdAt:Date.now()});["nTerm","nRead","nMean","nExample"].forEach(id=>$(id).value="");$("nRead").dataset.manual="";$("nTerm").focus();say("");}catch(e){say("Thêm từ thất bại: "+e.code);}
+ try{await addDoc(col(),{setId:cur,lang:setLang,term,reading:$("nRead").value.trim()||(setLang==="zh"?autoPinyin(term):""),meaning:$("nMean").value.trim(),example:$("nExample").value.trim(),createdAt:Date.now()});["nTerm","nRead","nMean","nExample"].forEach(id=>$(id).value="");$("nRead").dataset.manual="";$("nTerm").focus();say("");pushNotification("Đã thêm từ vựng",`Bạn đã thêm “${term}” vào bộ từ vựng.`);}catch(e){say("Thêm từ thất bại: "+e.code);}
 };
 // ---------- Import ----------
 $("imp").onclick = () => $("file").click();
@@ -815,7 +863,7 @@ $("file").onchange = async e => {
       }));
       await batch.commit();
     }
-    say(`Đã import ${rows.length} từ.`);
+    say(`Đã import ${rows.length} từ.`);pushNotification("Import từ vựng thành công",`Đã thêm ${rows.length} từ vào bộ hiện tại.`);
   } catch (e) { say("Import thất bại: " + (e.code || e.message)); }
 };
 
@@ -894,7 +942,7 @@ function renderFolders(){const box=$("folderGrid");if(!box)return;box.innerHTML=
  const del=el("button","del","Xóa");del.onclick=async()=>{if(!confirm("Xóa folder này? Các bộ từ vựng sẽ được chuyển ra ngoài folder."))return;const batch=writeBatch(db);sets.filter(x=>x.folderId===f.id).forEach(x=>batch.update(doc(db,"users",uid,"sets",x.id),{folderId:""}));batch.delete(doc(db,"users",uid,"folders",f.id));await batch.commit();};
  const view=el("button","sec","Xem bộ từ vựng");view.onclick=()=>{go("lib");};actions.append(pin,rename,del);card.append(actions,view);box.append(card);});
 }
-$("newFolder").onclick=async()=>{const name=prompt("Tên folder:");if(!name||!name.trim())return;try{await addDoc(foldersCol(),{name:name.trim(),createdAt:Date.now()});}catch(e){say("Không thể tạo folder: "+e.code);}};
+$("newFolder").onclick=async()=>{const name=prompt("Tên folder:");if(!name||!name.trim())return;try{await addDoc(foldersCol(),{name:name.trim(),createdAt:Date.now()});pushNotification("Đã tạo folder",`Folder “${name.trim()}” đã được tạo.`);}catch(e){say("Không thể tạo folder: "+e.code);}};
 
 
 // Study Group MVP: local persistent groups for preview and this browser profile.
@@ -921,9 +969,34 @@ function renderSgDetail(g,box){box.innerHTML="";const back=el("button","sec","�
 }
 function saveSgGroup(g){const a=studyGroups().map(x=>x.id===g.id?g:x);saveStudyGroups(a);}
 
+
+// ---------- Thông báo trong ứng dụng ----------
+function notificationKey(){return "vocabSpaceNotifications_"+(uid||"guest");}
+let notificationItems=[];
+function loadNotifications(){try{const a=JSON.parse(localStorage.getItem(notificationKey())||"[]");notificationItems=Array.isArray(a)?a:[];}catch(e){notificationItems=[];}}
+function saveNotifications(){try{localStorage.setItem(notificationKey(),JSON.stringify(notificationItems));}catch(e){}}
+function pushNotification(title,detail){notificationItems.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title,detail,createdAt:Date.now(),read:false});notificationItems=notificationItems.slice(0,60);saveNotifications();if(page==="noti")renderNotifications();}
+function renderNotifications(){const box=$("notificationList");if(!box)return;box.innerHTML="";if(!notificationItems.length){box.innerHTML='<div class="notification-empty">Chưa có thông báo nào. Hoạt động học tập mới sẽ xuất hiện tại đây.</div>';return;}
+ notificationItems.forEach(n=>{const row=el("div","notification-item"+(n.read?"":" unread")),body=el("div","notification-body"),title=el("b",null,n.title),detail=el("div","mu",n.detail),date=el("small",null,new Date(n.createdAt).toLocaleString("vi-VN"));body.append(title,detail,date);const read=el("button","sec",n.read?"Đã đọc":"Đánh dấu đã đọc");read.onclick=()=>{n.read=true;saveNotifications();renderNotifications();};const del=el("button","del","Xóa");del.onclick=()=>{notificationItems=notificationItems.filter(x=>x.id!==n.id);saveNotifications();renderNotifications();};row.append(body,read,del);box.append(row);});}
+
+// ---------- Tiến độ ----------
+function renderProgress(){const summary=$("progressSummary"),list=$("progressSets"),tbody=$("progressWords");if(!summary||!list||!tbody)return;const total=words.length,learned=words.filter(w=>w.learned).length,pending=total-learned,pct=total?Math.round(learned*100/total):0;summary.replaceChildren(...[[total,"Tổng số từ"],[learned,"Đã học"],[pending,"Cần ôn"],[pct+"%","Hoàn thành"]].map(([v,k])=>{const c=el("div","panel"),b=el("b",null,v),t=el("span","mu",k);c.append(b,t);return c;}));list.innerHTML="";const sl=allSets();if(!sl.length)list.append(el("p","mu","Bạn chưa có bộ từ vựng nào."));sl.forEach(set=>{const st=stOf(set.id),row=el("div","progress-set-row"),name=el("b",null,set.name),bar=el("div","bar"),fill=el("i");fill.style.width=st.p+"%";bar.append(fill);const value=el("span","mu",`${st.l}/${st.n} · ${st.p}%`),open=el("button","sec","Mở bộ");open.onclick=()=>go("set",set.id);row.append(name,bar,value,open);list.append(row);});tbody.innerHTML="";const pendingWords=words.filter(w=>!w.learned);if(!pendingWords.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=5;td.textContent=total?"Tuyệt vời! Bạn đã đánh dấu học hết từ vựng.":"Chưa có từ vựng để thống kê.";tr.append(td);tbody.append(tr);}pendingWords.forEach(w=>{const tr=document.createElement("tr");[w.term||"—",w.reading||"—",w.meaning||"—",sets.find(s=>s.id===w.setId)?.name||"Chưa phân loại"].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.append(td);});const td=document.createElement("td"),btn=el("button","sec","Đánh dấu đã học");btn.onclick=async()=>{try{await updateDoc(doc(db,"users",uid,"words",w.id),{learned:true});pushNotification("Đã cập nhật tiến độ",`Bạn đã đánh dấu “${w.term}” là đã học.`);}catch(e){say("Không thể cập nhật: "+e.code);}};td.append(btn);tr.append(td);tbody.append(tr);});}
+
+// ---------- Bài kiểm tra trắc nghiệm ----------
+let testQuestions=[],testIndex=0,testScore=0,testAnswered=false,testCorrectIds=[],testModeValue="meaning";
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
+function refreshTestSets(){const sel=$("testSetSelect");if(!sel)return;const old=sel.value;sel.innerHTML='<option value="all">Tất cả bộ từ vựng</option>';allSets().forEach(x=>{const o=document.createElement("option");o.value=x.id;o.textContent=x.name;sel.append(o);});sel.value=[...sel.options].some(o=>o.value===old)?old:"all";}
+function startTest(){const setId=$("testSetSelect").value,mode=$("testMode").value;const pool=words.filter(w=>(setId==="all"||w.setId===setId)&&String(w.term||"").trim()&&String(w.meaning||"").trim());if(pool.length<2){$("testHint").textContent="Cần ít nhất 2 từ có đủ Vocabulary và Meaning để tạo bài kiểm tra.";return;}testModeValue=mode;testQuestions=shuffle(pool).slice(0,Math.min(Number($("testCount").value)||10,pool.length)).map(w=>{const correct=mode==="meaning"?w.meaning:w.term;const candidates=shuffle(pool.filter(x=>x.id!==w.id).map(x=>mode==="meaning"?x.meaning:x.term).filter(Boolean));const options=shuffle([correct,...[...new Set(candidates)].slice(0,3)]);return {word:w,prompt:mode==="meaning"?w.term:w.meaning,correct,options};});testIndex=0;testScore=0;testAnswered=false;testCorrectIds=[];$("testResult").hidden=true;$("testQuiz").hidden=false;renderTestQuestion();}
+function renderTestQuestion(){const q=testQuestions[testIndex];if(!q)return finishTest();$("testCounter").textContent=`Câu ${testIndex+1}/${testQuestions.length}`;$("testScore").textContent=`Đúng: ${testScore}`;$("testProgressBar").style.width=(testIndex/testQuestions.length*100)+"%";$("testPrompt").textContent=q.prompt;$("testFeedback").textContent="";$("nextTest").disabled=true;$("nextTest").textContent=testIndex===testQuestions.length-1?"Xem kết quả":"Câu tiếp theo →";const box=$("testChoices");box.innerHTML="";q.options.forEach(option=>{const b=el("button","test-choice",option);b.onclick=()=>answerTest(option,b);box.append(b);});testAnswered=false;}
+function answerTest(option,button){if(testAnswered)return;testAnswered=true;const q=testQuestions[testIndex],correct=option===q.correct;if(correct){testScore++;testCorrectIds.push(q.word.id);}$("testScore").textContent=`Đúng: ${testScore}`;[...$("testChoices").children].forEach(b=>{b.disabled=true;if(b.textContent===q.correct)b.classList.add("correct");else if(b===button&&!correct)b.classList.add("incorrect");});$("testFeedback").textContent=correct?"Chính xác! 🎉":"Chưa đúng. Đáp án: "+q.correct;$("nextTest").disabled=false;}
+function finishTest(){const quiz=$("testQuiz"),result=$("testResult");quiz.hidden=true;result.hidden=false;const pct=Math.round(testScore/Math.max(1,testQuestions.length)*100);result.innerHTML="";result.append(el("div","eb","TEST COMPLETED"));const score=el("strong",null,`${testScore}/${testQuestions.length}`);result.append(score,el("h2",null,pct>=80?"Làm tốt lắm!":pct>=50?"Bạn đang tiến bộ!":"Hãy ôn tập thêm nhé!"),el("p","mu",`Bạn trả lời đúng ${pct}% số câu.`));const save=el("button","big","Đánh dấu các từ trả lời đúng là đã học");save.disabled=!testCorrectIds.length;save.onclick=async()=>{try{const batch=writeBatch(db);testCorrectIds.forEach(id=>batch.update(doc(db,"users",uid,"words",id),{learned:true}));await batch.commit();pushNotification("Đã lưu kết quả kiểm tra",`${testCorrectIds.length} từ trả lời đúng được đánh dấu đã học.`);save.textContent="Đã lưu tiến độ";save.disabled=true;}catch(e){alert("Không thể lưu tiến độ: "+e.code);}};const again=el("button","sec","Làm bài khác");again.onclick=()=>{result.hidden=true;startTest();};const actions=el("div","test-actions");actions.append(save,again);result.append(actions);$("testProgressBar").style.width="100%";}
+
 function renderAll() {
   if(page === "notes") renderNotes();
   if(page === "groups") renderStudyGroups();
+  if(page === "noti") renderNotifications();
+  if(page === "progress") renderProgress();
+  if(page === "tests") refreshTestSets();
   renderHomeNotes();
   Object.entries(P).forEach(([k, v]) => { $(v).hidden = k !== page; });
   const sl = allSets(), cs = sl.find(x => x.id === cur) || { name: "Bộ thẻ", desc: "" };
@@ -967,9 +1040,13 @@ function renderAll() {
   fillSets($("lGrid"), lst);
   render();
 }
-document.querySelectorAll("#side [data-p]").forEach(b => b.onclick = () => go(b.dataset.p));
+document.addEventListener("click", e => { const nav=e.target.closest("[data-p]"); if(nav){ e.preventDefault(); go(nav.dataset.p); } });
 $("createStudyGroup").onclick=createSg;$("joinStudyGroup").onclick=joinSg;$("groupSearch").oninput=renderStudyGroups;
 $("dashSetSelect").onchange=renderAll;
+$("startTest").onclick=startTest;
+$("nextTest").onclick=()=>{if(!testAnswered)return;if(testIndex<testQuestions.length-1){testIndex++;renderTestQuestion();}else finishTest();};
+$("endTest").onclick=()=>{if(testQuestions.length)finishTest();else $("testQuiz").hidden=true;};
+$("clearNotifications").onclick=()=>{if(!notificationItems.length)return;if(confirm("Xóa toàn bộ thông báo?")){notificationItems=[];saveNotifications();renderNotifications();}};
 
 $("menu").onclick = () => $("side").classList.toggle("open");
 $("gSearch").oninput = () => page === "lib" ? renderAll() : go("lib");
@@ -982,7 +1059,7 @@ $("sName").onkeydown = e => { if (e.key === "Enter") $("sOk").click(); };
 $("sOk").onclick = async () => {
   const n = $("sName").value.trim(); if (!n) return $("sName").focus();
   $("modal").hidden = true;
-  try { const r = await addDoc(collection(db, "users", uid, "sets"), { name: n, desc: $("sDesc").value.trim(), language: $("sLang").value, folderId: $("sFolder").value || "", createdAt: Date.now() }); go("set", r.id); }
+  try { const r = await addDoc(collection(db, "users", uid, "sets"), { name: n, desc: $("sDesc").value.trim(), language: $("sLang").value, folderId: $("sFolder").value || "", createdAt: Date.now() }); pushNotification("Đã tạo bộ từ vựng",`Bộ “${n}” đã sẵn sàng để học.`);go("set", r.id); }
   catch (e) { say("Tạo bộ thất bại: " + e.code); }
 };
 $("sRename").onclick = async () => {

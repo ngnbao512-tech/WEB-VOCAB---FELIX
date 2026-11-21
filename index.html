@@ -482,6 +482,16 @@ html[data-theme=dark] #app .security-note{background:#292a2c;border-color:#54483
 #app .home-note-row{cursor:pointer}
 @media(max-width:1000px){#app .home-quick-actions{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){#app .home-quick-actions{grid-template-columns:1fr 1fr;gap:8px}#app .home-action{padding:10px;grid-template-columns:34px 1fr;gap:2px 8px}#app .home-action>span{width:34px;height:34px}}
+#app .flc-top{display:flex;justify-content:space-between;align-items:center;margin:4px 0 10px}
+#app .flc-card{max-width:620px;min-height:260px;margin:22px auto;background:var(--card);border:2px solid var(--bd);border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:32px;cursor:pointer;box-shadow:0 18px 44px #2563eb1f;transition:transform .2s,border-color .2s;outline:none}
+#app .flc-card:hover,#app .flc-card:focus-visible{transform:translateY(-3px);border-color:var(--pr)}
+#app .flc-front{font-size:clamp(34px,5vw,56px);font-weight:800;word-break:break-word}
+#app .flc-r{color:var(--pr);font-size:22px;font-weight:600}
+#app .flc-m{font-size:clamp(22px,3vw,30px);font-weight:700}
+#app .flc-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+#app .flc-done,#app .flc-empty{max-width:560px;margin:24px auto;text-align:center;padding:30px;background:var(--card);border:1px solid var(--bd);border-radius:20px}
+#app .set-tabs{margin-bottom:14px;width:fit-content}
+#app td input[type=checkbox]{width:18px;height:18px;cursor:pointer}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -575,7 +585,7 @@ html[data-theme=dark] #app .security-note{background:#292a2c;border-color:#54483
   </div>
   <div class="home-grid">
     <div class="panel learning-panel">
-      <div class="section-head"><div><div class="eb">LEARNING PROGRESS</div><h2>Tiến độ học tập</h2></div><select id="dashSetSelect" aria-label="Chọn bộ từ vựng"><option value="all">Tất cả bộ từ vựng</option></select></div>
+      <div class="section-head"><div><div class="eb">LEARNING PROGRESS</div><h2>Tiến độ học tập</h2></div><select id="dashSetSelect" aria-label="Chọn bộ từ vựng"><option value="all">Tất cả bộ từ vựng</option></select> <button type="button" class="sec" id="dashStudy">▶ Học flashcard</button></div>
       <div class="word-table-wrap"><table class="word-table"><thead><tr><th>STT</th><th>Từ vựng</th><th>Phiên âm / Pinyin</th><th>Nghĩa</th><th>Trạng thái</th></tr></thead><tbody id="dashWords"></tbody></table></div>
     </div>
     <div class="stats-panel panel"><div class="eb">OVERVIEW</div><h2>Tổng quan</h2><div class="stats-three" id="dStats"></div></div>
@@ -628,7 +638,9 @@ html[data-theme=dark] #app .security-note{background:#292a2c;border-color:#54483
   <div class="notes-toolbar"><div class="notes-tabs"><button type="button" class="active" data-note-tab="pending">Cần nhớ <b id="pendingCount">0</b></button><button type="button" data-note-tab="done">Đã xong <b id="doneCount">0</b></button></div><input id="noteSearch" type="search" placeholder="Tìm trong ghi chú..."></div>
   <div id="notesList" class="notes-list"><div class="notes-empty">Chưa có ghi chú nào cần nhớ.</div></div>
 </section>
-<section id="pLib" hidden><div class="lh2" style="margin-top:0"><h1 style="margin:0">Vocabulary</h1><input id="gSearch" placeholder="Tìm bộ thẻ" style="margin-left:auto"><select id="sort"><option value="new">Mới nhất</option><option value="name">Tên A–Z</option><option value="prog">Mức độ học</option></select></div><div class="sg" id="lGrid"></div></section>
+<section id="pLib" hidden><div class="lh2" style="margin-top:0"><h1 style="margin:0">Vocabulary</h1><input id="gSearch" placeholder="Tìm bộ thẻ" style="margin-left:auto"><select id="sort"><option value="new">Mới nhất</option><option value="name">Tên A–Z</option><option value="prog">Mức độ học</option></select></div><div class="notes-tabs" id="libTabs" style="margin:0 0 14px;width:fit-content"><button type="button" class="active" data-lg="all">Tất cả</button><button type="button" data-lg="en">Tiếng Anh</button><button type="button" data-lg="zh">Tiếng Trung</button><button type="button" data-lg="it">Tiếng Ý</button></div>
+ <div id="libFolderNote" class="mu" hidden style="margin:0 0 12px"></div>
+ <div class="sg" id="lGrid"></div></section>
 <section id="pPersonal" hidden>
   <div class="personal-kicker">HỒ SƠ CÁ NHÂN</div><h1 class="personal-title">Thông tin cá nhân</h1>
   <div class="personal-grid">
@@ -666,13 +678,25 @@ html[data-theme=dark] #app .security-note{background:#292a2c;border-color:#54483
   <div class="lh2" style="margin-top:0"><div><h1 id="setName" style="margin:0"></h1><div class="mu" id="setDesc"></div></div><div id="setAct" style="margin-left:auto;display:flex;gap:8px"><button id="sRename" class="sec">Đổi tên</button><button id="sDel" class="del">Xóa bộ</button></div></div>
 
   <div class="panel vocabulary-editor">
-    <div class="lh2" id="listTop"><h2 style="margin:0">Vocabulary</h2><span id="stat"></span><input id="search" placeholder="Tìm từ vựng trong bộ này">
+ <div class="notes-tabs set-tabs" id="setTabs"><button type="button" class="active" data-set-tab="list">Danh sách</button><button type="button" data-set-tab="cards">Flashcard</button></div>
+    <div id="setList">
+ <div class="lh2" id="listTop"><h2 style="margin:0">Vocabulary</h2><span id="stat"></span><input id="search" placeholder="Tìm từ vựng trong bộ này">
       <button id="imp" class="sec">Import Excel/CSV</button><input id="file" type="file" accept=".xlsx,.xls,.csv,.txt" hidden><button id="expCsv" class="sec">Xuất CSV</button>
     </div>
-    <div class="vocab-add-grid"><input id="nTerm" placeholder="Vocabulary"><input id="nRead" placeholder="Phiên âm (Pinyin nếu là tiếng Trung)"><input id="nMean" placeholder="Meaning"><input id="nExample" placeholder="Ví dụ"><button id="add">＋ Thêm từ</button></div>
+    <div class="notes-tabs" id="statusTabs" style="margin:0 0 12px;width:fit-content"><button type="button" class="active" data-st="all">Tất cả <b id="stAll">0</b></button><button type="button" data-st="no">Chưa thuộc <b id="stNo">0</b></button><button type="button" data-st="yes">Đã thuộc <b id="stYes">0</b></button></div>
+ <div class="vocab-add-grid"><input id="nTerm" placeholder="Vocabulary"><input id="nRead" placeholder="Phiên âm (Pinyin nếu là tiếng Trung)"><input id="nMean" placeholder="Meaning"><input id="nExample" placeholder="Ví dụ"><button id="add">＋ Thêm từ</button></div>
     <div class="err" id="msg"></div>
-    <div class="scroll"><table><thead><tr><th>Vocabulary</th><th>Phiên âm</th><th>Meaning</th><th>Ví dụ</th><th></th></tr></thead><tbody id="body"></tbody></table></div>
+    <div class="scroll"><table><thead><tr><th>Thuộc</th><th>Vocabulary</th><th>Phiên âm</th><th>Meaning</th><th>Ví dụ</th><th></th></tr></thead><tbody id="body"></tbody></table></div>
     <p class="mu vocab-help">Bấm vào ô để chỉnh sửa trực tiếp. Thay đổi sẽ tự động lưu.</p>
+ </div>
+ <div id="setCards" hidden>
+  <div class="flc-top"><span id="fcCount" class="mu"></span><button id="fcShuffle" class="sec" type="button">⇄ Trộn thẻ</button></div>
+  <div class="bar"><i id="fcBar"></i></div>
+  <div id="fcEmpty" class="flc-empty" hidden>Bộ này chưa có từ vựng. Hãy thêm từ ở tab Danh sách.</div>
+  <div id="fcCard" class="flc-card" tabindex="0" role="button" aria-label="Lật thẻ"><div id="fcFront" class="flc-front"></div><div id="fcBack" hidden></div><small class="mu">Bấm vào thẻ hoặc nhấn Space để lật · ← chưa thuộc · → đã thuộc</small></div>
+  <div id="fcActions" class="flc-actions"><button id="fcSpeak" class="sec" type="button">🔊 Phát âm</button><button id="fcAgain" class="sec" type="button">Chưa thuộc</button><button id="fcKnow" type="button">Đã thuộc ✓</button></div>
+  <div id="fcDone" class="flc-done" hidden><h3>Hoàn thành lượt học!</h3><p id="fcSummary" class="mu"></p><button id="fcRestart" type="button">Học lại</button></div>
+ </div>
   </div>
 </section>
 </div></div>
@@ -731,6 +755,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined && text !== null) n.textContent = text; return n; };
+const norm = v => String(v == null ? "" : v).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
 
 let uid = null, lang = "zh", words = [], unsub = null, fi = 0, rk = null, cur = "", sets = [], folders = [], page = "dash", unsub2 = null, unsubFolders = null;
 const col = () => collection(db, "users", uid, "words");
@@ -757,7 +783,12 @@ async function doAuth() {
   loginButton.dataset.loading = "true";
   say(window.curLang === "en" ? "Signing in…" : "Đang đăng nhập…", "authErr");
   try {
-    await signInWithEmailAndPassword(auth, toEmail(username), password);
+    let lastErr = null;
+    for (const dom of ["@myvocab.com", "@tuvung.com"]) {
+      try { await signInWithEmailAndPassword(auth, username.trim().toLowerCase() + dom, password); lastErr = null; break; }
+      catch (err) { lastErr = err; if (!/invalid-credential|user-not-found|wrong-password|invalid-email/.test(err?.code || "")) break; }
+    }
+    if (lastErr) throw lastErr;
     say("", "authErr");
   } catch (e) {
     const code = e?.code || "";
@@ -850,7 +881,7 @@ onAuthStateChanged(auth, user => {
 // ---------- Hiển thị ----------
 function visible() {
  const q=$("search").value.trim().toLowerCase();
- return scope().filter(w=>!q||[w.term,w.reading,w.meaning,w.example].join(" ").toLowerCase().includes(q));
+ return scope().filter(w=>(stFilter==="all"||(stFilter==="yes")===!!w.learned)&&(!q||[w.term,w.reading,w.meaning,w.example].join(" ").toLowerCase().includes(q)));
 }
 function cell(w,field){
  const td=document.createElement("td");td.contentEditable="true";td.textContent=w[field]||"";
@@ -859,8 +890,20 @@ function cell(w,field){
 }
 function render(){
  const list=visible(),body=$("body");body.innerHTML="";
- list.forEach(w=>{const tr=document.createElement("tr"),delCell=document.createElement("td"),del=el("button","del","✕");del.onclick=()=>confirm("Xóa từ vựng này?")&&deleteDoc(doc(db,"users",uid,"words",w.id));tr.append(cell(w,"term"),cell(w,"reading"),cell(w,"meaning"),cell(w,"example"),delCell);delCell.append(del);body.append(tr);});
- const all=scope();$("stat").textContent=`${all.length} từ vựng · đang hiển thị ${list.length}`;
+ list.forEach(w=>{
+  const tr=document.createElement("tr"),chkCell=document.createElement("td"),delCell=document.createElement("td");
+  const chk=document.createElement("input");chk.type="checkbox";chk.checked=!!w.learned;chk.title="Đánh dấu đã thuộc";
+  chk.onchange=()=>updateDoc(doc(db,"users",uid,"words",w.id),{learned:chk.checked}).catch(e=>say("Lưu thất bại: "+e.code));chkCell.append(chk);
+  const sp=el("button","sec","🔊");sp.title="Phát âm";sp.onclick=()=>speakWord(w.term,w.lang||setLangOf());
+  const del=el("button","del","✕");del.onclick=()=>confirm("Xóa từ vựng này?")&&deleteDoc(doc(db,"users",uid,"words",w.id));
+  if(w.learned)tr.classList.add("done");
+  delCell.append(sp,del);tr.append(chkCell,cell(w,"term"),cell(w,"reading"),cell(w,"meaning"),cell(w,"example"),delCell);body.append(tr);
+ });
+ const all=scope(),n=all.filter(w=>w.learned).length;
+ $("stat").textContent=`${all.length} từ vựng · ${n} đã thuộc · đang hiển thị ${list.length}`;
+ $("stAll").textContent=all.length;$("stNo").textContent=all.length-n;$("stYes").textContent=n;
+ document.querySelectorAll("[data-st]").forEach(b=>b.classList.toggle("active",b.dataset.st===stFilter));
+ if(setTab==="cards")fcRender();
 }
 $("search").oninput=render;
 $("nTerm").oninput=()=>{if(!$("nRead").dataset.manual&&sets.find(x=>x.id===cur)?.language==="zh")$("nRead").value=autoPinyin($("nTerm").value);};
@@ -909,7 +952,7 @@ const scope = () => words.filter(w => (w.setId || "") === cur);
 const stOf = id => { const a = words.filter(w => (w.setId || "") === id), l = a.filter(w => w.learned).length; return { n: a.length, l, p: a.length ? Math.round(100 * l / a.length) : 0 }; };
 const allSets = () => (words.some(w => !w.setId) ? [{ id: "", name: "Chưa phân loại", desc: "Các từ chưa thuộc bộ nào", createdAt: 0 }] : []).concat(sets);
 function go(p, id) {
-  if (id !== undefined) { cur = id; }
+  if (id !== undefined) { cur = id; if (p === "set") { stFilter = "all"; setSetTab("list"); } }
   page = p; $("side").classList.remove("open"); renderAll();
 }
 function fillSets(box, list) {
@@ -918,7 +961,7 @@ function fillSets(box, list) {
   list.forEach(x => {
     const s = stOf(x.id), c = el("div", "sc"), bar = el("div", "bar"), i = el("i"); i.style.width = s.p + "%"; bar.append(i);
     c.append(el("h3", null, x.name), el("div", "mu", `${s.n} từ vựng · ${{en:"Anh",zh:"Trung",it:"Ý"}[x.language]||"Chưa chọn ngôn ngữ"}`), el("div", "mu", (x.desc || "") + (x.folderId && folders.find(f=>f.id===x.folderId) ? " · "+folders.find(f=>f.id===x.folderId).name : "")), bar);
-    const pin=el("button","sec",pinnedList().includes("set:"+x.id)?"★ Đã ghim":"☆ Ghim");pin.style.marginTop="8px";pin.onclick=e=>{e.stopPropagation();togglePinned("set:"+x.id);};c.append(pin);
+    const pin=el("button","sec",pinnedList().includes("set:"+x.id)?"★ Đã ghim":"☆ Ghim");pin.style.marginTop="8px";pin.onclick=e=>{e.stopPropagation();togglePinned("set:"+x.id);};c.append(pin);const study=el("button","sec","▶ Flashcard");study.style.cssText="margin:8px 0 0 6px";study.onclick=e=>{e.stopPropagation();go("set",x.id);setSetTab("cards");};c.append(study);
     c.onclick = () => go("set", x.id); box.append(c);
   });
 }
@@ -968,7 +1011,7 @@ function renderFolders(){const box=$("folderGrid");if(!box)return;box.innerHTML=
  const pin=el("button","sec",pinnedList().includes("folder:"+f.id)?"★ Đã ghim":"☆ Ghim");pin.onclick=()=>togglePinned("folder:"+f.id);
  const rename=el("button","sec","Đổi tên");rename.onclick=async()=>{const n=prompt("Tên folder mới:",f.name);if(n&&n.trim())await updateDoc(doc(db,"users",uid,"folders",f.id),{name:n.trim()});};
  const del=el("button","del","Xóa");del.onclick=async()=>{if(!confirm("Xóa folder này? Các bộ từ vựng sẽ được chuyển ra ngoài folder."))return;const batch=writeBatch(db);sets.filter(x=>x.folderId===f.id).forEach(x=>batch.update(doc(db,"users",uid,"sets",x.id),{folderId:""}));batch.delete(doc(db,"users",uid,"folders",f.id));await batch.commit();};
- const view=el("button","sec","Xem bộ từ vựng");view.onclick=()=>{go("lib");};actions.append(pin,rename,del);card.append(actions,view);box.append(card);});
+ const view=el("button","sec","Xem bộ từ vựng");view.onclick=()=>{libFolder=f.id;go("lib");};actions.append(pin,rename,del);card.append(actions,view);box.append(card);});
 }
 $("newFolder").onclick=async()=>{const name=prompt("Tên folder:");if(!name||!name.trim())return;try{await addDoc(foldersCol(),{name:name.trim(),createdAt:Date.now()});pushNotification("Đã tạo folder",`Folder “${name.trim()}” đã được tạo.`);}catch(e){say("Không thể tạo folder: "+e.code);}};
 
@@ -1019,6 +1062,62 @@ function renderTestQuestion(){const q=testQuestions[testIndex];if(!q)return fini
 function answerTest(option,button){if(testAnswered)return;testAnswered=true;const q=testQuestions[testIndex],correct=option===q.correct;if(correct){testScore++;testCorrectIds.push(q.word.id);}$("testScore").textContent=`Đúng: ${testScore}`;[...$("testChoices").children].forEach(b=>{b.disabled=true;if(b.textContent===q.correct)b.classList.add("correct");else if(b===button&&!correct)b.classList.add("incorrect");});$("testFeedback").textContent=correct?"Chính xác! 🎉":"Chưa đúng. Đáp án: "+q.correct;$("nextTest").disabled=false;}
 function finishTest(){const quiz=$("testQuiz"),result=$("testResult");quiz.hidden=true;result.hidden=false;const pct=Math.round(testScore/Math.max(1,testQuestions.length)*100);result.innerHTML="";result.append(el("div","eb","TEST COMPLETED"));const score=el("strong",null,`${testScore}/${testQuestions.length}`);result.append(score,el("h2",null,pct>=80?"Làm tốt lắm!":pct>=50?"Bạn đang tiến bộ!":"Hãy ôn tập thêm nhé!"),el("p","mu",`Bạn trả lời đúng ${pct}% số câu.`));const save=el("button","big","Đánh dấu các từ trả lời đúng là đã học");save.disabled=!testCorrectIds.length;save.onclick=async()=>{try{const batch=writeBatch(db);testCorrectIds.forEach(id=>batch.update(doc(db,"users",uid,"words",id),{learned:true}));await batch.commit();pushNotification("Đã lưu kết quả kiểm tra",`${testCorrectIds.length} từ trả lời đúng được đánh dấu đã học.`);save.textContent="Đã lưu tiến độ";save.disabled=true;}catch(e){alert("Không thể lưu tiến độ: "+e.code);}};const again=el("button","sec","Làm bài khác");again.onclick=()=>{result.hidden=true;startTest();};const actions=el("div","test-actions");actions.append(save,again);result.append(actions);$("testProgressBar").style.width="100%";}
 
+// ---------- Tab & chức năng bổ sung ----------
+let setTab = "list", stFilter = "all", libLang = "all", libFolder = "";
+let fcDeck = [], fcI = 0, fcFlip = false, fcKnown = 0;
+const SPK = { zh: "zh-CN", en: "en-US", it: "it-IT" };
+function speakWord(t, l) { try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = SPK[l] || "en-US"; speechSynthesis.speak(u); } catch (e) {} }
+const setLangOf = () => sets.find(x => x.id === cur)?.language || "en";
+function setSetTab(t) {
+  setTab = t; $("setList").hidden = t !== "list"; $("setCards").hidden = t !== "cards";
+  document.querySelectorAll("[data-set-tab]").forEach(b => b.classList.toggle("active", b.dataset.setTab === t));
+  if (t === "cards") fcStart(false);
+}
+function fcStart(mix) {
+  const open = scope().filter(w => !w.learned), pool = open.length ? open : scope();
+  fcDeck = mix ? shuffle(pool) : pool.slice(); fcI = 0; fcFlip = false; fcKnown = 0; fcRender();
+}
+function fcRender() {
+  const n = fcDeck.length, done = n > 0 && fcI >= n, w = fcDeck[fcI];
+  $("fcEmpty").hidden = n > 0; $("fcCard").hidden = !n || done; $("fcActions").hidden = !n || done; $("fcDone").hidden = !done;
+  $("fcCount").textContent = n ? `Thẻ ${Math.min(fcI + 1, n)}/${n}` : "";
+  $("fcBar").style.width = (n ? 100 * fcI / n : 0) + "%";
+  if (done) { $("fcSummary").textContent = `Bạn đã thuộc ${fcKnown}/${n} thẻ trong lượt này.`; return; }
+  if (!w) return;
+  $("fcFront").textContent = w.term || "";
+  const back = $("fcBack"); back.replaceChildren(el("div", "flc-r", w.reading || w.pinyin || ""), el("div", "flc-m", w.meaning || "—"));
+  if (w.example) back.append(el("div", "mu", w.example));
+  $("fcFront").hidden = fcFlip; back.hidden = !fcFlip;
+}
+function fcNext(known) {
+  const w = fcDeck[fcI]; if (!w || fcI >= fcDeck.length) return;
+  if (known) fcKnown++;
+  updateDoc(doc(db, "users", uid, "words", w.id), { learned: known }).catch(e => say("Lưu thất bại: " + e.code));
+  fcI++; fcFlip = false; fcRender();
+}
+document.querySelectorAll("[data-set-tab]").forEach(b => b.onclick = () => setSetTab(b.dataset.setTab));
+document.querySelectorAll("[data-st]").forEach(b => b.onclick = () => { stFilter = b.dataset.st; render(); });
+document.querySelectorAll("[data-lg]").forEach(b => b.onclick = () => { libLang = b.dataset.lg; renderAll(); });
+$("fcCard").onclick = () => { fcFlip = !fcFlip; fcRender(); };
+$("fcKnow").onclick = () => fcNext(true);
+$("fcAgain").onclick = () => fcNext(false);
+$("fcSpeak").onclick = () => { const w = fcDeck[fcI]; if (w) speakWord(w.term, w.lang || setLangOf()); };
+$("fcShuffle").onclick = () => fcStart(true);
+$("fcRestart").onclick = () => fcStart(false);
+$("dashStudy").onclick = () => {
+  let id = $("dashSetSelect").value;
+  if (id === "all") { const f = allSets().find(x => words.some(w => w.setId === x.id && !w.learned)) || allSets()[0]; if (!f) { go("lib"); return; } id = f.id; }
+  go("set", id); setSetTab("cards");
+};
+document.addEventListener("keydown", e => {
+  if (page !== "set" || setTab !== "cards") return;
+  const a = document.activeElement, t = a && a.tagName;
+  if (t === "INPUT" || t === "TEXTAREA" || t === "SELECT" || t === "BUTTON" || (a && a.isContentEditable)) return;
+  if (e.key === " ") { e.preventDefault(); fcFlip = !fcFlip; fcRender(); }
+  else if (e.key === "ArrowRight") fcNext(true);
+  else if (e.key === "ArrowLeft") fcNext(false);
+});
+
 function renderAll() {
   if(page === "notes") renderNotes();
   if(page === "groups") renderStudyGroups();
@@ -1060,15 +1159,18 @@ function renderAll() {
     const st=stOf(x.id);info.append(el("b",null,x.name),el("small",null,`${words.filter(w=>w.setId===x.id&&!w.learned).length} từ chưa học · ${st.p}% hoàn thành`));
     r.append(ic,info,status);r.onclick=()=>go("set",x.id);td.append(r);
   });
-  const pinBox=$("pinnedSets");if(pinBox){pinBox.innerHTML="";const pins=pinnedList(),pfs=folders.filter(x=>pins.includes("folder:"+x.id)),ps=sl.filter(x=>pins.includes("set:"+x.id));if(!pfs.length&&!ps.length)pinBox.innerHTML='<div class="mu" style="padding:5px 12px;font-size:12px">Chưa ghim mục nào</div>';pfs.forEach(x=>{const bt=el("button","si","▰ "+x.name);bt.onclick=()=>go("folders");pinBox.append(bt);});ps.forEach(x=>{const bt=el("button","si","▣ "+x.name);bt.onclick=()=>go("set",x.id);pinBox.append(bt);});}
+  const pinBox=$("pinnedSets");if(pinBox){pinBox.innerHTML="";const pins=pinnedList(),pfs=folders.filter(x=>pins.includes("folder:"+x.id)),ps=sl.filter(x=>pins.includes("set:"+x.id));if(!pfs.length&&!ps.length)pinBox.innerHTML='<div class="mu" style="padding:5px 12px;font-size:12px">Chưa ghim mục nào</div>';pfs.forEach(x=>{const bt=el("button","si","▰ "+x.name);bt.onclick=()=>{libFolder=x.id;go("lib");};pinBox.append(bt);});ps.forEach(x=>{const bt=el("button","si","▣ "+x.name);bt.onclick=()=>go("set",x.id);pinBox.append(bt);});}
   renderFolders();refreshFolderOptions();
   const q = norm($("gSearch").value), so = $("sort").value;
-  const lst = sl.filter(x => !q || norm(x.name + " " + (x.desc || "")).includes(q));
+  document.querySelectorAll("[data-lg]").forEach(b => b.classList.toggle("active", b.dataset.lg === libLang));
+  const fnote = $("libFolderNote");
+  if (fnote) { const ff = folders.find(f => f.id === libFolder); fnote.hidden = !ff; fnote.replaceChildren(); if (ff) { fnote.append(document.createTextNode("Đang lọc theo folder: " + ff.name + " ")); const x = el("button", "sec", "✕ Bỏ lọc"); x.onclick = () => { libFolder = ""; renderAll(); }; fnote.append(x); } }
+  const lst = sl.filter(x => (libLang === "all" || x.language === libLang) && (!libFolder || x.folderId === libFolder) && (!q || norm(x.name + " " + (x.desc || "")).includes(q)));
   lst.sort(so === "name" ? (a, b) => a.name.localeCompare(b.name) : so === "prog" ? (a, b) => stOf(b.id).p - stOf(a.id).p : (a, b) => b.createdAt - a.createdAt);
   fillSets($("lGrid"), lst);
   render();
 }
-document.addEventListener("click", e => { const nav=e.target.closest("[data-p]"); if(nav){ e.preventDefault(); go(nav.dataset.p); } });
+document.addEventListener("click", e => { const nav=e.target.closest("[data-p]"); if(nav){ e.preventDefault(); if(nav.dataset.p==="lib"&&nav.closest("#side"))libFolder=""; go(nav.dataset.p); } });
 $("createStudyGroup").onclick=createSg;$("joinStudyGroup").onclick=joinSg;$("groupSearch").oninput=renderStudyGroups;
 $("dashSetSelect").onchange=renderAll;
 $("startTest").onclick=startTest;

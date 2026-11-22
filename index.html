@@ -759,7 +759,7 @@ html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
   <div class="pm-head"><span class="pm-av" id="pmAv"></span><div><b id="pmName"></b><small>Học viên</small></div></div>
   <div class="pm-group">
    <button type="button" class="pm-row" id="profilePersonal"><span class="pm-ic i-per"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="pm-t">Thông tin cá nhân</span><span class="pm-go">›</span></button>
-   <div class="pm-lang-row"><span class="pm-lang-label">Ngôn ngữ / Language</span><div class="pm-lang-switch" role="group" aria-label="Chọn ngôn ngữ"><button type="button" class="pm-lang-btn" data-lang="vi" id="pmLangVi">VI</button><button type="button" class="pm-lang-btn" data-lang="en" id="pmLangEn">EN</button></div></div>
+   <div class="pm-lang-row"><span class="pm-lang-label">Ngôn ngữ</span><div class="pm-lang-switch" role="group" aria-label="Chọn ngôn ngữ"><button type="button" class="pm-lang-btn" data-lang="vi" id="pmLangVi">VI</button><button type="button" class="pm-lang-btn" data-lang="en" id="pmLangEn">EN</button></div></div>
    <button type="button" class="pm-row" id="profileTheme"><span class="pm-ic i-th" id="profileThemeIcon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8 8 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></span><span class="pm-t" id="profileThemeLabel">Chế độ tối</span><span class="sw"><i></i></span></button>
   </div>
   <button type="button" class="pm-row pm-out signout" id="profileLogout"><span class="pm-ic i-out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M13 4h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/></svg></span><span class="pm-t">Đăng xuất</span></button>
@@ -772,7 +772,7 @@ html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
 <div class="topr"><button id="backBtn" class="back-btn" type="button" aria-label="Quay lại" title="Quay lại"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span>Quay lại</span></button><button id="menu" class="sec" aria-label="Mở menu"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><span style="flex:1"></span><button id="newBtn"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Tạo vocabulary</button></div>
 <div class="in">
 <section id="pDash">
-  <div class="hero"><div><div class="eb">YOUR LEARNING SPACE</div><h1>Welcome, <span id="dHi"></span>!</h1><div class="mu">Hôm nay bạn muốn chinh phục những từ vựng nào?</div></div><button id="goStudy" class="big"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m9 5 10 7-10 7z"/></svg> Vào học tập</button></div>
+  <div class="hero"><div><h1>Welcome, <span id="dHi"></span>!</h1><div class="mu">Hôm nay bạn muốn chinh phục những từ vựng nào?</div></div><button id="goStudy" class="big"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m9 5 10 7-10 7z"/></svg> Vào học tập</button></div>
   <div class="home-quick-actions" aria-label="Lối tắt chức năng">
     <button type="button" class="home-action primary" id="homeCreateVocab"><span>＋</span><b>Tạo bộ từ vựng</b><small>Thêm chủ đề mới</small></button>
     <button type="button" class="home-action" data-home-go="lib"><span>▣</span><b>Vocabulary</b><small>Xem các bộ từ</small></button>
@@ -783,20 +783,20 @@ html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
   </div>
   <div class="home-grid">
     <div class="panel learning-panel">
-      <div class="section-head"><div><div class="eb">LEARNING PROGRESS</div><h2>Tiến độ học tập</h2></div><select id="dashSetSelect" aria-label="Chọn bộ từ vựng"><option value="all">Tất cả bộ từ vựng</option></select> <button type="button" class="sec" id="dashStudy">▶ Học flashcard</button></div>
+      <div class="section-head"><div><h2>Tiến độ học tập</h2></div><select id="dashSetSelect" aria-label="Chọn bộ từ vựng"><option value="all">Tất cả bộ từ vựng</option></select> <button type="button" class="sec" id="dashStudy">▶ Học flashcard</button></div>
       <div class="word-table-wrap"><table class="word-table"><thead><tr><th>STT</th><th>Từ vựng</th><th>Phiên âm / Pinyin</th><th>Nghĩa</th><th>Trạng thái</th></tr></thead><tbody id="dashWords"></tbody></table></div>
     </div>
-    <div class="stats-panel panel"><div class="eb">OVERVIEW</div><h2>Tổng quan</h2><div class="stats-three" id="dStats"></div></div>
+    <div class="stats-panel panel"><h2>Tổng quan</h2><div class="stats-three" id="dStats"></div></div>
   </div>
   <div class="home-lower">
     <div class="panel">
-      <div class="section-head"><div><div class="eb">YOUR VOCABULARY</div><h2>Từ vựng của bạn</h2></div><a id="seeAll">Xem tất cả →</a></div>
+      <div class="section-head"><div><h2>Từ vựng của bạn</h2></div><a id="seeAll">Xem tất cả →</a></div>
       <div id="dTodo" class="unfinished-list"></div>
     </div>
     
   </div>
   <div class="panel home-notes-panel">
-    <div class="section-head"><div><div class="eb">PERSONAL NOTES</div><h2>Ghi chú của tôi</h2><p class="mu" style="margin:4px 0 0">Ghi nhanh những điều quan trọng trong quá trình học tập.</p></div><a id="homeSeeNotes">Xem tất cả ghi chú →</a></div>
+    <div class="section-head"><div><h2>Ghi chú của tôi</h2><p class="mu" style="margin:4px 0 0">Ghi nhanh những điều quan trọng trong quá trình học tập.</p></div><a id="homeSeeNotes">Xem tất cả ghi chú →</a></div>
     <div class="home-note-compose"><textarea id="homeNoteInput" rows="2" placeholder="Viết ghi chú nhanh... (Ctrl + Enter để lưu)"></textarea><button id="homeAddNote" type="button">＋ Thêm ghi chú</button></div>
     <div id="homeNotesList" class="home-notes-list"></div>
   </div>
@@ -807,7 +807,7 @@ html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
 </section>
 <section id="pFolders" hidden><div class="lh2"><div><h1 style="margin:0">Folders</h1><p class="mu">Sắp xếp các bộ từ vựng theo chủ đề.</p></div><button id="newFolder">＋ Tạo folder</button></div><div class="sg" id="folderGrid"></div></section>
 <section id="pProgress" hidden>
- <div class="group-page-head"><div><div class="eb">YOUR ACHIEVEMENTS</div><h1>Tiến độ học tập</h1><p class="mu">Theo dõi mức độ ghi nhớ từ vựng của bạn.</p></div></div>
+ <div class="group-page-head"><div><h1>Tiến độ học tập</h1><p class="mu">Theo dõi mức độ ghi nhớ từ vựng của bạn.</p></div></div>
  <div id="progressSummary" class="progress-summary"></div>
  <div class="panel"><div class="section-head"><div><h2 style="margin:0">Tiến độ theo bộ từ vựng</h2><p class="mu">Bạn có thể cập nhật trạng thái học ngay tại đây.</p></div></div><div id="progressSets" class="progress-set-list"></div></div>
  <div class="panel"><div class="section-head"><div><h2 style="margin:0">Danh sách từ cần ôn</h2><p class="mu">Các từ chưa được đánh dấu đã học.</p></div></div><div class="scroll"><table><thead><tr><th>Từ vựng</th><th>Phiên âm / Pinyin</th><th>Nghĩa</th><th>Bộ từ</th><th></th></tr></thead><tbody id="progressWords"></tbody></table></div></div>
@@ -1494,7 +1494,7 @@ setTheme(th);
  const dict={
  'Home':'Home','WORKSPACE':'WORKSPACE','LIBRARY':'LIBRARY','PERSONAL':'PERSONAL','PINNED':'PINNED',
  'Thông báo':'Notifications','Vocabulary':'Vocabulary','Folders':'Folders','Tiến độ':'Progress','Note':'Notes','Ghi chú':'Notes','Nhắc nhở':'Reminders','Đã ghim':'Pinned',
- 'Thông tin cá nhân':'Personal information','Chế độ tối':'Dark mode','Đăng xuất':'Sign out','Học viên':'Learner','Ngôn ngữ / Language':'Language',
+ 'Thông tin cá nhân':'Personal information','Chế độ tối':'Dark mode','Đăng xuất':'Sign out','Học viên':'Learner','Ngôn ngữ':'Language',
  'Welcome, !':'Welcome, !','Hôm nay bạn muốn chinh phục những từ vựng nào?':'What vocabulary would you like to master today?',
  'Vào học tập':'Start studying','＋ Tạo bộ từ vựng Thêm chủ đề mới':'＋ Create vocabulary set Add a new topic','▣ Vocabulary Xem các bộ từ':'▣ Vocabulary Browse your sets','▰ Folders Sắp xếp bộ từ':'▰ Folders Organize your sets','▥ Tiến độ Xem kết quả học':'▥ Progress View your learning results','▧ Note Ghi nhớ điều quan trọng':'▧ Notes Remember important things','◉ Thông báo Xem hoạt động mới':'◉ Notifications View recent activity',
  'Tiến độ học tập':'Learning progress','Tất cả bộ từ vựng':'All vocabulary sets','Học flashcard':'Study flashcards','Tổng quan':'Overview','Từ vựng của bạn':'Your vocabulary','Ghi chú của tôi':'My notes','Ghi nhanh những điều quan trọng trong quá trình học tập.':'Quickly write down important things from your studies.','＋ Thêm ghi chú':'＋ Add note',
@@ -1518,7 +1518,7 @@ setTheme(th);
  const originals=new WeakMap();let translating=false;
  function tr(s){if(dict[s]!==undefined)return dict[s];for(const [re,to] of rx)if(re.test(s))return s.replace(re,to);return s;}
  function translateNode(n){if(!n||n.nodeType!==3)return;const raw=originals.get(n)??n.nodeValue;if(!originals.has(n))originals.set(n,raw);const next=window.curLang==='en'?tr(raw):raw;if(n.nodeValue!==next)n.nodeValue=next;}
- function walk(root){if(root.nodeType===3){translateNode(root);return;}if(root.nodeType!==1&&root.nodeType!==9)return; if(root.nodeType===1&&root.matches('script,style,textarea,input,[contenteditable="true"]'))return;const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=walker.nextNode())translateNode(n);if(root.querySelectorAll){root.querySelectorAll('input[placeholder],textarea[placeholder],input[aria-label],button[title]').forEach(e=>{for(const a of ['placeholder','aria-label','title'])if(e.hasAttribute(a)){const key='__i18n_'+a;if(!e.dataset[key])e.dataset[key]=e.getAttribute(a);e.setAttribute(a,window.curLang==='en'?tr(e.dataset[key]):e.dataset[key]);}})}}
+ function walk(root){if(root.nodeType===3){translateNode(root);return;}if(root.nodeType!==1&&root.nodeType!==9)return; if(root.nodeType===1&&root.matches('script,style,textarea,input,[contenteditable="true"]'))return;const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=walker.nextNode())translateNode(n);if(root.querySelectorAll){root.querySelectorAll('input[placeholder],textarea[placeholder],input[aria-label],button[title]').forEach(e=>{for(const a of ['placeholder','aria-label','title'])if(e.hasAttribute(a)){const key='i18nOriginal'+a.split('-').map(part=>part.charAt(0).toUpperCase()+part.slice(1)).join('');if(!e.dataset[key])e.dataset[key]=e.getAttribute(a);e.setAttribute(a,window.curLang==='en'?tr(e.dataset[key]):e.dataset[key]);}})}}
  const oldSet=window.setUi;window.setUi=function(lang){if(oldSet)oldSet(lang);window.curLang=lang;document.documentElement.lang=lang;translating=true;walk(document.getElementById('app')||document.body);walk(document.getElementById('auth')||document.body);translating=false;};
  const observer=new MutationObserver(ms=>{if(translating)return;for(const m of ms){if(m.type==='childList')m.addedNodes.forEach(n=>walk(n));else if(m.type==='characterData')translateNode(m.target);}});observer.observe(document.body,{subtree:true,childList:true});
  document.addEventListener('DOMContentLoaded',()=>window.setUi(window.curLang||'vi'));

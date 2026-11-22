@@ -113,6 +113,9 @@ tr.done td{color:#888}
 #app .top{display:flex;align-items:center;gap:12px;background:var(--card);border-bottom:1px solid var(--bd2);padding:10px 18px}
 #app .lg{width:30px;height:30px;border-radius:8px;background:var(--pr);color:#fff;display:grid;place-items:center}
 #app .top #gSearch{flex:1;max-width:420px;border-radius:99px;background:var(--bg);border:2px solid transparent}
+#app .back-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--bd2);background:var(--card);color:var(--pr);border-radius:999px;padding:9px 14px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px #2563eb10}
+#app .back-btn:hover{background:var(--sel)}
+#app .back-btn:disabled{opacity:.4;cursor:not-allowed}
 #app .tr{margin-left:auto;display:flex;align-items:center;gap:10px;font-weight:600}
 #app .av{width:32px;height:32px;border-radius:50%;background:#ffcd1f;color:#282e3e;display:grid;place-items:center;font-weight:700}
 #app .bodyw{flex:1;display:flex;min-height:0;position:relative}
@@ -186,7 +189,7 @@ tr.done td{color:#888}
 #modal .mbox{background:var(--card);border-radius:16px;padding:24px;width:min(440px,92vw);display:flex;flex-direction:column;gap:12px}
 #modal .mact{display:flex;justify-content:flex-end;gap:10px}
 #menu{display:none}
-@media(max-width:860px){#menu{display:block}#app .sb{position:absolute;z-index:5;top:0;bottom:0;left:-270px;transition:left .25s}#app .sb.open{left:0;box-shadow:4px 0 20px #0004}#app .brand{display:none}#app .qo{grid-template-columns:1fr}#app .pr span:first-child{width:90px}}
+@media(max-width:860px){#menu{display:inline-flex}#app .sb{position:absolute;z-index:25;top:0;bottom:0;left:0;width:min(280px,86vw);max-width:86vw;transform:translateX(-105%);transition:transform .25s ease;box-shadow:none}#app .sb.open{left:0;transform:translateX(0);box-shadow:8px 0 28px #0f172a26}#app .brand{display:none}#app .qo{grid-template-columns:1fr}#app .pr span:first-child{width:90px}}
 /* ===== Template kiểu "không gian học tập": đỏ rượu + kem ===== */
 html{--bg:#f5f8ff;--card:#fff;--tx:#1e293b;--mu:#64748b;--bd:#dbeafe;--bd2:#e8effb;--pr:#2563eb;--sel:#eff6ff;--done:#f0fdf4;--okbg:#dcfce7;--nobg:#fee2e2;--side:#fff}
 html[data-theme=dark]{--bg:#0f172a;--card:#17243b;--tx:#e8f0ff;--mu:#a8b8d0;--bd:#304766;--bd2:#253a58;--pr:#60a5fa;--sel:#1e3558;--done:#10302a;--okbg:#10382a;--nobg:#3f1d25;--side:#111d31}
@@ -602,6 +605,90 @@ html[data-theme=dark] #app .prof .profile-trigger{background:rgba(255,255,255,.0
 #app .prof .profile-trigger:hover{transform:translateY(-1px);background:linear-gradient(180deg,#fff,rgba(255,255,255,.65))}
 #app .pm-chev{margin-left:auto;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:rgba(37,99,235,.1);color:var(--pr);font-size:13px;transition:transform .3s}
 #app .profile-trigger[aria-expanded=true] .pm-chev{transform:rotate(180deg)}
+
+/* Responsive overflow repair + consistent icon language */
+#app{min-width:0;overflow:hidden}
+#app .bodyw{min-width:0;min-height:0;overflow:hidden}
+#app .pg{min-width:0;width:calc(100% - 270px);max-width:100%;overflow-x:hidden;overscroll-behavior:contain}
+#app .in{width:100%;min-width:0;max-width:1280px}
+#app .personal-grid{grid-template-columns:minmax(0,1.2fr) minmax(0,.9fr)}
+#app .personal-fields-three{grid-template-columns:repeat(2,minmax(0,1fr))}
+#app .solid-icon{width:22px;height:22px;flex:none}
+#app .solid-icon svg,#app .pm-ic svg{width:19px;height:19px;display:block;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+#app .pm-ic{display:grid;place-items:center}
+#app button{border-radius:999px;min-height:38px;box-shadow:0 2px 7px #1d4ed80c}
+#app button.sec{border:1px solid var(--bd);}
+#app .si{border-radius:12px;box-shadow:none}
+#app .profile-menu button{border-radius:12px;box-shadow:none}
+#app .personal-primary{border-radius:999px;background:linear-gradient(135deg,#60a5fa,#2563eb);box-shadow:0 7px 16px #2563eb24}
+#app .personal-primary:hover{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
+#app .personal-kicker{color:#2563eb}
+#app .personal-number{background:#eaf2ff;color:#2563eb}
+#app .personal-head-icon{color:#2563eb;background:#eaf2ff}
+#app .personal-card input:focus,#app .personal-card textarea:focus{border-color:#60a5fa;box-shadow:0 0 0 3px #2563eb16}
+#app .personal-card input[readonly]{background:var(--bg);color:var(--mu)}
+@media(max-width:860px){
+ #app .pg{width:100%;padding:16px 14px 40px}
+ #app .personal-grid{grid-template-columns:minmax(0,1fr)}
+ #app .personal-card{min-height:0}
+ #app .personal-fields-three{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #app .home-grid,#app .home-lower{grid-template-columns:minmax(0,1fr)}
+ #app .hero{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:520px){
+ #app .pg{padding:12px 10px 32px}
+ #app .personal-card{padding:16px}
+ #app .personal-fields-three{grid-template-columns:minmax(0,1fr)}
+ #app .personal-profile-row{grid-template-columns:72px minmax(0,1fr);gap:12px}
+ #app .personal-avatar-wrap{width:68px;height:68px}
+ #app .personal-card-head h2{font-size:18px}
+ #app .personal-title{font-size:28px}
+ #app .topr{gap:8px}
+ #app #newBtn{padding:9px 12px;font-size:12px}
+ #app .lh2{align-items:stretch}
+ #app .lh2 input,#app .lh2 select{max-width:100%;min-width:0}
+}
+
+
+#app .ui-icon{width:17px;height:17px;display:inline-block;vertical-align:-3px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#app .personal-head-icon .ui-icon{width:19px;height:19px;vertical-align:middle}
+#app .personal-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+#app .remove-avatar{display:inline-flex;align-items:center;gap:4px}
+#app #menu{align-items:center;justify-content:center;padding:9px 12px}
+#app #newBtn{display:inline-flex;align-items:center;gap:7px}
+
+
+/* ===== Liquid glass rounded select controls ===== */
+#app select,
+#app input:not([type=checkbox]):not([type=radio]){
+  border-radius:18px;
+}
+#app select{
+  -webkit-appearance:none;appearance:none;
+  min-height:44px;
+  padding:10px 42px 10px 16px;
+  color:var(--tx);
+  background-color:rgba(255,255,255,.68);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"),linear-gradient(135deg,rgba(255,255,255,.92),rgba(219,234,254,.46));
+  background-repeat:no-repeat,no-repeat;
+  background-position:right 14px center,center;
+  background-size:18px,100% 100%;
+  border:1px solid rgba(147,197,253,.72);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 5px 16px rgba(37,99,235,.09);
+  -webkit-backdrop-filter:blur(20px) saturate(1.65);
+  backdrop-filter:blur(20px) saturate(1.65);
+  transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;
+  cursor:pointer;
+}
+#app select:hover{border-color:rgba(59,130,246,.72);box-shadow:inset 0 1px 0 #fff,0 8px 20px rgba(37,99,235,.14)}
+#app select:focus{outline:none;border-color:#60a5fa;box-shadow:0 0 0 4px rgba(96,165,250,.18),inset 0 1px 0 #fff,0 8px 20px rgba(37,99,235,.13)}
+#app select option{color:#1e3a8a;background:#f5f9ff;padding:10px;font-weight:600}
+#app select option:checked{color:#fff;background:#2563eb}
+#app #dashSetSelect{max-width:240px;border-radius:20px;padding-right:44px;background-color:rgba(255,255,255,.72)}
+html[data-theme=dark] #app select{color:var(--tx);background-color:rgba(23,35,55,.78);border-color:rgba(96,165,250,.34);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2393c5fd' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"),linear-gradient(135deg,rgba(30,55,85,.9),rgba(23,35,55,.75))}
+html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
+@media(max-width:600px){#app #dashSetSelect{width:100%;max-width:100%}}
+
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -658,34 +745,34 @@ html[data-theme=dark] #app .prof .profile-trigger{background:rgba(255,255,255,.0
 <aside class="sb" id="side">
   <div class="brand2"><span class="lg2">V</span><div><b>VOCAB SPACE</b><span>LEARNING JOURNEY</span></div></div>
   <div class="nav-label">WORKSPACE</div>
-  <button class="si" data-p="dash"><span class="solid-icon">⌂</span>Home</button>
-  <button class="si" data-p="noti"><span class="solid-icon">◉</span>Thông báo</button>
+  <button class="si" data-p="dash"><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span>Home</button>
+  <button class="si" data-p="noti"><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></span>Thông báo</button>
   <div class="nav-label">LIBRARY</div>
-  <button class="si" data-p="lib"><span class="solid-icon">▣</span>Vocabulary</button>
-  <button class="si" data-p="folders"><span class="solid-icon">▰</span>Folders</button>
-  <button class="si" data-p="progress"><span class="solid-icon">▥</span>Tiến độ</button>
+  <button class="si" data-p="lib"><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM8 8h8v8H8z"/></svg></span>Vocabulary</button>
+  <button class="si" data-p="folders"><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3zM3 5h7l2 2"/></svg></span>Folders</button>
+  <button class="si" data-p="progress"><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5h4v14zM10 19V9h4v10zM16 19V3h4v16z"/></svg></span>Tiến độ</button>
   <div class="nav-label pinned-label">PINNED</div><div id="pinnedSets"></div>
   <div class="nav-divider"></div><div class="nav-label">PERSONAL</div>
-  <button class="si" data-p="notes"><span class="solid-icon">▧</span>Note</button>
+  <button class="si" data-p="notes"><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/></svg></span>Note</button>
   <div class="sfoot"><div class="prof">
     <div class="profile-menu" id="profileMenu" hidden>
   <div class="pm-head"><span class="pm-av" id="pmAv"></span><div><b id="pmName"></b><small>Học viên</small></div></div>
   <div class="pm-group">
-   <button type="button" class="pm-row" id="profileSettings"><span class="pm-ic i-set">⚙</span><span class="pm-t">Cài đặt</span><span class="pm-go">›</span></button>
-   <button type="button" class="pm-row" id="profilePersonal"><span class="pm-ic i-per">♙</span><span class="pm-t">Thông tin cá nhân</span><span class="pm-go">›</span></button>
-   <button type="button" class="pm-row" id="profileTheme"><span class="pm-ic i-th" id="profileThemeIcon">☾</span><span class="pm-t" id="profileThemeLabel">Chế độ tối</span><span class="sw"><i></i></span></button>
+   <button type="button" class="pm-row" id="profileSettings"><span class="pm-ic i-set"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM19 13.5l2-1.5-2-1.5-.5-2.1-2.5-.4L14.5 6h-5L8 8l-2.5.4L5 10.5 3 12l2 1.5.5 2.1 2.5.4L9.5 18h5l1.5-2 2.5-.4z"/></svg></span><span class="pm-t">Cài đặt</span><span class="pm-go">›</span></button>
+   <button type="button" class="pm-row" id="profilePersonal"><span class="pm-ic i-per"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="pm-t">Thông tin cá nhân</span><span class="pm-go">›</span></button>
+   <button type="button" class="pm-row" id="profileTheme"><span class="pm-ic i-th" id="profileThemeIcon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8 8 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></span><span class="pm-t" id="profileThemeLabel">Chế độ tối</span><span class="sw"><i></i></span></button>
   </div>
-  <button type="button" class="pm-row pm-out signout" id="profileLogout"><span class="pm-ic i-out">↪</span><span class="pm-t">Đăng xuất</span></button>
+  <button type="button" class="pm-row pm-out signout" id="profileLogout"><span class="pm-ic i-out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M13 4h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/></svg></span><span class="pm-t">Đăng xuất</span></button>
  </div>
     <button type="button" class="profile-trigger" id="profileTrigger" aria-expanded="false" aria-controls="profileMenu"><span class="av" id="av"></span><span class="profile-meta"><b id="who"></b><span>Học viên</span></span><span class="pm-chev">⌃</span></button>
   </div></div>
   <div class="profile-info" id="profileInfo" hidden><div class="info-card" role="dialog" aria-modal="true" aria-labelledby="profileInfoTitle"><div class="info-head"><h2 id="profileInfoTitle" style="margin:0">Thông tin cá nhân</h2><button type="button" class="sec" id="closeProfileInfo">✕</button></div><div class="info-row"><small>Tên người dùng</small><b id="profileInfoName">—</b></div><div class="info-row"><small>Email</small><b id="profileInfoEmail">—</b></div><div class="info-row"><small>Vai trò</small><b>Học viên</b></div></div></div>
 </aside>
 <div class="pg">
-<div class="topr"><button id="menu" class="sec">☰</button><span style="flex:1"></span><button id="newBtn">＋ Tạo vocabulary</button></div>
+<div class="topr"><button id="backBtn" class="back-btn" type="button" aria-label="Quay lại" title="Quay lại"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span>Quay lại</span></button><button id="menu" class="sec" aria-label="Mở menu"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><span style="flex:1"></span><button id="newBtn"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Tạo vocabulary</button></div>
 <div class="in">
 <section id="pDash">
-  <div class="hero"><div><div class="eb">YOUR LEARNING SPACE</div><h1>Welcome, <span id="dHi"></span>!</h1><div class="mu">Hôm nay bạn muốn chinh phục những từ vựng nào?</div></div><button id="goStudy" class="big">→ Vào học tập</button></div>
+  <div class="hero"><div><div class="eb">YOUR LEARNING SPACE</div><h1>Welcome, <span id="dHi"></span>!</h1><div class="mu">Hôm nay bạn muốn chinh phục những từ vựng nào?</div></div><button id="goStudy" class="big"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m9 5 10 7-10 7z"/></svg> Vào học tập</button></div>
   <div class="home-quick-actions" aria-label="Lối tắt chức năng">
     <button type="button" class="home-action primary" id="homeCreateVocab"><span>＋</span><b>Tạo bộ từ vựng</b><small>Thêm chủ đề mới</small></button>
     <button type="button" class="home-action" data-home-go="lib"><span>▣</span><b>Vocabulary</b><small>Xem các bộ từ</small></button>
@@ -734,6 +821,14 @@ html[data-theme=dark] #app .prof .profile-trigger{background:rgba(255,255,255,.0
   <div class="notes-toolbar"><div class="notes-tabs"><button type="button" class="active" data-note-tab="pending">Cần nhớ <b id="pendingCount">0</b></button><button type="button" data-note-tab="done">Đã xong <b id="doneCount">0</b></button></div><input id="noteSearch" type="search" placeholder="Tìm trong ghi chú..."></div>
   <div id="notesList" class="notes-list"><div class="notes-empty">Chưa có ghi chú nào cần nhớ.</div></div>
 </section>
+<div id="noteConfirmModal" class="note-confirm-overlay" hidden role="presentation">
+  <section class="note-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="noteConfirmTitle" aria-describedby="noteConfirmMessage">
+    <div class="note-confirm-icon" aria-hidden="true">？</div>
+    <h2 id="noteConfirmTitle">Xóa ghi chú?</h2>
+    <p id="noteConfirmMessage">Bạn có chắc muốn xóa ghi chú này không?</p>
+    <div class="note-confirm-actions"><button type="button" id="noteConfirmCancel" class="note-confirm-cancel">Hủy</button><button type="button" id="noteConfirmOk" class="note-confirm-ok">Xóa ghi chú</button></div>
+  </section>
+</div>
 <section id="pLib" hidden><div class="lh2" style="margin-top:0"><h1 style="margin:0">Vocabulary</h1><input id="gSearch" placeholder="Tìm bộ thẻ" style="margin-left:auto"><select id="sort"><option value="new">Mới nhất</option><option value="name">Tên A–Z</option><option value="prog">Mức độ học</option></select></div><div class="notes-tabs" id="libTabs" style="margin:0 0 14px;width:fit-content"><button type="button" class="active" data-lg="all">Tất cả</button><button type="button" data-lg="en">Tiếng Anh</button><button type="button" data-lg="zh">Tiếng Trung</button><button type="button" data-lg="it">Tiếng Ý</button></div>
  <div id="libFolderNote" class="mu" hidden style="margin:0 0 12px"></div>
  <div class="sg" id="lGrid"></div></section>
@@ -741,27 +836,25 @@ html[data-theme=dark] #app .prof .profile-trigger{background:rgba(255,255,255,.0
   <div class="personal-kicker">HỒ SƠ CÁ NHÂN</div><h1 class="personal-title">Thông tin cá nhân</h1>
   <div class="personal-grid">
     <section class="personal-card">
-      <header class="personal-card-head"><span class="personal-number">01</span><div><h2>Hồ sơ của tôi</h2><p>Thông tin cơ bản và liên hệ</p></div><span class="personal-head-icon">♟</span></header>
+      <header class="personal-card-head"><span class="personal-number">01</span><div><h2>Hồ sơ của tôi</h2><p>Thông tin cơ bản và liên hệ</p></div><span class="personal-head-icon"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span></header>
       <div class="personal-profile-row">
         <div class="personal-avatar-col"><div class="personal-avatar-wrap"><img id="personalAvatar" alt="Ảnh đại diện"><span id="personalAvatarFallback">NB</span></div><label class="upload-avatar" for="personalAvatarFile">Tải lên</label><input id="personalAvatarFile" type="file" accept="image/*" hidden><button class="remove-avatar" id="removePersonalAvatar" type="button">Xoá ảnh</button></div>
         <div class="personal-main-fields"><label>Họ và tên<input id="personalName" type="text" placeholder="Nhập họ và tên"></label><label>Tên đăng nhập<input id="personalUsername" type="text" readonly></label></div>
       </div>
       <div class="personal-fields-three">
         <label>Ngày sinh<input id="personalBirthday" type="date"></label>
-        <label>Số điện thoại<input id="personalPhone" type="tel" placeholder="Nhập số điện thoại"></label>
         <label>Email<input id="personalEmail" type="email" readonly></label>
       </div>
-      <div class="personal-parent-field"><label>Số điện thoại phụ huynh<input id="personalParentPhone" type="tel" placeholder="Nhập số điện thoại phụ huynh"></label></div>
       <label class="personal-bio-label">Giới thiệu<textarea id="personalBio" maxlength="1000" placeholder="Chia sẻ ngắn về mục tiêu học tập của bạn..."></textarea><small><span id="personalBioCount">0</span>/1.000 ký tự</small></label>
-      <button class="personal-primary" id="savePersonal" type="button">▣ Lưu thông tin cá nhân</button><div class="personal-feedback" id="personalFeedback" role="status"></div>
+      <button class="personal-primary" id="savePersonal" type="button"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M5 4h12l3 3v13H4V4zM8 4v6h8V4M8 20v-6h8v6"/></svg> Lưu thông tin cá nhân</button><div class="personal-feedback" id="personalFeedback" role="status"></div>
     </section>
     <section class="personal-card password-card">
-      <header class="personal-card-head"><span class="personal-number">02</span><div><h2>Đổi mật khẩu</h2><p>Bảo vệ tài khoản của bạn</p></div><span class="personal-head-icon">▣</span></header>
+      <header class="personal-card-head"><span class="personal-number">02</span><div><h2>Đổi mật khẩu</h2><p>Bảo vệ tài khoản của bạn</p></div><span class="personal-head-icon"><svg class="ui-icon" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span></header>
       <form id="passwordForm" class="password-form">
         <label>Mật khẩu hiện tại<input id="currentPassword" type="password" autocomplete="current-password" required></label>
         <label>Mật khẩu mới<input id="newPassword" type="password" autocomplete="new-password" minlength="6" required></label><small class="password-hint">Tối thiểu 6 ký tự.</small>
         <label>Nhập lại mật khẩu mới<input id="confirmPassword" type="password" autocomplete="new-password" minlength="6" required></label>
-        <button class="personal-primary" type="submit">▣ Đổi mật khẩu</button><div class="personal-feedback" id="passwordFeedback" role="status"></div>
+        <button class="personal-primary" type="submit"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 15v3M6 10V7a6 6 0 0 1 12 0v3M5 10h14v11H5z"/></svg> Đổi mật khẩu</button><div class="personal-feedback" id="passwordFeedback" role="status"></div>
       </form>
       <div class="security-note"><span>✓</span><div><b>Bảo mật tài khoản</b><p>Không chia sẻ mật khẩu. Sau khi đổi, hãy dùng mật khẩu mới ở lần đăng nhập tiếp theo.</p></div></div>
     </section>
@@ -800,6 +893,33 @@ html[data-theme=dark] #app .prof .profile-trigger{background:rgba(255,255,255,.0
 </main>
 </div>
 
+
+<style>
+/* In-app liquid-glass confirmation for Notes */
+#app .note-confirm-overlay{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;padding:20px;background:rgba(15,35,70,.34);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#app .note-confirm-overlay[hidden]{display:none}
+#app .note-confirm-dialog{width:min(100%,410px);padding:25px 24px 20px;border:1px solid rgba(255,255,255,.82);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(235,244,255,.88));box-shadow:0 24px 70px rgba(20,55,110,.24),inset 0 1px 0 #fff;text-align:center;color:#18345e;animation:noteDialogIn .18s ease-out}
+#app .note-confirm-icon{width:48px;height:48px;margin:0 auto 13px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(145deg,#eff6ff,#dbeafe);color:#2563eb;font-size:25px;font-weight:800;box-shadow:inset 0 1px 0 #fff,0 7px 18px rgba(37,99,235,.12)}
+#app .note-confirm-dialog h2{font-size:19px;font-weight:800;margin:0 0 8px;color:#173765}
+#app .note-confirm-dialog p{font-size:13px;line-height:1.6;color:#617795;margin:0 auto 21px;max-width:310px}
+#app .note-confirm-actions{display:flex;justify-content:center;gap:10px}
+#app .note-confirm-actions button{min-width:112px;padding:10px 17px;border-radius:999px;font-size:13px;font-weight:750;cursor:pointer;transition:transform .16s,box-shadow .16s}
+#app .note-confirm-actions button:hover{transform:translateY(-1px)}
+#app .note-confirm-cancel{border:1px solid #cbdcf3;background:rgba(255,255,255,.78);color:#45658f;box-shadow:inset 0 1px 0 #fff}
+#app .note-confirm-ok{border:1px solid #2563eb;background:linear-gradient(135deg,#60a5fa,#2563eb);color:#fff;box-shadow:0 6px 15px rgba(37,99,235,.23)}
+#app .notes-compose{background:linear-gradient(145deg,rgba(255,255,255,.88),rgba(235,244,255,.72));border:1px solid rgba(255,255,255,.9);box-shadow:0 12px 30px rgba(37,99,235,.09),inset 0 1px 0 #fff}
+#app .notes-compose textarea,#app #noteDate,#app #noteSearch{color:#1e3a5f}
+#app #addNoteBtn{background:linear-gradient(135deg,#60a5fa,#2563eb);color:#fff;border:1px solid rgba(255,255,255,.65);border-radius:999px;box-shadow:0 6px 15px rgba(37,99,235,.18)}
+#app .note-item{background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(239,246,255,.78));border:1px solid rgba(255,255,255,.9);box-shadow:0 7px 20px rgba(37,99,235,.07),inset 0 1px 0 #fff}
+#app .notes-heading h1{color:#1e40af}
+html[data-theme=dark] #app .note-confirm-dialog{background:linear-gradient(145deg,rgba(30,48,75,.97),rgba(22,37,61,.96));border-color:rgba(148,180,225,.24);color:#eaf2ff}
+html[data-theme=dark] #app .note-confirm-dialog h2{color:#eff6ff}
+html[data-theme=dark] #app .note-confirm-dialog p{color:#b4c6df}
+html[data-theme=dark] #app .note-confirm-cancel{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#dbeafe}
+html[data-theme=dark] #app .notes-compose,html[data-theme=dark] #app .note-item{background:rgba(24,42,68,.78);border-color:rgba(148,180,225,.18)}
+@keyframes noteDialogIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:480px){#app .note-confirm-dialog{padding:22px 17px 18px;border-radius:21px}#app .note-confirm-actions button{flex:1;min-width:0}}
+</style>
 <script>
 const T={
 vi:{h1:"Học từ mới,",h2:"nhớ thật lâu.",hs:"Mỗi ngày một từ, một bước xa hơn.",m1:"xin chào",m2:"tình cờ gặp điều may",m3:"cảm ơn",sub:"QUẢN LÝ TỪ VỰNG",kick:"VOCAB SPACE · KHÔNG GIAN TỪ VỰNG CỦA BẠN",jt:"MY VOCAB JOURNEY",q1:"One new word.",q2:"A wider world.",qs:"Mỗi ngày một từ, một bước xa hơn.",f1:"◇ Ba ngôn ngữ",f2:"▣ Theo dõi từ đã thuộc",f3:"⇪ Import Excel / CSV",wel:"CHÀO MỪNG TRỞ LẠI",lu:"Tên đăng nhập",lp:"Mật khẩu",btn:"Đăng nhập",help:"Chưa có tài khoản hoặc quên mật khẩu? Liên hệ quản trị viên.",ct:"VOCAB SPACE",cs:"Học một chút mỗi ngày, nhớ thật lâu.",foot:"Vocab Space · Learn a little, remember a lot.",pu:"Tên đăng nhập",pp:"Nhập mật khẩu",wel:"Chào mừng trở lại",sub:"Đăng nhập để quản lý từ vựng của bạn."},
@@ -854,7 +974,7 @@ const $ = id => document.getElementById(id);
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined && text !== null) n.textContent = text; return n; };
 const norm = v => String(v == null ? "" : v).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
 
-let uid = null, lang = "zh", words = [], unsub = null, fi = 0, rk = null, cur = "", sets = [], folders = [], page = "dash", unsub2 = null, unsubFolders = null;
+let uid = null, lang = "zh", words = [], unsub = null, fi = 0, rk = null, cur = "", sets = [], folders = [], page = "dash", pageHistory = [], unsub2 = null, unsubFolders = null;
 const col = () => collection(db, "users", uid, "words");
 const foldersCol = () => collection(db, "users", uid, "folders");
 const isZh = t => /[\u4e00-\u9fff]/.test(t);
@@ -936,7 +1056,7 @@ function loadPersonalForm(){
   const u=auth.currentUser, d=getPersonalData(), username=(u?.email||"").split("@")[0];
   $("personalName").value=d.name||u?.displayName||$("who").textContent||"";
   $("personalUsername").value=username; $("personalEmail").value=u?.email||"";
-  $("personalBirthday").value=d.birthday||""; $("personalPhone").value=d.phone||""; $("personalParentPhone").value=d.parentPhone||""; $("personalBio").value=d.bio||"";
+  $("personalBirthday").value=d.birthday||""; $("personalBio").value=d.bio||"";
   $("personalBioCount").textContent=($("personalBio").value||"").length;
   const avatar=d.avatar||""; $("personalAvatar").src=avatar; $("personalAvatarFallback").textContent=($("personalName").value||"NB").trim().split(/\s+/).slice(-2).map(x=>x[0]).join("").toUpperCase();
   $("personalFeedback").textContent=""; $("passwordFeedback").textContent="";
@@ -945,7 +1065,8 @@ $("personalBio").addEventListener("input",()=>$("personalBioCount").textContent=
 $("personalAvatarFile").addEventListener("change",e=>{const f=e.target.files?.[0];if(!f)return;if(f.size>2*1024*1024){$("personalFeedback").textContent="Ảnh tối đa 2MB.";return;}const r=new FileReader();r.onload=()=>{$("personalAvatar").src=r.result;};r.readAsDataURL(f);});
 $("removePersonalAvatar").onclick=()=>{$("personalAvatar").removeAttribute("src");$("personalAvatarFile").value="";};
 $("savePersonal").onclick=async()=>{
-  const d={...getPersonalData(),name:$("personalName").value.trim(),birthday:$("personalBirthday").value,phone:$("personalPhone").value.trim(),parentPhone:$("personalParentPhone").value.trim(),bio:$("personalBio").value,avatar:$("personalAvatar").getAttribute("src")||""};
+  const {phone, parentPhone, ...savedProfile}=getPersonalData();
+  const d={...savedProfile,name:$("personalName").value.trim(),birthday:$("personalBirthday").value,bio:$("personalBio").value,avatar:$("personalAvatar").getAttribute("src")||""};
   try{localStorage.setItem(profileStorageKey(),JSON.stringify(d));if(auth.currentUser&&d.name)await updateProfile(auth.currentUser,{displayName:d.name});$("who").textContent=d.name||$("who").textContent;$("dHi").textContent=$("who").textContent;$("av").textContent=($("who").textContent||"?")[0].toUpperCase();$("personalFeedback").textContent="Đã lưu thông tin cá nhân.";}catch(e){$("personalFeedback").textContent="Không thể lưu: "+(e.message||e.code);}
 };
 $("passwordForm").addEventListener("submit",async e=>{
@@ -966,7 +1087,7 @@ onAuthStateChanged(auth, user => {
   $("who").textContent = getPersonalData().name || user.displayName || loginUsername;
   $("dHi").textContent = loginUsername || $("who").textContent || "bạn";
   $("av").textContent = ($("who").textContent || "?")[0].toUpperCase();
-  $("cfgWho").textContent = $("who").textContent; go("dash");
+  $("cfgWho").textContent = $("who").textContent; pageHistory = []; go("dash");
   unsub = onSnapshot(query(col(), orderBy("createdAt", "desc")), snap => {
     words = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderAll();
@@ -1003,6 +1124,7 @@ function render(){
  if(setTab==="cards")fcRender();
 }
 $("search").oninput=render;
+$("backBtn").onclick = goBack;
 $("nTerm").oninput=()=>{if(!$("nRead").dataset.manual&&sets.find(x=>x.id===cur)?.language==="zh")$("nRead").value=autoPinyin($("nTerm").value);};
 $("nRead").oninput=()=>{$("nRead").dataset.manual=$("nRead").value?"1":"";};
 $("add").onclick=async()=>{const term=$("nTerm").value.trim();if(!term)return $("nTerm").focus();const setLang=sets.find(x=>x.id===cur)?.language||"en";
@@ -1050,7 +1172,13 @@ const stOf = id => { const a = words.filter(w => (w.setId || "") === id), l = a.
 const allSets = () => (words.some(w => !w.setId) ? [{ id: "", name: "Chưa phân loại", desc: "Các từ chưa thuộc bộ nào", createdAt: 0 }] : []).concat(sets);
 function go(p, id) {
   if (id !== undefined) { cur = id; if (p === "set") { stFilter = "all"; setSetTab("list"); } }
+  if (p !== page || (id !== undefined && id !== cur)) pageHistory.push({ page, cur });
   page = p; $("side").classList.remove("open"); renderAll();
+}
+function goBack() {
+  const previous = pageHistory.pop();
+  if (!previous) return;
+  page = previous.page; cur = previous.cur; $("side").classList.remove("open"); renderAll();
 }
 function fillSets(box, list) {
   box.innerHTML = "";
@@ -1066,6 +1194,15 @@ let noteItems = [];
 try { noteItems = JSON.parse(localStorage.getItem("vocabSpaceNotes") || "[]"); if (!Array.isArray(noteItems)) noteItems=[]; } catch(e) { noteItems=[]; }
 let noteTab = "pending";
 const saveNotes = () => { try { localStorage.setItem("vocabSpaceNotes", JSON.stringify(noteItems)); } catch(e) {} };
+function showNoteConfirm(onConfirm){
+  const modal=$("noteConfirmModal"), ok=$("noteConfirmOk"), cancel=$("noteConfirmCancel");
+  if(!modal||!ok||!cancel){return;}
+  modal.hidden=false; document.body.style.overflow="hidden";
+  const close=()=>{modal.hidden=true;document.body.style.overflow="";ok.removeEventListener("click",accept);cancel.removeEventListener("click",dismiss);modal.removeEventListener("click",outside);document.removeEventListener("keydown",escape);};
+  const accept=()=>{close();onConfirm();}; const dismiss=()=>close();
+  const outside=e=>{if(e.target===modal)dismiss();}; const escape=e=>{if(e.key==="Escape")dismiss();};
+  ok.addEventListener("click",accept);cancel.addEventListener("click",dismiss);modal.addEventListener("click",outside);document.addEventListener("keydown",escape);ok.focus();
+}
 function renderNotes(){
   const pending=noteItems.filter(n=>!n.done).length, done=noteItems.filter(n=>n.done).length;
   $("pendingCount").textContent=pending; $("doneCount").textContent=done;
@@ -1080,7 +1217,7 @@ function renderNotes(){
     const actions=el("div","note-item-actions");
     const pin=el("button","sec",n.pinned?"★":"☆");pin.title=n.pinned?"Bỏ ghim":"Ghim lên đầu";pin.onclick=()=>{n.pinned=!n.pinned;saveNotes();renderNotes();};
     const toggle=el("button","note-done",n.done?"Khôi phục":"Đã xong");toggle.onclick=()=>{n.done=!n.done;saveNotes();renderNotes();};
-    const del=el("button","note-delete","Xóa");del.onclick=()=>{if(confirm("Bạn có chắc muốn xóa ghi chú này?")){noteItems=noteItems.filter(x=>x.id!==n.id);saveNotes();renderNotes();}};
+    const del=el("button","note-delete","Xóa");del.onclick=()=>showNoteConfirm(()=>{noteItems=noteItems.filter(x=>x.id!==n.id);saveNotes();renderNotes();});
     actions.append(pin,toggle,del);row.append(main,actions);box.append(row);
   });
 }
@@ -1195,6 +1332,7 @@ function renderAll() {
   $("setName").textContent=cs.name;$("setDesc").textContent=(cs.desc||"")+" · "+({en:"Tiếng Anh",zh:"Tiếng Trung",it:"Tiếng Ý"}[cs.language]||"Chưa chọn ngôn ngữ");$("setAct").hidden=!cur;
   $("nRead").placeholder=cs.language==="zh"?"Pinyin (tự động tạo cho tiếng Trung)":"Phiên âm (tuỳ chọn)";
   document.querySelectorAll("#side [data-p]").forEach(b => b.classList.toggle("on", b.dataset.p === page));
+  const backBtn = $("backBtn"); if (backBtn) backBtn.disabled = pageHistory.length === 0;
   
   const t = words.length, l = words.filter(w => w.learned).length;
   if (!$("dHi").textContent) $("dHi").textContent = (auth.currentUser?.email || "").split("@")[0] || $("who").textContent || "bạn";

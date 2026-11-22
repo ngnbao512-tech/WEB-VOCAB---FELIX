@@ -758,8 +758,8 @@ html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
     <div class="profile-menu" id="profileMenu" hidden>
   <div class="pm-head"><span class="pm-av" id="pmAv"></span><div><b id="pmName"></b><small>Học viên</small></div></div>
   <div class="pm-group">
-   <button type="button" class="pm-row" id="profileSettings"><span class="pm-ic i-set"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM19 13.5l2-1.5-2-1.5-.5-2.1-2.5-.4L14.5 6h-5L8 8l-2.5.4L5 10.5 3 12l2 1.5.5 2.1 2.5.4L9.5 18h5l1.5-2 2.5-.4z"/></svg></span><span class="pm-t">Cài đặt</span><span class="pm-go">›</span></button>
    <button type="button" class="pm-row" id="profilePersonal"><span class="pm-ic i-per"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="pm-t">Thông tin cá nhân</span><span class="pm-go">›</span></button>
+   <div class="pm-lang-row"><span class="pm-lang-label">Ngôn ngữ / Language</span><div class="pm-lang-switch" role="group" aria-label="Chọn ngôn ngữ"><button type="button" class="pm-lang-btn" data-lang="vi" id="pmLangVi">VI</button><button type="button" class="pm-lang-btn" data-lang="en" id="pmLangEn">EN</button></div></div>
    <button type="button" class="pm-row" id="profileTheme"><span class="pm-ic i-th" id="profileThemeIcon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8 8 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg></span><span class="pm-t" id="profileThemeLabel">Chế độ tối</span><span class="sw"><i></i></span></button>
   </div>
   <button type="button" class="pm-row pm-out signout" id="profileLogout"><span class="pm-ic i-out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M13 4h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/></svg></span><span class="pm-t">Đăng xuất</span></button>
@@ -919,6 +919,17 @@ html[data-theme=dark] #app .note-confirm-cancel{background:rgba(255,255,255,.08)
 html[data-theme=dark] #app .notes-compose,html[data-theme=dark] #app .note-item{background:rgba(24,42,68,.78);border-color:rgba(148,180,225,.18)}
 @keyframes noteDialogIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:480px){#app .note-confirm-dialog{padding:22px 17px 18px;border-radius:21px}#app .note-confirm-actions button{flex:1;min-width:0}}
+
+/* Profile menu fit + language switch */
+#app .sb{overflow-x:hidden;overflow-y:auto;scrollbar-width:thin}
+#app .prof{min-width:0;width:100%}
+#app .prof .profile-menu{width:min(100%,272px);min-width:0;max-width:calc(100vw - 36px);left:0;box-sizing:border-box;overflow:visible}
+#app .pm-lang-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 8px 8px;border-top:1px solid rgba(148,163,184,.16);margin-top:4px}
+#app .pm-lang-label{font-size:12px;font-weight:700;color:var(--mu);min-width:0}
+#app .pm-lang-switch{display:flex;gap:3px;padding:3px;border-radius:999px;background:rgba(219,234,254,.72);border:1px solid rgba(147,197,253,.45);flex:none}
+#app .pm-lang-btn{min-width:38px;min-height:28px!important;padding:4px 10px!important;border:0!important;border-radius:999px!important;background:transparent!important;color:#52709a!important;font-size:11px;font-weight:800;box-shadow:none!important}
+#app .pm-lang-btn.active{background:linear-gradient(135deg,#60a5fa,#2563eb)!important;color:#fff!important;box-shadow:0 3px 9px rgba(37,99,235,.24)!important}
+@media(max-width:860px){#app .sb{overflow-y:auto;overflow-x:hidden}#app .prof .profile-menu{width:100%;max-width:100%}}
 </style>
 <script>
 const T={
@@ -932,7 +943,9 @@ function setUi(l){
   document.getElementById("email").placeholder=T[l].pu;
   document.getElementById("pass").placeholder=T[l].pp;
   document.querySelectorAll("#ui button").forEach(b=>b.classList.toggle("on",b.dataset.u===l));
+  document.querySelectorAll("#pmLangVi,#pmLangEn").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
 }
+window.setUi=setUi;
 document.querySelectorAll("#ui button").forEach(b=>b.onclick=()=>setUi(b.dataset.u));
 document.getElementById("eye").onclick=()=>{const i=document.getElementById("pass");i.type=i.type==="password"?"text":"password"};
 setUi(window.curLang);
@@ -1037,14 +1050,15 @@ const profileMenu = $("profileMenu");
 function toggleProfileMenu(force) {
   const open = typeof force === "boolean" ? force : profileMenu.hidden;
   profileMenu.hidden = !open;
-  if (open) { $("pmName").textContent = $("who").textContent; $("pmAv").textContent = $("av").textContent; }
+  if (open) { $("pmName").textContent = $("who").textContent; $("pmAv").textContent = $("av").textContent; syncProfileLanguage(); }
   $("profileTrigger").setAttribute("aria-expanded", String(open));
 }
 $("profileTrigger").onclick = e => { e.stopPropagation(); toggleProfileMenu(); };
 document.addEventListener("click", e => { if (!e.target.closest(".prof")) toggleProfileMenu(false); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") { toggleProfileMenu(false); $("profileInfo").hidden = true; } });
 $("profileTheme").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
-$("profileSettings").onclick = () => { toggleProfileMenu(false); go("cfg"); };
+function syncProfileLanguage(){const lang=window.curLang||"vi";["vi","en"].forEach(l=>$("pmLang"+(l==="vi"?"Vi":"En"))?.classList.toggle("active",lang===l));}
+[ ["pmLangVi","vi"],["pmLangEn","en"] ].forEach(([id,lang])=>$(id).onclick=()=>{window.setUi?.(lang);syncProfileLanguage();});
 $("profilePersonal").onclick = () => { toggleProfileMenu(false); go("personal"); loadPersonalForm(); };
 $("closeProfileInfo").onclick = () => $("profileInfo").hidden = true;
 $("profileInfo").onclick = e => { if (e.target === $("profileInfo")) $("profileInfo").hidden = true; };

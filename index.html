@@ -959,7 +959,7 @@ html[data-theme=dark] #app .security-note p{color:#a8b7ce}
  <div class="notes-tabs set-tabs" id="setTabs"><button type="button" class="active" data-set-tab="list">Danh sách</button><button type="button" data-set-tab="cards">Flashcard</button></div>
     <div id="setList">
  <div class="lh2" id="listTop"><h2 style="margin:0">Vocabulary</h2><span id="stat"></span><input id="search" placeholder="Tìm từ vựng trong bộ này">
-      <button id="imp" class="sec">Import Excel/CSV</button><input id="file" type="file" accept=".xlsx,.xls,.csv,.txt" hidden><button id="expCsv" class="sec">Xuất CSV</button>
+      <button id="imp" class="sec">Import Excel/CSV</button><input id="file" type="file" accept=".xlsx,.xls,.csv,.txt" hidden><button id="expCsv" class="sec">Xuất CSV</button><button id="copyVocab" class="sec" type="button">Copy từ vựng</button>
     </div>
     <div class="notes-tabs" id="statusTabs" style="margin:0 0 12px;width:fit-content"><button type="button" class="active" data-st="all">Tất cả <b id="stAll">0</b></button><button type="button" data-st="no">Chưa thuộc <b id="stNo">0</b></button><button type="button" data-st="yes">Đã thuộc <b id="stYes">0</b></button></div>
  <div class="vocab-add-grid"><input id="nTerm" placeholder="Vocabulary"><input id="nRead" placeholder="Phiên âm (Pinyin nếu là tiếng Trung)"><input id="nMean" placeholder="Meaning"><input id="nExample" placeholder="Ví dụ"><button id="add">＋ Thêm từ</button></div>
@@ -1442,6 +1442,18 @@ $("expCsv").onclick = () => {
   a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
   a.download = "tuvung.csv"; a.click();
 };
+$("copyVocab").onclick = async () => {
+  const btn = $("copyVocab"), old = btn.textContent;
+  const rows = scope().slice().sort((x, y) => (x.createdAt || 0) - (y.createdAt || 0)).filter(w => String(w.term || "").trim());
+  if (!rows.length) { btn.textContent = "Bộ này chưa có từ"; setTimeout(() => btn.textContent = old, 2000); return; }
+  const clean = v => String(v == null ? "" : v).replace(/[\r\n]+/g, " ").trim();
+  const text = rows.map(w => clean(w.term) + "," + clean(w.meaning)).join("\n");
+  const withComma = rows.filter(w => clean(w.term).includes(",") || clean(w.meaning).includes(",")).length;
+  try { await navigator.clipboard.writeText(text); }
+  catch (e) { const t = document.createElement("textarea"); t.value = text; t.style.cssText = "position:fixed;opacity:0"; document.body.append(t); t.select(); try { document.execCommand("copy"); } catch (e2) {} t.remove(); }
+  btn.textContent = "✓ Đã copy " + rows.length + " từ" + (withComma ? " (" + withComma + " từ có dấu phẩy)" : "");
+  setTimeout(() => btn.textContent = old, 3000);
+};
 
 const P = { dash:"pDash", noti:"pNoti", lib:"pLib", folders:"pFolders", progress:"pProgress", notes:"pNotes", feedback:"pFeedback", admin:"pAdmin", msg:"pMsg", personal:"pPersonal", set:"pSet", cfg:"pCfg" };
 const scope = () => words.filter(w => (w.setId || "") === cur);
@@ -1759,7 +1771,7 @@ setTheme(th);
 /* Full-workspace Vietnamese/English localization */
 (()=>{
  const dict={
- 'Home':'Home','Quản trị':'Admin','Tổng quan':'Overview','Học viên':'Students','Kho vocab':'Vocab library','Làm mới':'Refresh','Dành cho Admin / Giáo viên.':'For Admin / Teachers.','Trò chuyện với giáo viên và nhận thông báo chung.':'Chat with your teacher and get announcements.','Tổng học viên':'Total students','Đang online':'Online now','Tổng bộ từ vựng':'Total vocabulary sets','Tổng số từ':'Total words','Bài kiểm tra':'Tests','Từ mới thêm trong 7 ngày':'New words in the last 7 days','Xem vocab':'View vocab','Nhắn tin':'Message','Khóa':'Lock','Mở khóa':'Unlock','Chia sẻ':'Share','Sửa tên':'Rename','Lịch sử chia sẻ':'Sharing history','Chọn một hội thoại':'Select a conversation','Gửi':'Send','＋ Nhắn học viên':'＋ Message a student','＋ Nhóm':'＋ Group','Chưa có tin nhắn.':'No messages yet.','Tài khoản mới (7 ngày)':'New accounts (7 days)','Góp ý':'Feedback','Gửi ý kiến, báo lỗi hoặc đề xuất tính năng. Mọi góp ý sẽ được chuyển đến quản trị viên.':'Send ideas, bug reports or feature requests. All feedback goes to the administrator.','Gửi góp ý':'Send feedback','Hộp thư góp ý':'Feedback inbox','Chỉ quản trị viên thấy mục này.':'Only the administrator can see this.','Chưa có góp ý nào.':'No feedback yet.','Đã xem':'Mark as read','Đánh dấu chưa xem':'Mark as unread','Xóa':'Delete','Vui lòng nhập nội dung góp ý.':'Please enter your feedback.','Đang gửi...':'Sending...','Nhập góp ý của bạn...':'Write your feedback...','Đã gửi! Cảm ơn bạn đã góp ý.':'Sent! Thank you for your feedback.','WORKSPACE':'WORKSPACE','LIBRARY':'LIBRARY','PERSONAL':'PERSONAL','PINNED':'PINNED',
+ 'Home':'Home','Copy từ vựng':'Copy vocab','Bộ này chưa có từ':'This set has no words','Quản trị':'Admin','Tổng quan':'Overview','Học viên':'Students','Kho vocab':'Vocab library','Làm mới':'Refresh','Dành cho Admin / Giáo viên.':'For Admin / Teachers.','Trò chuyện với giáo viên và nhận thông báo chung.':'Chat with your teacher and get announcements.','Tổng học viên':'Total students','Đang online':'Online now','Tổng bộ từ vựng':'Total vocabulary sets','Tổng số từ':'Total words','Bài kiểm tra':'Tests','Từ mới thêm trong 7 ngày':'New words in the last 7 days','Xem vocab':'View vocab','Nhắn tin':'Message','Khóa':'Lock','Mở khóa':'Unlock','Chia sẻ':'Share','Sửa tên':'Rename','Lịch sử chia sẻ':'Sharing history','Chọn một hội thoại':'Select a conversation','Gửi':'Send','＋ Nhắn học viên':'＋ Message a student','＋ Nhóm':'＋ Group','Chưa có tin nhắn.':'No messages yet.','Tài khoản mới (7 ngày)':'New accounts (7 days)','Góp ý':'Feedback','Gửi ý kiến, báo lỗi hoặc đề xuất tính năng. Mọi góp ý sẽ được chuyển đến quản trị viên.':'Send ideas, bug reports or feature requests. All feedback goes to the administrator.','Gửi góp ý':'Send feedback','Hộp thư góp ý':'Feedback inbox','Chỉ quản trị viên thấy mục này.':'Only the administrator can see this.','Chưa có góp ý nào.':'No feedback yet.','Đã xem':'Mark as read','Đánh dấu chưa xem':'Mark as unread','Xóa':'Delete','Vui lòng nhập nội dung góp ý.':'Please enter your feedback.','Đang gửi...':'Sending...','Nhập góp ý của bạn...':'Write your feedback...','Đã gửi! Cảm ơn bạn đã góp ý.':'Sent! Thank you for your feedback.','WORKSPACE':'WORKSPACE','LIBRARY':'LIBRARY','PERSONAL':'PERSONAL','PINNED':'PINNED',
  'Thông báo':'Notifications','Vocabulary':'Vocabulary','Folders':'Folders','Tiến độ':'Progress','Note':'Notes','Ghi chú':'Notes','Nhắc nhở':'Reminders','Đã ghim':'Pinned',
  'Thông tin cá nhân':'Personal information','Chế độ tối':'Dark mode','Đăng xuất':'Sign out','Học viên':'Learner','Ngôn ngữ':'Language',
  'Welcome, !':'Welcome, !','Hôm nay bạn muốn chinh phục những từ vựng nào?':'What vocabulary would you like to master today?',

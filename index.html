@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VOCAB SPACE – Learning Journey</title>
+<title>VOCAB SPACE</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%232563eb'/%3E%3Crect x='5' y='9' width='22' height='26' rx='5' fill='%23ffffff66' transform='rotate(-12 16 22)'/%3E%3Cg transform='rotate(8 23 20)'%3E%3Crect x='11' y='6' width='24' height='28' rx='5' fill='white'/%3E%3Cpath d='M17 13L23 27L29 13' fill='none' stroke='%232563eb' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3C/svg%3E">
 <style>
 *{box-sizing:border-box}
@@ -692,6 +692,56 @@ html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ===== Dark mode: ô ngày, thanh cuộn, chữ ô nhập ===== */
+html[data-theme=dark] #app,html[data-theme=dark] #modal{color-scheme:dark;scrollbar-color:#3f5a82 #0e1a2f}
+html[data-theme=dark] #app .notes-compose textarea,html[data-theme=dark] #app #noteDate,html[data-theme=dark] #app #noteSearch{color:var(--tx)}
+html[data-theme=dark] #app .notes-heading h1{color:#93c5fd}
+html[data-theme=dark] #app input[type=date]{color-scheme:dark;color:var(--tx)}
+html[data-theme=dark] #app input[type=date]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.9}
+html[data-theme=dark] #app ::-webkit-scrollbar{width:10px;height:10px}
+html[data-theme=dark] #app ::-webkit-scrollbar-track{background:#0e1a2f}
+html[data-theme=dark] #app ::-webkit-scrollbar-thumb{background:#3f5a82;border-radius:99px;border:2px solid #0e1a2f}
+html[data-theme=dark] #app ::-webkit-scrollbar-thumb:hover{background:#5578a8}
+html[data-theme=dark] #app ::-webkit-scrollbar-corner{background:#0e1a2f}
+
+/* ===== Tab Góp ý ===== */
+#app .fb-box{max-width:760px}
+#app .fb-form{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px}
+#app .fb-form textarea{width:100%;min-height:130px;resize:vertical;border:1.5px solid var(--bd2);border-radius:12px;padding:12px;font:inherit;font-size:14px;background:var(--bg);color:var(--tx);outline:none;box-sizing:border-box}
+#app .fb-form textarea:focus{border-color:var(--pr)}
+#app .fb-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+#app .fb-count{font-size:12px;color:var(--mu)}
+#app .fb-msg{font-size:13px;font-weight:600;min-height:18px}
+#app .fb-msg.ok{color:#22c55e}#app .fb-msg.err{color:#f87171}
+#app .fb-list{margin-top:22px}
+#app .fb-item{background:var(--card);border:1px solid var(--bd2);border-radius:14px;padding:14px 16px;margin:10px 0}
+#app .fb-item.unread{border-left:4px solid var(--pr);background:var(--sel)}
+#app .fb-item .fb-head{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+#app .fb-item .fb-text{white-space:pre-wrap;word-break:break-word;font-size:14px;line-height:1.55}
+#app .fb-item .fb-act{display:flex;gap:8px;margin-top:10px}
+#app .fb-item .fb-act button{padding:6px 12px;font-size:12px}
+#app .fb-badge{margin-left:auto;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:#ef4444;color:#fff;font-size:11px;font-weight:800;display:inline-grid;place-items:center}
+</style>
+
+<style>
+.pdot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#94a3b8;margin-right:7px;flex:none}.pdot.online{background:#22c55e}.pdot.away{background:#f59e0b}
+#app .ad-tabs{display:flex;gap:6px;margin:6px 0 14px;flex-wrap:wrap}#app .ad-tabs button{background:var(--card);color:var(--tx);border:1px solid var(--bd)}#app .ad-tabs button.on{background:var(--pr);color:#fff}
+#app .ad-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+#app .ad-stat{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:2px}#app .ad-stat b{font-size:26px;color:var(--pr)}#app .ad-stat small{color:var(--mu)}
+#app .ad-bars{display:flex;align-items:flex-end;gap:10px;height:140px;padding:10px 4px}#app .ad-bars div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;font-size:11px;color:var(--mu)}#app .ad-bars i{display:block;width:100%;background:var(--pr);border-radius:8px 8px 0 0;min-height:2px}
+#app .ad-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}#app .ad-bar input,#app .ad-bar select{min-width:0}
+#app .ad-tbl{width:100%;border-collapse:collapse;font-size:13px}#app .ad-tbl td,#app .ad-tbl th{padding:9px 8px;border-bottom:1px solid var(--bd2);text-align:left}#app .ad-tbl button{padding:5px 10px;font-size:12px;margin:2px}
+#app .ad-wrap{overflow:auto}
+.ad-ov{position:fixed;inset:0;z-index:9999;background:#0008;display:grid;place-items:center;padding:16px}.ad-mbox{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:16px;padding:20px;width:min(440px,100%);max-height:85vh;overflow:auto;display:flex;flex-direction:column;gap:10px}.ad-mbox label{display:flex;gap:8px;align-items:center}.ad-mbox input,.ad-mbox select{padding:9px;border-radius:10px;border:1.5px solid var(--bd2);background:var(--bg);color:var(--tx)}.ad-mbox button{border:0;border-radius:10px;padding:9px 16px;font-weight:700;background:var(--pr);color:#fff;cursor:pointer}.ad-mbox button.sec{background:var(--bd2);color:var(--tx)}
+#app .msg-wrap{display:grid;grid-template-columns:290px 1fr;gap:14px;height:min(70vh,640px)}#app .msg-side,#app .msg-main{background:var(--card);border:1px solid var(--bd);border-radius:16px;display:flex;flex-direction:column;min-height:0;overflow:hidden}#app .msg-side{padding:10px;gap:8px}#app .msg-side>div:last-child{overflow:auto;flex:1}
+#app .msg-it{padding:10px;border-radius:10px;cursor:pointer;display:flex;gap:8px;align-items:center}#app .msg-it:hover,#app .msg-it.on{background:var(--sel)}#app .msg-it small{display:block;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}#app .msg-it .fb-badge{margin-left:auto}
+#app .msg-head{padding:12px 16px;border-bottom:1px solid var(--bd);font-weight:700}#app .msg-feed{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
+#app .msg-b{max-width:75%;padding:8px 12px;border-radius:14px;background:var(--bg);align-self:flex-start;word-break:break-word;white-space:pre-wrap}#app .msg-b.me{align-self:flex-end;background:var(--pr);color:#fff}#app .msg-b small{display:block;opacity:.75;font-size:11px;margin-top:3px}
+#app .msg-in{display:flex;gap:8px;padding:10px;border-top:1px solid var(--bd)}#app .msg-in input{flex:1;min-width:0}
+@media(max-width:860px){#app .msg-wrap{grid-template-columns:1fr;height:auto}#app .msg-side{max-height:240px}#app .msg-main{height:60vh}}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -743,7 +793,7 @@ html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
 <div id="xmas" aria-hidden="true"><canvas id="xmasCanvas"></canvas><svg id="xmasLights" preserveAspectRatio="none"></svg><svg id="xmasScene" viewBox="0 0 1440 280" preserveAspectRatio="xMidYMax slice"></svg></div>
 <main id="app" hidden>
 <aside class="sb" id="side">
-  <div class="brand2"><span class="lg2">V</span><div><b>VOCAB SPACE</b><span>LEARNING JOURNEY</span></div></div>
+  <div class="brand2"><span class="lg2">V</span><div><b>VOCAB SPACE</b></div></div>
   <div class="nav-label">WORKSPACE</div>
   <button class="si" data-p="dash"><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span>Home</button>
   <button class="si" data-p="noti"><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></span>Thông báo</button>
@@ -754,6 +804,8 @@ html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
   <div class="nav-label pinned-label">PINNED</div><div id="pinnedSets"></div>
   <div class="nav-divider"></div><div class="nav-label">PERSONAL</div>
   <button class="si" data-p="notes"><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/></svg></span>Note</button>
+  <button class="si" data-p="msg"><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1.1-4.4A8 8 0 1 1 21 12z"/></svg></span>Messages<span class="fb-badge" id="msgBadge" hidden>0</span></button>
+  <button class="si" data-p="admin" id="adminNav" hidden><span class="solid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></span>Quản trị</button>
   <div class="sfoot"><div class="prof">
     <div class="profile-menu" id="profileMenu" hidden>
   <div class="pm-head"><span class="pm-av" id="pmAv"></span><div><b id="pmName"></b><small>Học viên</small></div></div>
@@ -769,7 +821,7 @@ html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
   <div class="profile-info" id="profileInfo" hidden><div class="info-card" role="dialog" aria-modal="true" aria-labelledby="profileInfoTitle"><div class="info-head"><h2 id="profileInfoTitle" style="margin:0">Thông tin cá nhân</h2><button type="button" class="sec" id="closeProfileInfo">✕</button></div><div class="info-row"><small>Tên người dùng</small><b id="profileInfoName">—</b></div><div class="info-row"><small>Email</small><b id="profileInfoEmail">—</b></div><div class="info-row"><small>Vai trò</small><b>Học viên</b></div></div></div>
 </aside>
 <div class="pg">
-<div class="topr"><button id="backBtn" class="back-btn" type="button" aria-label="Quay lại" title="Quay lại"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span>Quay lại</span></button><button id="menu" class="sec" aria-label="Mở menu"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><span style="flex:1"></span><button id="newBtn"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Tạo vocabulary</button></div>
+<div class="topr"><button id="backBtn" class="back-btn" type="button" hidden aria-label="Quay lại" title="Quay lại"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span>Quay lại</span></button><button id="menu" class="sec" aria-label="Mở menu"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><span style="flex:1"></span><button id="newBtn"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Tạo vocabulary</button></div>
 <div class="in">
 <section id="pDash">
   <div class="hero"><div><h1>Welcome, <span id="dHi"></span>!</h1><div class="mu">Hôm nay bạn muốn chinh phục những từ vựng nào?</div></div><button id="goStudy" class="big"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m9 5 10 7-10 7z"/></svg> Vào học tập</button></div>
@@ -800,6 +852,29 @@ html[data-theme=dark] #app select option{color:#eaf2ff;background:#172337}
     <div class="home-note-compose"><textarea id="homeNoteInput" rows="2" placeholder="Viết ghi chú nhanh... (Ctrl + Enter để lưu)"></textarea><button id="homeAddNote" type="button">＋ Thêm ghi chú</button></div>
     <div id="homeNotesList" class="home-notes-list"></div>
   </div>
+</section>
+<section id="pFeedback" hidden>
+  <div class="lh2"><div><h1 style="margin:0">Góp ý</h1><p class="mu">Gửi ý kiến, báo lỗi hoặc đề xuất tính năng. Mọi góp ý sẽ được chuyển đến quản trị viên.</p></div></div>
+  <div class="fb-box">
+    <div class="fb-form">
+      <textarea id="fbText" maxlength="1000" placeholder="Nhập góp ý của bạn..."></textarea>
+      <div class="fb-row"><button type="button" id="fbSend">Gửi góp ý</button><span class="fb-count" id="fbCount">0/1000</span><span class="fb-msg" id="fbMsg"></span></div>
+    </div>
+    <div id="fbAdmin" class="fb-list" hidden>
+      <h2 style="margin:0 0 4px">Hộp thư góp ý</h2><p class="mu" style="margin:0 0 6px">Chỉ quản trị viên thấy mục này.</p>
+      <div id="fbList"></div>
+    </div>
+  </div>
+</section>
+<section id="pAdmin" hidden>
+  <div class="lh2"><div><h1 style="margin:0">Quản trị</h1><p class="mu">Dành cho Admin / Giáo viên.</p></div><button id="adRefresh" class="sec">Làm mới</button></div>
+  <div class="ad-tabs" id="adminTabs"><button data-t="dash">Tổng quan</button><button data-t="stu">Học viên</button><button data-t="vocab">Kho vocab</button></div>
+  <div id="adminBody"></div>
+</section>
+<section id="pMsg" hidden>
+  <div class="lh2"><div><h1 style="margin:0">Messages</h1><p class="mu">Trò chuyện với giáo viên và nhận thông báo chung.</p></div></div>
+  <div class="msg-wrap"><div class="msg-side"><input id="msgSearch" placeholder="Tìm hội thoại..."><div id="msgTools" class="fb-row"></div><div id="msgConvos"></div></div>
+  <div class="msg-main"><div id="msgHead" class="msg-head">Chọn một hội thoại</div><div id="msgFeed" class="msg-feed"></div><div class="msg-in" id="msgIn"><input id="msgInput" placeholder="Nhập tin nhắn..." maxlength="2000"><button id="msgSend">Gửi</button></div></div></div>
 </section>
 <section id="pNoti" hidden>
  <div class="lh2"><div><h1 style="margin:0">Thông báo</h1><p class="mu">Hoạt động mới trong không gian học tập của bạn.</p></div><button id="clearNotifications" class="sec">Xóa tất cả</button></div>
@@ -967,7 +1042,7 @@ window.addEventListener("unhandledrejection", event => {
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut,EmailAuthProvider,reauthenticateWithCredential,updatePassword,updateProfile} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,collection,addDoc,doc,updateDoc,deleteDoc,onSnapshot,query,orderBy,writeBatch} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore,collection,addDoc,doc,updateDoc,deleteDoc,onSnapshot,query,orderBy,writeBatch,setDoc,getDoc,getDocs,where,collectionGroup} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ====== DÁN CẤU HÌNH FIREBASE CỦA BẠN VÀO ĐÂY ======
 const firebaseConfig = {
@@ -987,7 +1062,10 @@ const $ = id => document.getElementById(id);
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined && text !== null) n.textContent = text; return n; };
 const norm = v => String(v == null ? "" : v).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
 
-let uid = null, lang = "zh", words = [], unsub = null, fi = 0, rk = null, cur = "", sets = [], folders = [], page = "dash", pageHistory = [], unsub2 = null, unsubFolders = null;
+let uid = null, lang = "zh", words = [], unsub = null, fi = 0, rk = null, cur = "", sets = [], folders = [], page = "dash", pageHistory = [], unsub2 = null, unsubFolders = null, unsubFb = null, fbItems = [];
+// >>> ĐỔI "admin" thành TÊN ĐĂNG NHẬP của tài khoản admin (phần trước dấu @ của email) <<<
+const ADMIN_USERNAMES = ["admin"];
+const isAdmin = () => ADMIN_USERNAMES.includes(((auth.currentUser?.email || "").split("@")[0] || "").toLowerCase());
 const col = () => collection(db, "users", uid, "words");
 const foldersCol = () => collection(db, "users", uid, "folders");
 const isZh = t => /[\u4e00-\u9fff]/.test(t);
@@ -1044,8 +1122,8 @@ async function doAuth() {
 }
 $("login").onclick = doAuth;
 ["email", "pass"].forEach(i => { $(i).onkeydown = e => { if (e.key === "Enter") doAuth(); }; });
-if ($("logout")) $("logout").onclick = () => signOut(auth);
-$("logout2").onclick = () => signOut(auth);
+if ($("logout")) $("logout").onclick = () => doLogout();
+$("logout2").onclick = () => doLogout();
 const profileMenu = $("profileMenu");
 function toggleProfileMenu(force) {
   const open = typeof force === "boolean" ? force : profileMenu.hidden;
@@ -1062,7 +1140,7 @@ function syncProfileLanguage(){const lang=window.curLang||"vi";["vi","en"].forEa
 $("profilePersonal").onclick = () => { toggleProfileMenu(false); go("personal"); loadPersonalForm(); };
 $("closeProfileInfo").onclick = () => $("profileInfo").hidden = true;
 $("profileInfo").onclick = e => { if (e.target === $("profileInfo")) $("profileInfo").hidden = true; };
-$("profileLogout").onclick = () => signOut(auth);
+$("profileLogout").onclick = () => doLogout();
 
 function profileStorageKey(){ return "vocabSpaceProfile_"+(uid||"guest"); }
 function getPersonalData(){try{return JSON.parse(localStorage.getItem(profileStorageKey())||"{}")}catch(e){return {}}}
@@ -1091,7 +1169,7 @@ $("passwordForm").addEventListener("submit",async e=>{
 });
 
 onAuthStateChanged(auth, user => {
-  if (unsub) { unsub(); unsub = null; } if (unsub2) { unsub2(); unsub2 = null; } if(unsubFolders){unsubFolders();unsubFolders=null;}
+  if (unsub) { unsub(); unsub = null; } if (unsub2) { unsub2(); unsub2 = null; } if(unsubFolders){unsubFolders();unsubFolders=null;} if(unsubFb){unsubFb();unsubFb=null;} fbItems=[]; stCleanup();
   uid = user ? user.uid : null;
   loadNotifications();
   $("auth").hidden = !!user;
@@ -1101,14 +1179,185 @@ onAuthStateChanged(auth, user => {
   $("who").textContent = getPersonalData().name || user.displayName || loginUsername;
   $("dHi").textContent = loginUsername || $("who").textContent || "bạn";
   $("av").textContent = ($("who").textContent || "?")[0].toUpperCase();
-  $("cfgWho").textContent = $("who").textContent; pageHistory = []; go("dash");
+  $("cfgWho").textContent = $("who").textContent; pageHistory = []; page = "dash"; go("dash");
   unsub = onSnapshot(query(col(), orderBy("createdAt", "desc")), snap => {
     words = snap.docs.map(d => ({ id: d.id, ...d.data() }));
     renderAll();
   }, e => say("Lỗi tải dữ liệu: " + e.code));
   unsub2 = onSnapshot(collection(db, "users", uid, "sets"), snap => { sets = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderAll(); }, e => say("Lỗi tải bộ từ vựng: " + e.code));
+  if (isAdmin()) unsubFb = onSnapshot(query(collection(db, "feedback"), orderBy("createdAt", "desc")), snap => { fbItems = snap.docs.map(d => ({ id: d.id, ...d.data() })); renderFeedback(); }, e => { const m = $("fbMsg"); if (m) { m.className = "fb-msg err"; m.textContent = "Không tải được góp ý: " + e.code; } });
+  initStaff(user);
   unsubFolders=onSnapshot(foldersCol(),snap=>{folders=snap.docs.map(d=>({id:d.id,...d.data()}));renderAll();},e=>say("Lỗi tải folder: "+e.code));
 });
+
+// ---------- Góp ý ----------
+function renderFeedback() {
+  const admin = isAdmin(), box = $("fbAdmin"), list = $("fbList"), badge = $("fbBadge");
+  if (!box) return;
+  box.hidden = !admin;
+  const unread = fbItems.filter(x => !x.read).length;
+  if (badge) { badge.hidden = !admin || !unread; badge.textContent = unread > 99 ? "99+" : unread; }
+  if (!admin || page !== "feedback") return;
+  list.innerHTML = "";
+  if (!fbItems.length) { list.append(el("div", "notification-empty", "Chưa có góp ý nào.")); return; }
+  fbItems.forEach(x => {
+    const row = el("div", "fb-item" + (x.read ? "" : " unread")), head = el("div", "fb-head");
+    head.append(el("b", null, x.username || "Ẩn danh"), el("small", "mu", x.createdAt ? new Date(x.createdAt).toLocaleString("vi-VN") : ""));
+    const act = el("div", "fb-act"), read = el("button", "sec", x.read ? "Đánh dấu chưa xem" : "Đã xem"), del = el("button", "del", "Xóa");
+    read.onclick = () => updateDoc(doc(db, "feedback", x.id), { read: !x.read }).catch(e => alert("Lỗi: " + e.code));
+    del.onclick = () => { if (confirm("Xóa góp ý này?")) deleteDoc(doc(db, "feedback", x.id)).catch(e => alert("Lỗi: " + e.code)); };
+    act.append(read, del);
+    row.append(head, el("div", "fb-text", x.message || ""), act);
+    list.append(row);
+  });
+}
+$("fbText").addEventListener("input", () => { $("fbCount").textContent = $("fbText").value.length + "/1000"; });
+$("fbSend").onclick = async () => {
+  const text = $("fbText").value.trim(), msg = $("fbMsg"), btn = $("fbSend");
+  if (!text) { msg.className = "fb-msg err"; msg.textContent = "Vui lòng nhập nội dung góp ý."; $("fbText").focus(); return; }
+  if (!auth.currentUser) return;
+  btn.disabled = true; msg.className = "fb-msg"; msg.textContent = "Đang gửi...";
+  try {
+    await addDoc(collection(db, "feedback"), { uid: auth.currentUser.uid, username: (auth.currentUser.email || "").split("@")[0], message: text.slice(0, 1000), createdAt: Date.now(), read: false });
+    $("fbText").value = ""; $("fbCount").textContent = "0/1000";
+    msg.className = "fb-msg ok"; msg.textContent = "Đã gửi! Cảm ơn bạn đã góp ý.";
+  } catch (e) {
+    msg.className = "fb-msg err"; msg.textContent = "Gửi thất bại (" + (e.code || "lỗi") + "). Vui lòng thử lại sau.";
+  }
+  btn.disabled = false;
+};
+
+// ======================= Admin / Giáo viên / Messages / Presence =======================
+let stRole="student",stProfiles=[],stPres={},gSets=[],gWords=[],stConvos=[],stActive=null,stUnsub=[],stMsgUnsub=null,stHb=null,stLastAct=Date.now(),adminTab="dash",adQ="",adStat="all",vQ="",vStu="",vOpen=null,stSeen=null,adShares=[];
+const cvSrc={a:[],b:[]};
+const isStaff=()=>isAdmin()||stRole==="teacher";
+const myName=()=>(auth.currentUser?.email||"").split("@")[0];
+const nameOf=u=>(stProfiles.find(p=>p.id===u)||{}).username||String(u).slice(0,6);
+const dmId=u=>"dm_"+u;
+const stateOf=u=>{const p=stPres[u];if(!p||Date.now()-p.lastSeen>90000)return"offline";return p.state==="away"?"away":"online";};
+const stLabel={online:"Online",away:"Away",offline:"Offline"};
+const ago=t=>{if(!t)return"—";const m=Math.round((Date.now()-t)/60000);return m<1?"vừa xong":m<60?m+" phút trước":m<1440?Math.round(m/60)+" giờ trước":new Date(t).toLocaleDateString("vi-VN");};
+const dotEl=st=>el("span","pdot "+st);
+async function setPres(state){const u=auth.currentUser;if(!u)return;try{await setDoc(doc(db,"presence",u.uid),{state,lastSeen:Date.now(),username:myName()},{merge:true});}catch(e){}}
+const hbState=()=>document.hidden||Date.now()-stLastAct>300000?"away":"online";
+function startPresence(){stopPresence();setPres(hbState());stHb=setInterval(()=>setPres(hbState()),30000);}
+function stopPresence(){if(stHb){clearInterval(stHb);stHb=null;}}
+["mousemove","keydown","click","touchstart"].forEach(ev=>document.addEventListener(ev,()=>{stLastAct=Date.now();},{passive:true}));
+document.addEventListener("visibilitychange",()=>{if(auth.currentUser)setPres(hbState());});
+window.addEventListener("pagehide",()=>{if(auth.currentUser)setPres("offline");});
+async function doLogout(){stopPresence();await setPres("offline");signOut(auth);}
+function stCleanup(){stUnsub.forEach(f=>{try{f();}catch(e){}});stUnsub=[];if(stMsgUnsub){stMsgUnsub();stMsgUnsub=null;}stRole="student";stProfiles=[];stPres={};gSets=[];gWords=[];stConvos=[];stActive=null;stSeen=null;cvSrc.a=[];cvSrc.b=[];stopPresence();$("adminNav").hidden=true;}
+function modalBox(title,bodyFn,okText,onOk){const ov=el("div","ad-ov"),box=el("div","ad-mbox");box.append(el("h3",null,title));bodyFn(box);const act=el("div","fb-row"),ok=el("button",null,okText),no=el("button","sec","Hủy");no.onclick=()=>ov.remove();ok.onclick=async()=>{ok.disabled=true;try{await onOk();ov.remove();}catch(e){alert("Lỗi: "+(e.code||e.message));ok.disabled=false;}};act.append(ok,no);box.append(act);ov.append(box);document.body.append(ov);}
+async function loadGlobal(){if(!isStaff())return;try{const[a,b]=await Promise.all([getDocs(collectionGroup(db,"sets")),getDocs(collectionGroup(db,"words"))]);gSets=a.docs.map(d=>({id:d.id,uid:d.ref.parent.parent.id,...d.data()}));gWords=b.docs.map(d=>({id:d.id,uid:d.ref.parent.parent.id,...d.data()}));}catch(e){alert("Không tải được dữ liệu quản trị: "+e.code);}if(page==="admin")renderAdmin();}
+async function initStaff(user){
+  stCleanup();
+  try{const r=await getDoc(doc(db,"roles",user.uid));if(r.exists()&&r.data().role==="teacher")stRole="teacher";}catch(e){}
+  if(!isAdmin()){try{await setDoc(doc(db,"profiles",user.uid),{username:myName(),createdAt:Date.parse(user.metadata.creationTime)||Date.now()},{merge:true});}catch(e){}}
+  stUnsub.push(onSnapshot(doc(db,"profiles",user.uid),d=>{if(d.exists()&&d.data().locked){alert("Tài khoản của bạn đã bị khóa.");doLogout();}},()=>{}));
+  $("adminNav").hidden=!isStaff();
+  startPresence();
+  const upd=()=>{stConvos=[...cvSrc.a,...cvSrc.b].sort((x,y)=>(y.lastAt||0)-(x.lastAt||0));msgBadge();trackNew();if(page==="msg")renderMsg();};
+  const mk=d=>({id:d.id,...d.data()});
+  if(isStaff()){
+    setDoc(doc(db,"convos","all"),{type:"broadcast",title:"Toàn bộ học viên"},{merge:true}).catch(()=>{});
+    stUnsub.push(onSnapshot(collection(db,"convos"),sn=>{cvSrc.a=sn.docs.map(mk);cvSrc.b=[];upd();},()=>{}));
+    stUnsub.push(onSnapshot(collection(db,"profiles"),sn=>{stProfiles=sn.docs.map(mk);if(page==="admin"||page==="msg")renderAll();},()=>{}));
+    stUnsub.push(onSnapshot(collection(db,"presence"),sn=>{stPres={};sn.docs.forEach(d=>stPres[d.id]=d.data());if(page==="admin")renderAdmin();},()=>{}));
+    stUnsub.push(onSnapshot(query(collection(db,"shares"),orderBy("at","desc")),sn=>{adShares=sn.docs.map(mk).slice(0,30);if(page==="admin")renderAdmin();},()=>{}));
+    const iv=setInterval(()=>{if(page==="admin")renderAdmin();},30000);stUnsub.push(()=>clearInterval(iv));
+    loadGlobal();
+  }else{
+    stUnsub.push(onSnapshot(query(collection(db,"convos"),where("members","array-contains",user.uid)),sn=>{cvSrc.a=sn.docs.map(mk);upd();},()=>{}));
+    stUnsub.push(onSnapshot(doc(db,"convos","all"),d=>{cvSrc.b=d.exists()?[mk(d)]:[];upd();},()=>{}));
+  }
+}
+const unreadOf=c=>c.lastAt&&c.lastBy!==auth.currentUser.uid&&c.lastAt>((c.reads||{})[auth.currentUser.uid]||0)&&stActive!==c.id;
+function msgBadge(){const n=stConvos.filter(unreadOf).length,b=$("msgBadge");if(b){b.hidden=!n;b.textContent=n;}}
+function trackNew(){if(stSeen===null){stSeen={};stConvos.forEach(c=>stSeen[c.id]=c.lastAt||0);return;}stConvos.forEach(c=>{if((c.lastAt||0)>(stSeen[c.id]||0)&&c.lastBy!==auth.currentUser.uid&&stActive!==c.id)pushNotification("Tin nhắn mới",c.lastMsg||"");stSeen[c.id]=c.lastAt||0;});}
+// ---------- Admin ----------
+function renderAdmin(){const root=$("adminBody");if(!root||!isStaff())return;root.innerHTML="";document.querySelectorAll("#adminTabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===adminTab));({dash:adDash,stu:adStu,vocab:adVocab})[adminTab](root);}
+document.querySelectorAll("#adminTabs button").forEach(b=>b.onclick=()=>{adminTab=b.dataset.t;vOpen=null;renderAdmin();});
+$("adRefresh").onclick=loadGlobal;
+function stat(n,l){const d=el("div","ad-stat");d.append(el("b",null,n),el("small",null,l));return d;}
+function adDash(root){
+  const st=stProfiles.filter(p=>p.id!==auth.currentUser.uid),c={online:0,away:0,offline:0};st.forEach(p=>c[stateOf(p.id)]++);
+  const wk=Date.now()-7*864e5,g=el("div","ad-grid");
+  g.append(stat(st.length,"Tổng học viên"),stat(c.online,"Đang online"),stat(c.away,"Away"),stat(c.offline,"Offline"),stat(st.filter(p=>p.createdAt>wk).length,"Tài khoản mới (7 ngày)"),stat(gSets.length,"Tổng bộ từ vựng"),stat(gWords.length,"Tổng số từ"),stat(0,"Bài kiểm tra"));
+  const pn=el("div","panel");pn.append(el("h2",null,"Từ mới thêm trong 7 ngày"));const bars=el("div","ad-bars"),days=[];
+  for(let i=6;i>=0;i--){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-i);days.push(d.getTime());}
+  const cnt=days.map(t=>gWords.filter(w=>w.createdAt>=t&&w.createdAt<t+864e5).length),mx=Math.max(1,...cnt);
+  days.forEach((t,i)=>{const col=el("div");const bar=el("i");bar.style.height=(cnt[i]/mx*100)+"%";col.append(el("span",null,String(cnt[i])),bar,el("span",null,new Date(t).toLocaleDateString("vi-VN",{day:"2-digit",month:"2-digit"})));bars.append(col);});
+  pn.append(bars);root.append(g,pn);
+}
+function adStu(root){
+  const bar=el("div","ad-bar"),q=el("input");q.placeholder="Tìm học viên...";q.value=adQ;const f=el("select");[["all","Tất cả"],["online","Online"],["away","Away"],["offline","Offline"],["locked","Bị khóa"]].forEach(([v,t])=>{const o=el("option",null,t);o.value=v;f.append(o);});f.value=adStat;
+  const tb=el("div","ad-wrap");const draw=()=>{tb.innerHTML="";const t=el("table","ad-tbl");t.innerHTML="<thead><tr><th>Học viên</th><th>Trạng thái</th><th>Hoạt động gần nhất</th><th>Bộ / Từ (đã thuộc)</th><th></th></tr></thead>";const bd=el("tbody");
+    stProfiles.filter(p=>p.id!==auth.currentUser.uid&&norm(p.username).includes(norm(adQ))&&(adStat==="all"||(adStat==="locked"?p.locked:stateOf(p.id)===adStat))).sort((a,b)=>(a.username||"").localeCompare(b.username||"")).forEach(p=>{
+      const tr=el("tr"),w=gWords.filter(x=>x.uid===p.id),l=w.filter(x=>x.learned).length,s=stateOf(p.id),n=el("td"),sd=el("td"),a=el("td");
+      n.append(dotEl(s),el("b",null,p.username||p.id));if(p.locked)n.append(el("span","chip"," Đã khóa"));
+      sd.textContent=stLabel[s];tr.append(n,sd,el("td",null,ago((stPres[p.id]||{}).lastSeen)),el("td",null,gSets.filter(x=>x.uid===p.id).length+" / "+w.length+" ("+l+")"),a);
+      const b1=el("button","sec","Xem vocab"),b2=el("button","sec","Nhắn tin"),b3=el("button",p.locked?"sec":"del",p.locked?"Mở khóa":"Khóa");
+      b1.onclick=()=>{adminTab="vocab";vStu=p.id;vOpen=null;renderAdmin();};b2.onclick=()=>{go("msg");openConv(dmId(p.id));};b3.onclick=()=>updateDoc(doc(db,"profiles",p.id),{locked:!p.locked}).catch(e=>alert("Lỗi: "+e.code));
+      a.append(b1,b2,b3);
+      if(isAdmin()){const b4=el("button","sec","Giáo viên?");b4.onclick=async()=>{try{if(confirm("Cấp quyền giáo viên cho "+p.username+"? (OK = cấp, Hủy = bỏ qua)"))await setDoc(doc(db,"roles",p.id),{role:"teacher"});else if(confirm("Thu hồi quyền giáo viên của "+p.username+"?"))await deleteDoc(doc(db,"roles",p.id));}catch(e){alert("Lỗi: "+e.code);}};a.append(b4);}
+      bd.append(tr);});t.append(bd);tb.append(t);};
+  q.oninput=()=>{adQ=q.value;draw();};f.onchange=()=>{adStat=f.value;draw();};bar.append(q,f);root.append(bar,tb);draw();
+}
+function adVocab(root){
+  if(vOpen){const s=gSets.find(x=>x.uid===vOpen.uid&&x.id===vOpen.id);if(!s){vOpen=null;return adVocab(root);}
+    const top=el("div","ad-bar"),back=el("button","sec","← Danh sách");back.onclick=()=>{vOpen=null;renderAdmin();};top.append(back,el("h2",null,s.name+" · "+nameOf(s.uid)));root.append(top);
+    const t=el("table","ad-tbl");t.innerHTML="<thead><tr><th>#</th><th>Từ</th><th>Phiên âm</th><th>Nghĩa</th><th>Trạng thái</th></tr></thead>";const bd=el("tbody");
+    gWords.filter(w=>w.uid===s.uid&&w.setId===s.id).forEach((w,i)=>{const tr=el("tr");[i+1,w.term,w.reading||"",w.meaning||"",w.learned?"Đã thuộc":"Chưa thuộc"].forEach(v=>tr.append(el("td",null,String(v))));bd.append(tr);});t.append(bd);const wr=el("div","ad-wrap");wr.append(t);root.append(wr);return;}
+  const bar=el("div","ad-bar"),q=el("input");q.placeholder="Tìm tên bộ / học viên / ngôn ngữ...";q.value=vQ;const sel=el("select"),all=el("option",null,"Tất cả học viên");all.value="";sel.append(all);stProfiles.filter(p=>p.id!==auth.currentUser.uid).forEach(p=>{const o=el("option",null,p.username);o.value=p.id;sel.append(o);});sel.value=vStu;
+  const nb=el("button",null,"＋ Tạo bộ cho học viên");nb.onclick=()=>createSetFor(vStu);bar.append(q,sel,nb);
+  const wr=el("div","ad-wrap");const draw=()=>{wr.innerHTML="";const t=el("table","ad-tbl");t.innerHTML="<thead><tr><th>Bộ từ vựng</th><th>Học viên</th><th>Ngôn ngữ</th><th>Số từ</th><th></th></tr></thead>";const bd=el("tbody"),LG={en:"Tiếng Anh",zh:"Tiếng Trung",it:"Tiếng Ý"};
+    gSets.filter(x=>(!vStu||x.uid===vStu)&&(norm(x.name).includes(norm(vQ))||norm(nameOf(x.uid)).includes(norm(vQ))||norm(LG[x.language]||"").includes(norm(vQ)))).forEach(x=>{
+      const tr=el("tr"),a=el("td");tr.append(el("td",null,x.name+(x.sharedFrom?" (chia sẻ từ "+x.sharedFrom.name+")":"")),el("td",null,nameOf(x.uid)),el("td",null,LG[x.language]||"—"),el("td",null,String(gWords.filter(w=>w.uid===x.uid&&w.setId===x.id).length)),a);
+      const v=el("button","sec","Xem"),sh=el("button","sec","Chia sẻ"),ed=el("button","sec","Sửa tên"),dl=el("button","del","Xóa");
+      v.onclick=()=>{vOpen={uid:x.uid,id:x.id};renderAdmin();};sh.onclick=()=>shareDlg(x);
+      ed.onclick=async()=>{const n=prompt("Tên mới:",x.name);if(n&&n.trim()){try{await updateDoc(doc(db,"users",x.uid,"sets",x.id),{name:n.trim()});loadGlobal();}catch(e){alert("Lỗi: "+e.code);}}};
+      dl.onclick=async()=>{if(!confirm("Xóa bộ \""+x.name+"\" và toàn bộ từ bên trong?"))return;try{const ws=gWords.filter(w=>w.uid===x.uid&&w.setId===x.id);for(let i=0;i<ws.length;i+=400){const b=writeBatch(db);ws.slice(i,i+400).forEach(w=>b.delete(doc(db,"users",x.uid,"words",w.id)));await b.commit();}await deleteDoc(doc(db,"users",x.uid,"sets",x.id));loadGlobal();}catch(e){alert("Lỗi: "+e.code);}};
+      a.append(v,sh,ed,dl);bd.append(tr);});t.append(bd);wr.append(t);};
+  q.oninput=()=>{vQ=q.value;draw();};sel.onchange=()=>{vStu=sel.value;draw();};root.append(bar,wr);draw();
+  const pn=el("div","panel");pn.append(el("h2",null,"Lịch sử chia sẻ"));if(!adShares.length)pn.append(el("p","mu","Chưa có lượt chia sẻ nào."));adShares.forEach(h=>pn.append(el("div","mu",new Date(h.at).toLocaleString("vi-VN")+" · \""+h.setName+"\" · người tạo: "+h.creatorName+" · người chia sẻ: "+h.byName+" → người nhận: "+h.toName)));root.append(pn);
+}
+function createSetFor(sid){modalBox("Tạo bộ vocab cho học viên",b=>{const s=el("select");s.id="cs1";stProfiles.filter(p=>p.id!==auth.currentUser.uid).forEach(p=>{const o=el("option",null,p.username);o.value=p.id;s.append(o);});if(sid)s.value=sid;const n=el("input");n.id="cs2";n.placeholder="Tên bộ";const l=el("select");l.id="cs3";[["zh","Tiếng Trung"],["en","Tiếng Anh"],["it","Tiếng Ý"]].forEach(([v,t])=>{const o=el("option",null,t);o.value=v;l.append(o);});b.append(s,n,l);},"Tạo",async()=>{const u=document.getElementById("cs1").value,n=document.getElementById("cs2").value.trim();if(!u||!n)throw new Error("Thiếu thông tin");await addDoc(collection(db,"users",u,"sets"),{name:n,desc:"",language:document.getElementById("cs3").value,folderId:"",createdAt:Date.now(),createdByStaff:myName()});loadGlobal();});}
+function shareDlg(x){const boxes=[];modalBox("Chia sẻ bản sao \""+x.name+"\"",b=>{b.append(el("p","mu","Chọn học viên nhận (bản gốc không thay đổi):"));stProfiles.filter(p=>p.id!==x.uid&&p.id!==auth.currentUser.uid).forEach(p=>{const l=el("label"),c=document.createElement("input");c.type="checkbox";c.value=p.id;boxes.push(c);l.append(c,el("span",null,p.username));b.append(l);});},"Chia sẻ",async()=>{const t=boxes.filter(c=>c.checked).map(c=>c.value);if(!t.length)throw new Error("Chưa chọn học viên");await shareSet(x,t);alert("Đã chia sẻ cho "+t.length+" học viên.");loadGlobal();});}
+async function shareSet(s,targets){const src=gWords.filter(w=>w.uid===s.uid&&w.setId===s.id);for(const t of targets){const ref=await addDoc(collection(db,"users",t,"sets"),{name:s.name,desc:s.desc||"",language:s.language||"",folderId:"",createdAt:Date.now(),sharedFrom:{uid:s.uid,name:nameOf(s.uid),setId:s.id},sharedBy:myName(),sharedAt:Date.now()});
+  for(let i=0;i<src.length;i+=400){const b=writeBatch(db);src.slice(i,i+400).forEach(w=>{const{id:_i,uid:_u,...rest}=w;b.set(doc(collection(db,"users",t,"words")),{...rest,setId:ref.id,learned:false,createdAt:Date.now()});});await b.commit();}
+  await addDoc(collection(db,"shares"),{setName:s.name,creatorUid:s.uid,creatorName:nameOf(s.uid),byUid:auth.currentUser.uid,byName:myName(),toUid:t,toName:nameOf(t),at:Date.now()});}}
+// ---------- Messages ----------
+function convTitle(c){if(c.type==="broadcast")return"📢 Toàn bộ học viên";if(c.type==="group")return"👥 "+(c.title||"Nhóm");return isStaff()?"💬 "+(c.student||nameOf((c.members||[])[0])):"💬 Giáo viên";}
+function renderMsg(){
+  const me=auth.currentUser.uid,box=$("msgConvos"),tools=$("msgTools"),q=norm($("msgSearch").value);box.innerHTML="";
+  let list=stConvos.slice();if(!isStaff()&&!list.some(c=>c.id===dmId(me)))list.unshift({id:dmId(me),type:"dm",members:[me],lastAt:0});
+  list=list.filter(c=>norm(convTitle(c)).includes(q));
+  list.forEach(c=>{const it=el("div","msg-it"+(c.id===stActive?" on":"")),t=el("div");t.append(el("b",null,convTitle(c)),el("small",null,c.lastMsg||"Chưa có tin nhắn"));it.append(t);if(unreadOf(c))it.append(el("span","fb-badge","●"));it.onclick=()=>openConv(c.id);box.append(it);});
+  if(isStaff()&&!tools.dataset.done){tools.dataset.done=1;const n=el("button",null,"＋ Nhắn học viên"),g=el("button","sec","＋ Nhóm");
+    n.onclick=()=>modalBox("Nhắn tin riêng",b=>{const s=el("select");s.id="mn1";stProfiles.filter(p=>p.id!==me).forEach(p=>{const o=el("option",null,p.username);o.value=p.id;s.append(o);});b.append(s);},"Mở",async()=>{openConv(dmId(document.getElementById("mn1").value));});
+    g.onclick=()=>modalBox("Tạo nhóm chat",b=>{const n=el("input");n.id="mg1";n.placeholder="Tên nhóm";b.append(n);stProfiles.filter(p=>p.id!==me).forEach(p=>{const l=el("label"),c=document.createElement("input");c.type="checkbox";c.value=p.id;c.className="mgc";l.append(c,el("span",null,p.username));b.append(l);});},"Tạo",async()=>{const m=[...document.querySelectorAll(".mgc")].filter(c=>c.checked).map(c=>c.value),t=document.getElementById("mg1").value.trim();if(!t||!m.length)throw new Error("Cần tên nhóm và thành viên");const id="g_"+Date.now();await setDoc(doc(db,"convos",id),{type:"group",title:t,members:m,createdBy:me,lastAt:Date.now(),lastBy:me,lastMsg:"Nhóm mới",reads:{}});openConv(id);});
+    tools.append(n,g);}
+  const c=stConvos.find(x=>x.id===stActive);$("msgHead").textContent=stActive?(c?convTitle(c):(isStaff()?"💬 "+nameOf(stActive.slice(3)):"💬 Giáo viên")):"Chọn một hội thoại";
+  $("msgIn").hidden=!stActive||(!isStaff()&&c&&c.type==="broadcast");
+}
+$("msgSearch").oninput=()=>renderMsg();
+function openConv(id){
+  stActive=id;if(stMsgUnsub){stMsgUnsub();stMsgUnsub=null;}const feed=$("msgFeed");feed.innerHTML="";
+  stMsgUnsub=onSnapshot(query(collection(db,"convos",id,"msgs"),orderBy("at")),sn=>{
+    const me=auth.currentUser.uid,c=stConvos.find(x=>x.id===id)||{},rd=c.reads||{};feed.innerHTML="";
+    if(!sn.docs.length)feed.append(el("div","mu","Chưa có tin nhắn."));
+    sn.docs.forEach(d=>{const m=d.data(),mine=m.from===me,b=el("div","msg-b"+(mine?" me":""));b.append(el("div",null,(mine?"":m.name+": ")+m.text));
+      const seen=mine&&Object.entries(rd).some(([u,t])=>u!==me&&t>=m.at);b.append(el("small",null,new Date(m.at).toLocaleString("vi-VN")+(mine?(seen?" · ✓✓ Đã đọc":" · ✓ Đã gửi"):"")));feed.append(b);});
+    feed.scrollTop=feed.scrollHeight;
+    if(c.id&&c.lastBy!==me&&(c.lastAt||0)>(rd[me]||0))updateDoc(doc(db,"convos",id),{["reads."+me]:Date.now()}).catch(()=>{});
+  },e=>{feed.textContent="Không tải được tin nhắn ("+e.code+")";});
+  renderMsg();msgBadge();
+}
+$("msgSend").onclick=async()=>{const t=$("msgInput").value.trim();if(!t||!stActive)return;const me=auth.currentUser.uid,c=stConvos.find(x=>x.id===stActive),now=Date.now();$("msgInput").value="";
+  try{if(!c){if(!stActive.startsWith("dm_"))return;const sid=stActive.slice(3);await setDoc(doc(db,"convos",stActive),{type:"dm",members:[sid],student:sid===me?myName():nameOf(sid),lastMsg:t.slice(0,80),lastAt:now,lastBy:me,reads:{[me]:now}});}
+  else await updateDoc(doc(db,"convos",stActive),{lastMsg:t.slice(0,80),lastAt:now,lastBy:me,["reads."+me]:now});
+  await addDoc(collection(db,"convos",stActive,"msgs"),{from:me,name:myName(),text:t.slice(0,2000),at:now});}catch(e){alert("Gửi thất bại: "+(e.code||e.message));}};
+$("msgInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("msgSend").click();}});
 
 // ---------- Hiển thị ----------
 function visible() {
@@ -1180,13 +1429,14 @@ $("expCsv").onclick = () => {
   a.download = "tuvung.csv"; a.click();
 };
 
-const P = { dash:"pDash", noti:"pNoti", lib:"pLib", folders:"pFolders", progress:"pProgress", notes:"pNotes", personal:"pPersonal", set:"pSet", cfg:"pCfg" };
+const P = { dash:"pDash", noti:"pNoti", lib:"pLib", folders:"pFolders", progress:"pProgress", notes:"pNotes", feedback:"pFeedback", admin:"pAdmin", msg:"pMsg", personal:"pPersonal", set:"pSet", cfg:"pCfg" };
 const scope = () => words.filter(w => (w.setId || "") === cur);
 const stOf = id => { const a = words.filter(w => (w.setId || "") === id), l = a.filter(w => w.learned).length; return { n: a.length, l, p: a.length ? Math.round(100 * l / a.length) : 0 }; };
 const allSets = () => (words.some(w => !w.setId) ? [{ id: "", name: "Chưa phân loại", desc: "Các từ chưa thuộc bộ nào", createdAt: 0 }] : []).concat(sets);
 function go(p, id) {
+  const prev = { page, cur };
   if (id !== undefined) { cur = id; if (p === "set") { stFilter = "all"; setSetTab("list"); } }
-  if (p !== page || (id !== undefined && id !== cur)) pageHistory.push({ page, cur });
+  if (p !== prev.page || (id !== undefined && id !== prev.cur)) { pageHistory.push(prev); if (pageHistory.length > 50) pageHistory.shift(); }
   page = p; $("side").classList.remove("open"); renderAll();
 }
 function goBack() {
@@ -1338,6 +1588,9 @@ document.addEventListener("keydown", e => {
 
 function renderAll() {
   if(page === "notes") renderNotes();
+  renderFeedback();
+  if(page==="admin")renderAdmin();
+  if(page==="msg")renderMsg();
   if(page === "noti") renderNotifications();
   if(page === "progress") renderProgress();
   renderHomeNotes();
@@ -1346,7 +1599,7 @@ function renderAll() {
   $("setName").textContent=cs.name;$("setDesc").textContent=(cs.desc||"")+" · "+({en:"Tiếng Anh",zh:"Tiếng Trung",it:"Tiếng Ý"}[cs.language]||"Chưa chọn ngôn ngữ");$("setAct").hidden=!cur;
   $("nRead").placeholder=cs.language==="zh"?"Pinyin (tự động tạo cho tiếng Trung)":"Phiên âm (tuỳ chọn)";
   document.querySelectorAll("#side [data-p]").forEach(b => b.classList.toggle("on", b.dataset.p === page));
-  const backBtn = $("backBtn"); if (backBtn) backBtn.disabled = pageHistory.length === 0;
+  const backBtn = $("backBtn"); if (backBtn) { backBtn.hidden = pageHistory.length === 0; backBtn.disabled = pageHistory.length === 0; }
   
   const t = words.length, l = words.filter(w => w.learned).length;
   if (!$("dHi").textContent) $("dHi").textContent = (auth.currentUser?.email || "").split("@")[0] || $("who").textContent || "bạn";
@@ -1394,7 +1647,7 @@ $("clearNotifications").onclick=()=>{if(!notificationItems.length)return;if(conf
 $("menu").onclick = () => $("side").classList.toggle("open");
 $("gSearch").oninput = () => page === "lib" ? renderAll() : go("lib");
 $("sort").onchange = renderAll;
-$("logout2").onclick = () => signOut(auth);
+$("logout2").onclick = () => doLogout();
 const openM = () => { $("modal").hidden = false; $("sName").value = ""; $("sDesc").value = ""; $("sLang").value = "en"; refreshFolderOptions(); $("sName").focus(); };
 $("newBtn").onclick = openM; if ($("sNew")) $("sNew").onclick = openM;
 $("homeCreateVocab").onclick = openM;
@@ -1492,7 +1745,7 @@ setTheme(th);
 /* Full-workspace Vietnamese/English localization */
 (()=>{
  const dict={
- 'Home':'Home','WORKSPACE':'WORKSPACE','LIBRARY':'LIBRARY','PERSONAL':'PERSONAL','PINNED':'PINNED',
+ 'Home':'Home','Quản trị':'Admin','Tổng quan':'Overview','Học viên':'Students','Kho vocab':'Vocab library','Làm mới':'Refresh','Dành cho Admin / Giáo viên.':'For Admin / Teachers.','Trò chuyện với giáo viên và nhận thông báo chung.':'Chat with your teacher and get announcements.','Tổng học viên':'Total students','Đang online':'Online now','Tổng bộ từ vựng':'Total vocabulary sets','Tổng số từ':'Total words','Bài kiểm tra':'Tests','Từ mới thêm trong 7 ngày':'New words in the last 7 days','Xem vocab':'View vocab','Nhắn tin':'Message','Khóa':'Lock','Mở khóa':'Unlock','Chia sẻ':'Share','Sửa tên':'Rename','Lịch sử chia sẻ':'Sharing history','Chọn một hội thoại':'Select a conversation','Gửi':'Send','＋ Nhắn học viên':'＋ Message a student','＋ Nhóm':'＋ Group','Chưa có tin nhắn.':'No messages yet.','Tài khoản mới (7 ngày)':'New accounts (7 days)','Góp ý':'Feedback','Gửi ý kiến, báo lỗi hoặc đề xuất tính năng. Mọi góp ý sẽ được chuyển đến quản trị viên.':'Send ideas, bug reports or feature requests. All feedback goes to the administrator.','Gửi góp ý':'Send feedback','Hộp thư góp ý':'Feedback inbox','Chỉ quản trị viên thấy mục này.':'Only the administrator can see this.','Chưa có góp ý nào.':'No feedback yet.','Đã xem':'Mark as read','Đánh dấu chưa xem':'Mark as unread','Xóa':'Delete','Vui lòng nhập nội dung góp ý.':'Please enter your feedback.','Đang gửi...':'Sending...','Nhập góp ý của bạn...':'Write your feedback...','Đã gửi! Cảm ơn bạn đã góp ý.':'Sent! Thank you for your feedback.','WORKSPACE':'WORKSPACE','LIBRARY':'LIBRARY','PERSONAL':'PERSONAL','PINNED':'PINNED',
  'Thông báo':'Notifications','Vocabulary':'Vocabulary','Folders':'Folders','Tiến độ':'Progress','Note':'Notes','Ghi chú':'Notes','Nhắc nhở':'Reminders','Đã ghim':'Pinned',
  'Thông tin cá nhân':'Personal information','Chế độ tối':'Dark mode','Đăng xuất':'Sign out','Học viên':'Learner','Ngôn ngữ':'Language',
  'Welcome, !':'Welcome, !','Hôm nay bạn muốn chinh phục những từ vựng nào?':'What vocabulary would you like to master today?',

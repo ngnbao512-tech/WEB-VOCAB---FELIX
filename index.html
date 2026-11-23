@@ -1447,14 +1447,14 @@ $("copyVocab").onclick = async () => {
   const rows = scope().slice().sort((x, y) => (x.createdAt || 0) - (y.createdAt || 0)).filter(w => String(w.term || "").trim());
   if (!rows.length) { btn.textContent = "Bộ này chưa có từ"; setTimeout(() => btn.textContent = old, 2000); return; }
   const clean = v => String(v == null ? "" : v).replace(/[\r\n]+/g, " ").trim();
-  const text = rows.map(w => clean(w.term) + "," + clean(w.meaning)).join("\n");
-  const withComma = rows.filter(w => clean(w.term).includes(",") || clean(w.meaning).includes(",")).length;
+  const text = rows.map(w => clean(w.term) + "-" + clean(w.meaning)).join("\n");
+  const withComma = rows.filter(w => clean(w.term).includes("-") || clean(w.meaning).includes("-")).length;
   try { await navigator.clipboard.writeText(text); }
   catch (e) { const t = document.createElement("textarea"); t.value = text; t.style.cssText = "position:fixed;opacity:0"; document.body.append(t); t.select(); try { document.execCommand("copy"); } catch (e2) {} t.remove(); }
-  btn.textContent = "✓ Đã copy " + rows.length + " từ" + (withComma ? " (" + withComma + " từ có dấu phẩy)" : "");
+  btn.textContent = "✓ Đã copy " + rows.length + " từ" + (withComma ? " (" + withComma + " từ có dấu gạch ngang)" : "");
   setTimeout(() => btn.textContent = old, 3000);
 };
-// Bôi đen nhiều dòng trong bảng từ vựng rồi Ctrl+C / chuột phải > Copy => "từ,nghĩa" mỗi dòng
+// Bôi đen nhiều dòng trong bảng từ vựng rồi Ctrl+C / chuột phải > Copy => "từ-nghĩa" mỗi dòng
 document.addEventListener("copy", e => {
   const sel = window.getSelection(), body = $("body");
   if (!sel || sel.isCollapsed || !sel.rangeCount || !body) return;
@@ -1464,7 +1464,7 @@ document.addEventListener("copy", e => {
   const rows = [...body.rows].filter(tr => sel.containsNode(tr, true));
   if (!rows.length || (rows.length === 1 && a === f)) return;
   const clean = td => String(td ? td.textContent : "").replace(/[\r\n]+/g, " ").trim();
-  const lines = rows.map(tr => clean(tr.cells[1]) + "," + clean(tr.cells[3])).filter(l => l !== ",");
+  const lines = rows.map(tr => clean(tr.cells[1]) + "-" + clean(tr.cells[3])).filter(l => l !== "-");
   if (!lines.length) return;
   e.clipboardData.setData("text/plain", lines.join("\n"));
   e.preventDefault();

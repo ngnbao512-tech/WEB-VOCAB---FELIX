@@ -1454,6 +1454,21 @@ $("copyVocab").onclick = async () => {
   btn.textContent = "✓ Đã copy " + rows.length + " từ" + (withComma ? " (" + withComma + " từ có dấu phẩy)" : "");
   setTimeout(() => btn.textContent = old, 3000);
 };
+// Bôi đen nhiều dòng trong bảng từ vựng rồi Ctrl+C / chuột phải > Copy => "từ,nghĩa" mỗi dòng
+document.addEventListener("copy", e => {
+  const sel = window.getSelection(), body = $("body");
+  if (!sel || sel.isCollapsed || !sel.rangeCount || !body) return;
+  const cellOf = n => { const x = n && (n.nodeType === 1 ? n : n.parentElement); return x && x.closest ? x.closest("td") : null; };
+  const a = cellOf(sel.anchorNode), f = cellOf(sel.focusNode);
+  if (!a || !f || !body.contains(a) || !body.contains(f)) return;
+  const rows = [...body.rows].filter(tr => sel.containsNode(tr, true));
+  if (!rows.length || (rows.length === 1 && a === f)) return;
+  const clean = td => String(td ? td.textContent : "").replace(/[\r\n]+/g, " ").trim();
+  const lines = rows.map(tr => clean(tr.cells[1]) + "," + clean(tr.cells[3])).filter(l => l !== ",");
+  if (!lines.length) return;
+  e.clipboardData.setData("text/plain", lines.join("\n"));
+  e.preventDefault();
+});
 
 const P = { dash:"pDash", noti:"pNoti", lib:"pLib", folders:"pFolders", progress:"pProgress", notes:"pNotes", feedback:"pFeedback", admin:"pAdmin", msg:"pMsg", personal:"pPersonal", set:"pSet", cfg:"pCfg" };
 const scope = () => words.filter(w => (w.setId || "") === cur);

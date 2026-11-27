@@ -850,21 +850,20 @@ html[data-theme=dark] #app .security-note p{color:#a8b7ce}
   <div class="home-grid">
     <div class="panel learning-panel">
       <div class="section-head"><div><h2>Tiến độ học tập</h2></div><select id="dashSetSelect" aria-label="Chọn bộ từ vựng"><option value="all">Tất cả bộ từ vựng</option></select> <button type="button" class="sec" id="dashStudy">▶ Học flashcard</button></div>
-      <div class="word-table-wrap"><table class="word-table"><thead><tr><th>STT</th><th>Từ vựng</th><th>Phiên âm / Pinyin</th><th>Nghĩa</th><th>Trạng thái</th></tr></thead><tbody id="dashWords"></tbody></table></div>
+      <div id="dashProgress" class="dash-progress"></div>
     </div>
-    <div class="stats-panel panel"><h2>Tổng quan</h2><div class="stats-three" id="dStats"></div></div>
+    <div class="stats-panel panel"><h2>Tổng quan</h2><div class="dash-overview" id="dOverview"></div></div>
   </div>
   <div class="home-lower">
     <div class="panel">
       <div class="section-head"><div><h2>Từ vựng của bạn</h2></div><a id="seeAll">Xem tất cả →</a></div>
       <div id="dTodo" class="unfinished-list"></div>
     </div>
-    
-  </div>
-  <div class="panel home-notes-panel">
-    <div class="section-head"><div><h2>Ghi chú của tôi</h2><p class="mu" style="margin:4px 0 0">Ghi nhanh những điều quan trọng trong quá trình học tập.</p></div><a id="homeSeeNotes">Xem tất cả ghi chú →</a></div>
-    <div class="home-note-compose"><textarea id="homeNoteInput" rows="2" placeholder="Viết ghi chú nhanh... (Ctrl + Enter để lưu)"></textarea><button id="homeAddNote" type="button">＋ Thêm ghi chú</button></div>
-    <div id="homeNotesList" class="home-notes-list"></div>
+    <div class="panel home-notes-panel">
+      <div class="section-head"><div><h2>Ghi chú của tôi</h2></div><a id="homeSeeNotes">Xem tất cả →</a></div>
+      <div class="home-note-compose"><textarea id="homeNoteInput" rows="1" placeholder="Ghi chú nhanh... (Ctrl + Enter)"></textarea><button id="homeAddNote" type="button">＋ Thêm</button></div>
+      <div id="homeNotesList" class="home-notes-list"></div>
+    </div>
   </div>
 </section>
 <section id="pFeedback" hidden>
@@ -1019,6 +1018,48 @@ html[data-theme=dark] #app .notes-compose,html[data-theme=dark] #app .note-item{
 #app .pm-lang-btn{min-width:38px;min-height:28px!important;padding:4px 10px!important;border:0!important;border-radius:999px!important;background:transparent!important;color:#52709a!important;font-size:11px;font-weight:800;box-shadow:none!important}
 #app .pm-lang-btn.active{background:linear-gradient(135deg,#60a5fa,#2563eb)!important;color:#fff!important;box-shadow:0 3px 9px rgba(37,99,235,.24)!important}
 @media(max-width:860px){#app .sb{overflow-y:auto;overflow-x:hidden}#app .prof .profile-menu{width:100%;max-width:100%}}
+
+/* ===== Home: learning progress / overview / compact notes ===== */
+#app .dash-top{display:flex;gap:18px;align-items:center;margin:16px 0 4px}
+#app .dash-ring{--p:0;width:96px;height:96px;border-radius:50%;flex:none;display:grid;place-items:center;background:conic-gradient(#23b26d calc(var(--p)*1%),var(--bd) 0)}
+#app .dash-ring span{width:74px;height:74px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-weight:800;font-size:20px;color:var(--tx)}
+#app .dash-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;flex:1;min-width:0}
+#app .dash-stat{padding:11px 12px;border:1px solid var(--bd2);border-radius:12px;background:var(--bg);display:flex;flex-direction:column;gap:2px;color:var(--mu);font-size:12px;min-width:0}
+#app .dash-stat b{font-size:21px;color:var(--tx);line-height:1.2;overflow-wrap:anywhere}
+#app .dash-stat.ok b{color:#15803d}
+#app .dash-stat.warn b{color:#b45309}
+html[data-theme=dark] #app .dash-stat.ok b{color:#4ade80}
+html[data-theme=dark] #app .dash-stat.warn b{color:#fbbf24}
+#app .dash-sub{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);font-weight:800;margin:18px 0 8px}
+#app .dash-list{display:grid;gap:8px;max-height:230px;overflow:auto}
+#app .dash-row{display:grid;grid-template-columns:minmax(90px,1.2fr) minmax(80px,2fr) auto;gap:12px;align-items:center;padding:9px 11px;border-radius:10px;background:var(--bg);font-size:13px}
+#app .dash-row.click{cursor:pointer}
+#app .dash-row.click:hover{background:var(--sel)}
+#app .dash-row .bar{margin:0}
+#app .dash-row b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#app .dash-row span{color:var(--mu);white-space:nowrap;font-size:12px}
+#app .dash-word{display:flex;justify-content:space-between;gap:12px;padding:9px 11px;border-radius:10px;background:var(--bg);font-size:13px}
+#app .dash-word span{color:var(--mu);text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:55%}
+#app .dash-empty{padding:16px;border:1px dashed var(--bd);border-radius:11px;text-align:center;color:var(--mu);font-size:13px}
+#app .dash-overview .dash-top{flex-direction:column;align-items:stretch;margin-top:14px}
+#app .dash-overview .dash-ring{align-self:center}
+#app .dash-overview .dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+#app .dash-overview .dash-row{grid-template-columns:minmax(70px,1fr) minmax(50px,1.4fr) auto;gap:10px}
+#app .dash-hl{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:8px 11px;border-radius:10px;background:var(--bg);margin-bottom:8px}
+#app .dash-hl span{color:var(--mu)}
+#app .dash-hl b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%}
+#app .home-lower{align-items:start}
+#app .home-lower>.panel{margin:0;padding:18px}
+#app .home-notes-panel{margin-top:0;padding:16px 18px}
+#app .home-notes-panel .section-head h2{font-size:17px}
+#app .home-notes-panel .home-note-compose{margin:10px 0;gap:8px;align-items:center}
+#app .home-notes-panel .home-note-compose textarea{min-height:38px;height:38px;padding:8px 10px;font-size:12.5px;border-radius:10px;resize:none}
+#app .home-notes-panel .home-note-compose button{align-self:center;padding:8px 12px;font-size:13px}
+#app .home-notes-panel .home-notes-list{gap:6px}
+#app .home-notes-panel .home-note-row{padding:8px 10px;border-radius:9px}
+#app .home-notes-panel .home-note-text{font-size:12.5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#app .home-notes-panel .home-note-empty{padding:12px;font-size:12.5px}
+@media(max-width:600px){#app .dash-top{flex-direction:column;align-items:stretch}#app .dash-ring{align-self:center}#app .dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}#app .home-notes-panel .home-note-compose{flex-direction:row}#app .home-notes-panel .home-note-compose button{width:auto}}
 </style>
 <script>
 const T={
@@ -1651,17 +1692,7 @@ function renderAll() {
     sl.forEach(x => { const o=document.createElement("option"); o.value=x.id; o.textContent=x.name; opts.append(o); });
     opts.value = sl.some(x=>x.id===old) || old==="all" ? old : "all";
   }
-  const visibleWords = words.filter(w => chosen==="all" || w.setId===chosen);
-  const total=visibleWords.length, learned=visibleWords.filter(w=>w.learned).length, pending=total-learned;
-  $("dStats").replaceChildren(...[["Số từ",total],["Từ đã học",learned],["Từ cần hoàn thành",pending]].map(([k,v])=>{const d=el("div");d.append(el("span",null,k),el("b",null,v));return d;}));
-  const tbody=$("dashWords"); tbody.innerHTML="";
-  const pendingWords=visibleWords;
-  if(!pendingWords.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=5;td.textContent="Chưa có từ vựng trong bộ này.";tr.append(td);tbody.append(tr);}
-  pendingWords.slice(0,80).forEach((w,i)=>{
-    const tr=document.createElement("tr");
-    [i+1,w.term||"—",w.reading||w.pinyin||"—",w.meaning||"—"].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.append(td);});
-    const td=document.createElement("td"),pill=el("span","status-pill"+(w.learned?" learned":""),w.learned?"Đã học":"Cần học");td.append(pill);tr.append(td);tbody.append(tr);
-  });
+  renderDashProgress(chosen, sl);
   const td=$("dTodo"); td.innerHTML="";
   const unfinished=sl.filter(x=>{const setWords=words.filter(w=>w.setId===x.id);return setWords.some(w=>!w.learned);});
   if(!unfinished.length)td.textContent=sl.length?"Bạn đã xem hết các bộ từ vựng!":"Chưa có bộ từ vựng nào. Hãy tạo bộ đầu tiên.";
@@ -1682,6 +1713,71 @@ function renderAll() {
   render();
 }
 document.addEventListener("click", e => { const nav=e.target.closest("[data-p]"); if(nav){ e.preventDefault(); if(nav.dataset.p==="lib"&&nav.closest("#side"))libFolder=""; go(nav.dataset.p); } });
+
+function renderDashProgress(chosen, sl){
+  const box=$("dashProgress"), ov=$("dOverview"); if(!box||!ov)return;
+  const LANG={en:"Tiếng Anh",zh:"Tiếng Trung",it:"Tiếng Ý"};
+  const dateLoc=window.curLang==="en"?"en-US":"vi-VN";
+  const weekAgo=Date.now()-7*864e5;
+  const ring=p=>{const r=el("div","dash-ring");r.style.setProperty("--p",p);r.append(el("span",null,p+"%"));return r;};
+  const stat=(k,v,cls)=>{const d=el("div","dash-stat"+(cls?" "+cls:""));d.append(el("b",null,v),el("span",null,k));return d;};
+  const sub=t=>el("div","dash-sub",t);
+  const pctOf=(l,n)=>n?Math.round(l*100/n):0;
+  const setRow=(x,st,clickable)=>{const r=el("div","dash-row"+(clickable?" click":"")),bar=el("div","bar"),fill=el("i");fill.style.width=st.p+"%";bar.append(fill);r.append(el("b",null,x.name),bar,el("span",null,st.l+"/"+st.n+" · "+st.p+"%"));if(clickable)r.onclick=()=>go("set",x.id);return r;};
+
+  /* ---- Learning progress: all sets or one set ---- */
+  const all=chosen==="all", cs=all?null:sl.find(x=>x.id===chosen);
+  const ws=all?words:words.filter(w=>(w.setId||"")===chosen);
+  const total=ws.length, learned=ws.filter(w=>w.learned).length, pending=total-learned, pct=pctOf(learned,total);
+  const recent=ws.filter(w=>(w.createdAt||0)>=weekAgo).length;
+  const stats=[stat("Đã học",learned,"ok"),stat("Chưa học",pending,pending?"warn":""),stat("Tổng số từ",total)];
+  if(all){
+    const done=sl.filter(x=>{const st=stOf(x.id);return st.n>0&&st.p===100;}).length;
+    stats.push(stat("Số bộ từ vựng",sl.length),stat("Bộ hoàn thành",done+"/"+sl.length),stat("Từ mới (7 ngày)",recent));
+  }else{
+    stats.push(stat("Ngôn ngữ",LANG[cs?.language]||"Chưa chọn ngôn ngữ"),stat("Từ mới (7 ngày)",recent),stat("Ngày tạo",cs?.createdAt?new Date(cs.createdAt).toLocaleDateString(dateLoc):"—"));
+  }
+  const top=el("div","dash-top"),grid=el("div","dash-stats");grid.append(...stats);top.append(ring(pct),grid);
+  const parts=[top];
+  if(all){
+    parts.push(sub("Tiến độ từng bộ"));
+    if(!sl.length)parts.push(el("div","dash-empty","Bạn chưa có bộ từ vựng nào."));
+    else{const list=el("div","dash-list");[...sl].sort((x,y)=>stOf(x.id).p-stOf(y.id).p||x.name.localeCompare(y.name)).forEach(x=>list.append(setRow(x,stOf(x.id),true)));parts.push(list);}
+  }else{
+    parts.push(sub("Từ chưa học"));
+    const left=ws.filter(w=>!w.learned);
+    if(!total)parts.push(el("div","dash-empty","Chưa có từ vựng trong bộ này."));
+    else if(!left.length)parts.push(el("div","dash-empty","Bạn đã học hết từ trong bộ này!"));
+    else{const list=el("div","dash-list");left.slice(0,8).forEach(w=>{const r=el("div","dash-word");r.append(el("b",null,w.term||"—"),el("span",null,w.meaning||"—"));list.append(r);});if(left.length>8)list.append(el("div","dash-empty",(left.length-8)+" từ khác"));parts.push(list);}
+  }
+  box.replaceChildren(...parts);
+
+  /* ---- Overview: always every set ---- */
+  const T=words.length, L=words.filter(w=>w.learned).length, P=T-L, PCT=pctOf(L,T);
+  const withWords=sl.map(x=>({x,st:stOf(x.id)})).filter(o=>o.st.n>0);
+  const doneAll=withWords.filter(o=>o.st.p===100).length;
+  const recentAll=words.filter(w=>(w.createdAt||0)>=weekAgo).length;
+  const otop=el("div","dash-top"),og=el("div","dash-stats");
+  og.append(stat("Số bộ từ vựng",sl.length),stat("Tổng số từ",T),stat("Đã học",L,"ok"),stat("Chưa học",P,P?"warn":""),stat("Bộ hoàn thành",doneAll+"/"+sl.length),stat("Từ mới (7 ngày)",recentAll));
+  otop.append(ring(PCT),og);
+  const oparts=[otop];
+  if(!T){oparts.push(el("div","dash-empty","Chưa có từ vựng nào để thống kê."));}
+  else{
+    const langOf={};sl.forEach(x=>langOf[x.id]=x.language||"");
+    const agg={};words.forEach(w=>{const lg=langOf[w.setId||""]||w.lang||"";const g=agg[lg]||(agg[lg]={n:0,l:0});g.n++;if(w.learned)g.l++;});
+    const keys=Object.keys(agg).filter(k=>LANG[k]);
+    if(keys.length){oparts.push(sub("Theo ngôn ngữ"));const list=el("div","dash-list");keys.forEach(k=>list.append(setRow({name:LANG[k]},{l:agg[k].l,n:agg[k].n,p:pctOf(agg[k].l,agg[k].n)},false)));oparts.push(list);}
+    const open=withWords.filter(o=>o.st.p<100);
+    const best=[...withWords].sort((a,b)=>b.st.p-a.st.p)[0], worst=[...open].sort((a,b)=>a.st.p-b.st.p)[0];
+    if(best||worst){
+      oparts.push(sub("Nổi bật"));
+      const hl=(k,o)=>{const d=el("div","dash-hl");d.append(el("span",null,k),el("b",null,o.x.name+" · "+o.st.p+"%"));return d;};
+      if(best)oparts.push(hl("Bộ học tốt nhất",best));
+      if(worst)oparts.push(hl("Bộ cần ôn nhất",worst));
+    }
+  }
+  ov.replaceChildren(...oparts);
+}
 $("dashSetSelect").onchange=renderAll;
 $("clearNotifications").onclick=()=>{if(!notificationItems.length)return;if(confirm("Xóa toàn bộ thông báo?")){notificationItems=[];saveNotifications();renderNotifications();}};
 
@@ -1786,7 +1882,7 @@ setTheme(th);
 /* Full-workspace Vietnamese/English localization */
 (()=>{
  const dict={
- 'Home':'Home','Copy từ vựng':'Copy vocab','Bộ này chưa có từ':'This set has no words','Quản trị':'Admin','Tổng quan':'Overview','Học viên':'Students','Kho vocab':'Vocab library','Làm mới':'Refresh','Dành cho Admin / Giáo viên.':'For Admin / Teachers.','Trò chuyện với giáo viên và nhận thông báo chung.':'Chat with your teacher and get announcements.','Tổng học viên':'Total students','Đang online':'Online now','Tổng bộ từ vựng':'Total vocabulary sets','Tổng số từ':'Total words','Bài kiểm tra':'Tests','Từ mới thêm trong 7 ngày':'New words in the last 7 days','Xem vocab':'View vocab','Nhắn tin':'Message','Khóa':'Lock','Mở khóa':'Unlock','Chia sẻ':'Share','Sửa tên':'Rename','Lịch sử chia sẻ':'Sharing history','Chọn một hội thoại':'Select a conversation','Gửi':'Send','＋ Nhắn học viên':'＋ Message a student','＋ Nhóm':'＋ Group','Chưa có tin nhắn.':'No messages yet.','Tài khoản mới (7 ngày)':'New accounts (7 days)','Góp ý':'Feedback','Gửi ý kiến, báo lỗi hoặc đề xuất tính năng. Mọi góp ý sẽ được chuyển đến quản trị viên.':'Send ideas, bug reports or feature requests. All feedback goes to the administrator.','Gửi góp ý':'Send feedback','Hộp thư góp ý':'Feedback inbox','Chỉ quản trị viên thấy mục này.':'Only the administrator can see this.','Chưa có góp ý nào.':'No feedback yet.','Đã xem':'Mark as read','Đánh dấu chưa xem':'Mark as unread','Xóa':'Delete','Vui lòng nhập nội dung góp ý.':'Please enter your feedback.','Đang gửi...':'Sending...','Nhập góp ý của bạn...':'Write your feedback...','Đã gửi! Cảm ơn bạn đã góp ý.':'Sent! Thank you for your feedback.','WORKSPACE':'WORKSPACE','LIBRARY':'LIBRARY','PERSONAL':'PERSONAL','PINNED':'PINNED',
+ 'Home':'Home','Chưa học':'Not learned yet','Số bộ từ vựng':'Vocabulary sets','Bộ hoàn thành':'Completed sets','Từ mới (7 ngày)':'New words (7 days)','Ngôn ngữ':'Language','Ngày tạo':'Created','Tiến độ từng bộ':'Progress by set','Từ chưa học':'Words not learned yet','Theo ngôn ngữ':'By language','Nổi bật':'Highlights','Bộ học tốt nhất':'Best progress','Bộ cần ôn nhất':'Needs most review','Bạn đã học hết từ trong bộ này!':'You have learned every word in this set!','Chưa có từ vựng trong bộ này.':'No words in this set yet.','Chưa có từ vựng nào để thống kê.':'No words to track yet.','Bạn chưa có bộ từ vựng nào.':'You have no vocabulary sets yet.','Tiếng Anh':'English','Tiếng Trung':'Chinese','Tiếng Ý':'Italian','Chưa chọn ngôn ngữ':'No language set','＋ Thêm':'＋ Add','Xem tất cả →':'View all →','Copy từ vựng':'Copy vocab','Bộ này chưa có từ':'This set has no words','Quản trị':'Admin','Tổng quan':'Overview','Học viên':'Students','Kho vocab':'Vocab library','Làm mới':'Refresh','Dành cho Admin / Giáo viên.':'For Admin / Teachers.','Trò chuyện với giáo viên và nhận thông báo chung.':'Chat with your teacher and get announcements.','Tổng học viên':'Total students','Đang online':'Online now','Tổng bộ từ vựng':'Total vocabulary sets','Tổng số từ':'Total words','Bài kiểm tra':'Tests','Từ mới thêm trong 7 ngày':'New words in the last 7 days','Xem vocab':'View vocab','Nhắn tin':'Message','Khóa':'Lock','Mở khóa':'Unlock','Chia sẻ':'Share','Sửa tên':'Rename','Lịch sử chia sẻ':'Sharing history','Chọn một hội thoại':'Select a conversation','Gửi':'Send','＋ Nhắn học viên':'＋ Message a student','＋ Nhóm':'＋ Group','Chưa có tin nhắn.':'No messages yet.','Tài khoản mới (7 ngày)':'New accounts (7 days)','Góp ý':'Feedback','Gửi ý kiến, báo lỗi hoặc đề xuất tính năng. Mọi góp ý sẽ được chuyển đến quản trị viên.':'Send ideas, bug reports or feature requests. All feedback goes to the administrator.','Gửi góp ý':'Send feedback','Hộp thư góp ý':'Feedback inbox','Chỉ quản trị viên thấy mục này.':'Only the administrator can see this.','Chưa có góp ý nào.':'No feedback yet.','Đã xem':'Mark as read','Đánh dấu chưa xem':'Mark as unread','Xóa':'Delete','Vui lòng nhập nội dung góp ý.':'Please enter your feedback.','Đang gửi...':'Sending...','Nhập góp ý của bạn...':'Write your feedback...','Đã gửi! Cảm ơn bạn đã góp ý.':'Sent! Thank you for your feedback.','WORKSPACE':'WORKSPACE','LIBRARY':'LIBRARY','PERSONAL':'PERSONAL','PINNED':'PINNED',
  'Thông báo':'Notifications','Vocabulary':'Vocabulary','Folders':'Folders','Tiến độ':'Progress','Note':'Notes','Ghi chú':'Notes','Nhắc nhở':'Reminders','Đã ghim':'Pinned',
  'Thông tin cá nhân':'Personal information','Chế độ tối':'Dark mode','Đăng xuất':'Sign out','Học viên':'Learner','Ngôn ngữ':'Language',
  'Welcome, !':'Welcome, !','Hôm nay bạn muốn chinh phục những từ vựng nào?':'What vocabulary would you like to master today?',
@@ -1806,7 +1902,7 @@ setTheme(th);
  'Bạn có chắc muốn xóa bộ từ vựng này không?':'Are you sure you want to delete this vocabulary set?','Bạn có chắc muốn xóa folder này không?':'Are you sure you want to delete this folder?','Không thể tải dữ liệu.':'Could not load data.','Đã lưu thành công.':'Saved successfully.','Đã xóa thành công.':'Deleted successfully.','Đã cập nhật thành công.':'Updated successfully.','Vui lòng nhập nội dung.':'Please enter some content.','Vui lòng nhập tên bộ từ vựng.':'Please enter a vocabulary set name.','Tên bộ từ vựng đã tồn tại.':'This vocabulary set name already exists.',
  'Đang tải...':'Loading...','Không có dữ liệu':'No data','Chưa có dữ liệu':'No data yet','Mục tiêu học tập':'Learning goals','Bộ từ vựng':'Vocabulary set','Từ vựng':'Vocabulary','Thư viện':'Library','Trang chủ':'Home','Cá nhân':'Personal','Hồ sơ':'Profile','Thông tin':'Information','Bảo mật':'Security','Đăng nhập để quản lý từ vựng của bạn.':'Sign in to manage your vocabulary.'
  };
- const rx=[
+ const rx=[[/^(\d+) từ khác$/,'$1 more words'],
  [/^Cần nhớ (\d+)$/,'To remember $1'],[/^Đã xong (\d+)$/,'Completed $1'],[/^Tất cả (\d+)$/,'All $1'],[/^Chưa thuộc (\d+)$/,'Not learned $1'],[/^Đã thuộc (\d+)$/,'Learned $1'],[/^(\d+) từ vựng$/,'$1 words'],[/^Nhắc vào ngày (.+)$/,'Reminder: $1'],[/^Đang lọc theo folder: (.+)$/,'Filtering by folder: $1'],[/^Bạn đã thêm “(.+)” vào bộ từ vựng\.$/,'You added “$1” to the vocabulary set.'],[/^Bộ “(.+)” đã sẵn sàng để học\.$/,'The set “$1” is ready to study.']
  ];
  const originals=new WeakMap();let translating=false;
